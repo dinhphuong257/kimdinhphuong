@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import LayoutShell from "@/components/LayoutShell";
 import ProfileHeader from "@/components/ProfileHeader";
 import HighlightsSection from "@/components/HighlightsSection";
 import AboutSection from "@/components/AboutSection";
 import ExperienceCards from "@/components/ExperienceCards";
-import RecentWorkGrid from "@/components/RecentWorkGrid";
 import VideoCallModal from "@/components/VideoCallModal";
 import Reveal from "@/components/Reveal";
 
@@ -36,24 +34,6 @@ export default function HomeClient() {
 
           <Reveal direction="up" delay={350}>
             <ExperienceCards />
-          </Reveal>
-
-          <Reveal direction="up" delay={450}>
-            <RecentWorkGrid />
-          </Reveal>
-
-          <Reveal direction="up" delay={550}>
-            <div className="px-4 sm:px-6 pb-8 pt-2">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors"
-              >
-                View all projects
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
           </Reveal>
         </article>
       </div>

@@ -3,13 +3,13 @@ import BlogPageClient from "@/components/pages/BlogPageClient";
 
 export const metadata: Metadata = {
     title: "Blog",
-    description: "Bài viết chia sẻ kinh nghiệm về thiết kế sản phẩm, UX và các góc nhìn thực tiễn.",
+    description: "Articles sharing experience in product design, UX, and practical perspectives.",
     alternates: {
         canonical: "/blog",
     },
     openGraph: {
         title: "Blog | Kim Đình Phương",
-        description: "Đọc các bài viết mới nhất về product design, UX và tư duy làm sản phẩm.",
+        description: "Read the latest articles about product design, UX, and product thinking.",
         url: "/blog",
         images: ["/opengraph-image"],
     },

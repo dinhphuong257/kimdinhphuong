@@ -4,21 +4,21 @@ import HomeClient from "@/components/pages/HomeClient";
 export const metadata: Metadata = {
   title: "Home",
   description:
-    "Portfolio của Kim Đình Phương - sinh viên Logistics năm 3 với các dự án tối ưu chuỗi cung ứng và vận hành kho.",
+    "Portfolio of Kim Đình Phương - a third-year Logistics student focused on supply chain optimization and warehouse operations.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Kim Đình Phương - Logistics Profile",
     description:
-      "Khám phá hồ sơ, kinh nghiệm và các dự án nổi bật về logistics, supply chain và vận hành kho.",
+      "Explore profile, experience, and featured projects in logistics, supply chain, and warehouse operations.",
     url: "/",
     images: ["/opengraph-image"],
   },
   twitter: {
     title: "Kim Đình Phương - Logistics Profile",
     description:
-      "Khám phá hồ sơ và dự án logistics của Kim Đình Phương.",
+      "Explore Kim Đình Phương's profile and logistics projects.",
     images: ["/twitter-image"],
   },
 };

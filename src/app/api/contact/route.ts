@@ -7,6 +7,20 @@ interface ContactFormData {
     message: string;
 }
 
+function escapeHtml(value: string) {
+    return value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function getMissingEnvVars() {
+    const required = ["SMTP_EMAIL", "SMTP_PASSWORD", "CONTACT_RECEIVER_EMAIL"];
+    return required.filter((key) => !process.env[key]?.trim());
+}
+
 export async function POST(request: NextRequest) {
     try {
         const body: ContactFormData = await request.json();
@@ -37,34 +51,64 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Configure your actual email SMTP here
-        // Please set SMTP_EMAIL and SMTP_PASSWORD in your .env.local file
+        const missingEnvVars = getMissingEnvVars();
+        if (missingEnvVars.length > 0) {
+            console.error(`Missing email environment variables: ${missingEnvVars.join(", ")}`);
+            return NextResponse.json(
+                {
+                    error: "Email service is not configured correctly. Please try again later."
+                },
+                { status: 500 }
+            );
+        }
+
+        const smtpEmail = process.env.SMTP_EMAIL as string;
+        const smtpPassword = process.env.SMTP_PASSWORD as string;
+        const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL as string;
+        const safeName = escapeHtml(body.name.trim());
+        const safeSenderEmail = escapeHtml(body.email.trim());
+        const safeMessage = escapeHtml(body.message.trim());
+
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.SMTP_EMAIL || 'your_email@gmail.com',
-                pass: process.env.SMTP_PASSWORD || 'your_app_password'
+                user: smtpEmail,
+                pass: smtpPassword
             }
         });
 
-        // ⚠️ IF YOU DONT HAVE .ENV YET, THIS MIGHT FAIL IN PRODUCTION
-        // This is a setup for real email sending.
-        if (process.env.SMTP_EMAIL && process.env.SMTP_PASSWORD) {
-            await transporter.sendMail({
-                from: process.env.SMTP_EMAIL,
-                to: "kimdinhphuong.vn@gmail.com", // Your receiving email
-                subject: `[Portfolio] Tin nhắn mới từ ${body.name}`,
-                html: `
-                    <h3>Bạn có một tin nhắn mới từ Portfolio!</h3>
-                    <p><strong>Người gửi:</strong> ${body.name}</p>
-                    <p><strong>Email:</strong> ${body.email}</p>
-                    <p><strong>Nội dung:</strong></p>
-                    <p>${body.message.replace(/\\n/g, '<br>')}</p>
-                `
-            });
-        } else {
-            console.log("No SMTP credentials found in .env, falling back to console log:");
-            console.log(body);
+        await transporter.verify();
+
+        const result = await transporter.sendMail({
+            from: `Portfolio Contact <${smtpEmail}>`,
+            to: receiverEmail,
+            replyTo: body.email,
+            subject: `[Portfolio] Tin nhắn mới từ ${body.name}`,
+            text: [
+                "Bạn có một tin nhắn mới từ Portfolio!",
+                `Người gửi: ${body.name}`,
+                `Email: ${body.email}`,
+                "Nội dung:",
+                body.message.trim()
+            ].join("\n"),
+            html: `
+                <h3>Bạn có một tin nhắn mới từ Portfolio!</h3>
+                <p><strong>Người gửi:</strong> ${safeName}</p>
+                <p><strong>Email:</strong> ${safeSenderEmail}</p>
+                <p><strong>Nội dung:</strong></p>
+                <p>${safeMessage.replace(/\n/g, '<br>')}</p>
+            `,
+            headers: {
+                "X-Auto-Response-Suppress": "OOF, AutoReply"
+            }
+        });
+
+        if (result.rejected.length > 0) {
+            console.error("Email rejected by SMTP provider:", result.rejected);
+            return NextResponse.json(
+                { error: "Email delivery failed. Please try again later." },
+                { status: 502 }
+            );
         }
 
         return NextResponse.json(

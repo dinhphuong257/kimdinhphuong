@@ -20,7 +20,7 @@ export default function BlogPageClient() {
         <LayoutShell>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
-                    <div className="mb-6 space-y-2">
+                    <div className="mb-6 space-y-2 animate-fade-in-up">
                         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                             Blog
                         </h1>
@@ -30,15 +30,16 @@ export default function BlogPageClient() {
                     </div>
 
                     {hasPosts && (
-                        <div className="mb-6 flex flex-wrap gap-2">
-                            {BLOG_CATEGORIES.map((category) => (
+                        <div className="mb-6 flex flex-wrap gap-2 animate-fade-in-up" style={{ animationDelay: "80ms" }}>
+                            {BLOG_CATEGORIES.map((category, index) => (
                                 <button
                                     key={category}
                                     onClick={() => setSelectedCategory(category)}
-                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 ${selectedCategory === category
+                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] ${selectedCategory === category
                                         ? "bg-slate-900 text-white shadow-md"
                                         : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
                                         }`}
+                                    style={{ animationDelay: `${100 + index * 40}ms` }}
                                 >
                                     {category}
                                 </button>
@@ -48,16 +49,20 @@ export default function BlogPageClient() {
 
                     <div className="space-y-8">
                         {featuredPost && (
-                            <div className="mb-8">
+                            <div key={featuredPost.id} className="mb-8 animate-fade-in-up" style={{ animationDelay: "140ms" }}>
                                 <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">Featured Story</h2>
                                 <BlogCard post={featuredPost} featured={true} />
                             </div>
                         )}
 
                         {gridPosts.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                            <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                                 {gridPosts.map((post, index) => (
-                                    <div key={post.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 50}ms` }}>
+                                    <div
+                                        key={post.id}
+                                        className="animate-fade-in-up"
+                                        style={{ animationDelay: `${160 + index * 60}ms` }}
+                                    >
                                         <BlogCard post={post} />
                                     </div>
                                 ))}

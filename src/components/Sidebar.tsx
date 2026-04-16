@@ -138,7 +138,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         {/* Navigation - Minimal Style */}
-        <nav className="flex-1 overflow-y-auto px-4 py-6 flex flex-col justify-center">
+        <nav className="flex-1 overflow-y-auto px-4 py-6 flex flex-col justify-start lg:justify-center">
           <ul className="space-y-3">
             {navItems.map((item) => (
               <li key={item.label}>

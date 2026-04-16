@@ -37,7 +37,7 @@ function ProjectsContent() {
             <div className="space-y-12">
             {projects.map((project, index) => {
                 const isMovie = project.id === "rap-phim-chill";
-                const isWMS = project.id === "wms-cold-storage";
+                const isWMS = project.id === "wms-ecofresh";
 
                 return (
                     <Reveal direction="up" delay={index * 200 + 100} key={project.id}>
@@ -99,7 +99,7 @@ function ProjectsContent() {
                                                     Enterprise Logistics
                                                 </span>
                                                 <h3 className="pt-2 text-5xl sm:text-6xl md:text-7xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-blue-400 drop-shadow-[0_0_30px_rgba(56,189,248,0.4)] tracking-tighter leading-none">
-                                                    WMS<br/>MANAGER
+                                                    WMS<br/>ECOFRESH
                                                 </h3>
                                             </div>
                                             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent rounded-full opacity-60"></div>
@@ -110,7 +110,7 @@ function ProjectsContent() {
 
                                         <div className="absolute bottom-6 left-6 z-10 px-4 py-2 bg-slate-900/60 backdrop-blur-md rounded-xl border border-cyan-500/20 text-white shadow-2xl text-sm font-medium flex items-center gap-2 group-hover/poster:bg-cyan-600/90 transition-colors duration-300">
                                             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]"></span>
-                                            Cold Storage App
+                                            logisticsprojects.vercel.app
                                         </div>
                                     </>
                                 )}
@@ -158,7 +158,7 @@ function ProjectsContent() {
                                             rel="noopener noreferrer"
                                             className={`inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900 text-white font-semibold rounded-xl transition-all duration-300 shadow-sm ${isWMS ? 'hover:bg-cyan-600 hover:shadow-cyan-500/25' : 'hover:bg-indigo-600 hover:shadow-indigo-500/25'} hover:-translate-y-1`}
                                         >
-                                            <span>{isWMS ? 'View Documentation' : 'Visit Website'}</span>
+                                            <span>Visit Website</span>
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                         </a>
                                     </div>

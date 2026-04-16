@@ -140,6 +140,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                         </div>
 
                         <p className="text-lg text-gray-600">{project.summary}</p>
+
+
                     </div>
                 </div>
 

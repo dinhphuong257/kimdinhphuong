@@ -32,7 +32,7 @@ export default function TutPageClient() {
         <LayoutShell>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
-                    <div className="mb-6 space-y-2">
+                    <div className="mb-6 space-y-2 animate-fade-in-up">
                         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
                             Tutorials & Guides
                         </h1>
@@ -42,7 +42,7 @@ export default function TutPageClient() {
                     </div>
 
                     {hasTutorials && (
-                        <div className="mb-4">
+                        <div className="mb-4 animate-fade-in-up" style={{ animationDelay: "80ms" }}>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <svg
@@ -71,15 +71,16 @@ export default function TutPageClient() {
                     )}
 
                     {hasTutorials && (
-                        <div className="mb-6 flex flex-wrap gap-2">
-                            {tutorialCategories.map((category) => (
+                        <div className="mb-6 flex flex-wrap gap-2 animate-fade-in-up" style={{ animationDelay: "120ms" }}>
+                            {tutorialCategories.map((category, index) => (
                                 <button
                                     key={category}
                                     onClick={() => setActiveCategory(category)}
-                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 ${activeCategory === category
+                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] ${activeCategory === category
                                             ? "bg-slate-900 text-white shadow-md"
                                             : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
                                         }`}
+                                    style={{ animationDelay: `${140 + index * 40}ms` }}
                                 >
                                     {category}
                                 </button>
@@ -88,7 +89,7 @@ export default function TutPageClient() {
                     )}
 
                     {hasTutorials && (
-                        <div className="mb-5 flex items-center gap-3">
+                        <div className="mb-5 flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: "160ms" }}>
                             <p className="text-xs sm:text-sm font-semibold text-slate-600">
                                 <span className="text-slate-900">{filteredTutorials.length}</span> {filteredTutorials.length === 1 ? "tutorial" : "tutorials"}
                             </p>
@@ -97,14 +98,14 @@ export default function TutPageClient() {
                     )}
 
                     {filteredTutorials.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                        <div key={`${activeCategory}-${searchQuery}`} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                             {filteredTutorials.map((tutorial, index) => (
                                 <div
                                     key={tutorial.id}
                                     className="animate-fade-in-up"
-                                    style={{ animationDelay: `${index * 50}ms` }}
+                                    style={{ animationDelay: `${180 + index * 60}ms` }}
                                 >
-                                    <TutCard tutorial={tutorial} />
+                                        <TutCard tutorial={tutorial} />
                                 </div>
                             ))}
                         </div>
