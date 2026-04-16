@@ -136,6 +136,27 @@ function ProjectsContent() {
                                         <p className="text-slate-600 leading-relaxed text-pretty">
                                             {project.summary}
                                         </p>
+                                        
+                                        {isWMS && (
+                                            <div className="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200 shadow-sm">
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                                    </svg>
+                                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Demo Login</span>
+                                                </div>
+                                                <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm">
+                                                    <div>
+                                                        <span className="text-slate-500 mr-2">Email:</span>
+                                                        <span className="font-semibold text-slate-900">admin@wms.com</span>
+                                                    </div>
+                                                    <div>
+                                                        <span className="text-slate-500 mr-2">Pass:</span>
+                                                        <span className="font-semibold text-slate-900">123</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Meta */}

@@ -36,7 +36,7 @@ export const projects: Project[] = [
         title: "Rạp Phim Chill",
         summary: "A premium movie streaming platform providing a seamless and immersive viewing experience. Built with performance and modern UI/UX design in mind.",
         role: "Lead Developer",
-        year: 2024,
+        year: 2025,
         thumbnail: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=2070&auto=format&fit=crop",
         thumbnailGradient: "bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900",
         tags: ["Web Development", "Streaming Platform", "UI/UX Design"],
