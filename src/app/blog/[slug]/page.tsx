@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     if (!post) {
         return {
             title: "Post Not Found",
-            description: "Bài viết bạn đang tìm không tồn tại.",
+            description: "The post you are looking for does not exist.",
         };
     }
 

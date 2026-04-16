@@ -83,19 +83,19 @@ export async function POST(request: NextRequest) {
             from: `Portfolio Contact <${smtpEmail}>`,
             to: receiverEmail,
             replyTo: body.email,
-            subject: `[Portfolio] Tin nhắn mới từ ${body.name}`,
+            subject: `[Portfolio] New message from ${body.name}`,
             text: [
-                "Bạn có một tin nhắn mới từ Portfolio!",
-                `Người gửi: ${body.name}`,
+                "You have a new message from your portfolio!",
+                `Sender: ${body.name}`,
                 `Email: ${body.email}`,
-                "Nội dung:",
+                "Message:",
                 body.message.trim()
             ].join("\n"),
             html: `
-                <h3>Bạn có một tin nhắn mới từ Portfolio!</h3>
-                <p><strong>Người gửi:</strong> ${safeName}</p>
+                <h3>You have a new message from your portfolio!</h3>
+                <p><strong>Sender:</strong> ${safeName}</p>
                 <p><strong>Email:</strong> ${safeSenderEmail}</p>
-                <p><strong>Nội dung:</strong></p>
+                <p><strong>Message:</strong></p>
                 <p>${safeMessage.replace(/\n/g, '<br>')}</p>
             `,
             headers: {
@@ -114,14 +114,14 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
             {
                 success: true,
-                message: "Tin nhắn đã được gửi thành công! Tôi sẽ phản hồi sớm nhất có thể."
+                message: "Your message has been sent successfully! I will get back to you as soon as possible."
             },
             { status: 200 }
         );
     } catch (error) {
         console.error("Contact form error:", error);
         return NextResponse.json(
-            { error: "Đã có lỗi xảy ra. Hãy thử gửi lại sau." },
+            { error: "An error occurred. Please try again later." },
             { status: 500 }
         );
     }

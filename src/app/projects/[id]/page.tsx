@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: ProjectDetailPageProps): Prom
     if (!project) {
         return {
             title: "Project Not Found",
-            description: "Dự án bạn đang tìm không tồn tại.",
+            description: "The project you are looking for does not exist.",
         };
     }
 

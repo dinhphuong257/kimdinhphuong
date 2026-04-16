@@ -5,13 +5,13 @@ import { profileData } from "@/data/profile";
 
 export const metadata: Metadata = {
     title: "Contact",
-    description: "Liên hệ Kim Đình Phương để trao đổi về dự án logistics, hợp tác hoặc cơ hội nghề nghiệp.",
+    description: "Contact Kim Đình Phương to discuss logistics projects, partnerships, or career opportunities.",
     alternates: {
         canonical: "/contact",
     },
     openGraph: {
         title: "Contact | Kim Đình Phương",
-        description: "Kết nối và gửi tin nhắn trực tiếp cho Kim Đình Phương.",
+        description: "Connect and send a direct message to Kim Đình Phương.",
         url: "/contact",
         images: ["/opengraph-image"],
     },

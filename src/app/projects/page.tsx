@@ -5,13 +5,13 @@ import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
     title: "Projects",
-    description: "Danh sách dự án nổi bật của Kim Đình Phương về web development, logistics và supply chain.",
+    description: "A curated list of Kim Đình Phương's featured projects in web development, logistics, and supply chain.",
     alternates: {
         canonical: "/projects",
     },
     openGraph: {
         title: "Projects | Kim Đình Phương",
-        description: "Khám phá các case study và dự án nổi bật về logistics và sản phẩm số.",
+        description: "Explore featured case studies and projects in logistics and digital products.",
         url: "/projects",
         images: ["/opengraph-image"],
     },
@@ -65,7 +65,7 @@ function ProjectsContent() {
                                                     Original Platform
                                                 </span>
                                                 <h3 className="pt-2 text-5xl sm:text-6xl md:text-7xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-indigo-100 to-indigo-400 drop-shadow-[0_0_30px_rgba(79,70,229,0.5)] tracking-tighter leading-none">
-                                                    RẠP PHIM<br/>CHILL
+                                                    CHILL<br/>CINEMA
                                                 </h3>
                                             </div>
                                             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent rounded-full opacity-60"></div>

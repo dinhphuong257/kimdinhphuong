@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     if (!tutorial) {
         return {
             title: 'Tutorial Not Found',
-            description: 'Nội dung hướng dẫn bạn đang tìm không tồn tại.',
+            description: 'The tutorial content you are looking for does not exist.',
         };
     }
 

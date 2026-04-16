@@ -3,13 +3,13 @@ import TutPageClient from "@/components/pages/TutPageClient";
 
 export const metadata: Metadata = {
     title: "Tutorials",
-    description: "Kho tutorial và hướng dẫn thực tế về logistics, web development và công cụ làm việc.",
+    description: "A practical library of tutorials and guides on logistics, web development, and working tools.",
     alternates: {
         canonical: "/tut",
     },
     openGraph: {
         title: "Tutorials | Kim Đình Phương",
-        description: "Xem các hướng dẫn mới về logistics và phát triển web từ kinh nghiệm thực tế.",
+        description: "Discover the latest guides on logistics and web development from real-world experience.",
         url: "/tut",
         images: ["/opengraph-image"],
     },

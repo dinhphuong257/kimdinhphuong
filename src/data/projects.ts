@@ -33,7 +33,7 @@ export interface Project {
 export const projects: Project[] = [
     {
         id: "rap-phim-chill",
-        title: "Rạp Phim Chill",
+        title: "Chill Cinema",
         summary: "A premium movie streaming platform providing a seamless and immersive viewing experience. Built with performance and modern UI/UX design in mind.",
         role: "Lead Developer",
         year: 2024,

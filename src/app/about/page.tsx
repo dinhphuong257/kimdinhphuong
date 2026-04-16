@@ -6,13 +6,13 @@ import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
     title: "About",
-    description: "Tìm hiểu về Kim Đình Phương: nền tảng học tập, kỹ năng logistics và công cụ sử dụng trong công việc.",
+    description: "Learn about Kim Đình Phương's educational background, logistics skills, and work tools.",
     alternates: {
         canonical: "/about",
     },
     openGraph: {
         title: "About | Kim Đình Phương",
-        description: "Thông tin chi tiết về hồ sơ cá nhân, kỹ năng và hành trình phát triển của Kim Đình Phương.",
+        description: "Detailed information about Kim Đình Phương's profile, skills, and growth journey.",
         url: "/about",
         images: ["/opengraph-image"],
     },

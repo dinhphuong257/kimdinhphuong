@@ -74,7 +74,10 @@ export default function ContactForm() {
             const data = await response.json();
 
             if (response.ok) {
-                showToast("Message sent successfully! I'll get back to you soon.", "success");
+                showToast(
+                    data.message || "Your message has been sent successfully! I will get back to you as soon as possible.",
+                    "success"
+                );
                 setFormData({
                     name: "",
                     email: "",
@@ -82,10 +85,10 @@ export default function ContactForm() {
                 });
                 setErrors({});
             } else {
-                showToast(data.error || "Something went wrong. Please try again.", "error");
+                showToast(data.error || "An error occurred. Please try again.", "error");
             }
         } catch {
-            showToast("Failed to send message. Please try again later.", "error");
+            showToast("Unable to send your message right now. Please try again later.", "error");
         } finally {
             setIsSubmitting(false);
         }
@@ -217,7 +220,14 @@ export default function ContactForm() {
                 </button>
             </form>
 
-            {toast && <Toast message={toast.message} type={toast.type} onClose={hideToast} />}
+            {toast && (
+                <Toast
+                    key={toast.id}
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={hideToast}
+                />
+            )}
         </>
     );
 }
