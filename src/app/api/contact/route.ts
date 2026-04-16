@@ -7,6 +7,15 @@ interface ContactFormData {
     message: string;
 }
 
+interface MailConfig {
+    smtpEmail: string;
+    smtpPassword: string;
+    receiverEmail: string;
+    smtpHost?: string;
+    smtpPort?: number;
+    smtpSecure: boolean;
+}
+
 function escapeHtml(value: string) {
     return value
         .replace(/&/g, "&amp;")
@@ -16,9 +25,52 @@ function escapeHtml(value: string) {
         .replace(/'/g, "&#39;");
 }
 
-function getMissingEnvVars() {
-    const required = ["SMTP_EMAIL", "SMTP_PASSWORD", "CONTACT_RECEIVER_EMAIL"];
-    return required.filter((key) => !process.env[key]?.trim());
+function getEnvValue(keys: string[]) {
+    for (const key of keys) {
+        const value = process.env[key]?.trim();
+        if (value) {
+            return value;
+        }
+    }
+    return "";
+}
+
+function getMailConfig(): MailConfig {
+    const smtpEmail = getEnvValue(["SMTP_EMAIL", "SMTP_USER", "EMAIL_USER", "GMAIL_USER"]);
+    const smtpPassword = getEnvValue([
+        "SMTP_PASSWORD",
+        "SMTP_PASS",
+        "EMAIL_PASSWORD",
+        "GMAIL_APP_PASSWORD",
+        "GMAIL_PASS",
+    ]);
+    const receiverEmail = getEnvValue([
+        "CONTACT_RECEIVER_EMAIL",
+        "RECEIVER_EMAIL",
+        "TO_EMAIL",
+    ]) || smtpEmail;
+    const smtpHost = getEnvValue(["SMTP_HOST"]);
+    const smtpPortRaw = getEnvValue(["SMTP_PORT"]);
+    const smtpPort = smtpPortRaw ? Number(smtpPortRaw) : undefined;
+    const smtpSecureValue = getEnvValue(["SMTP_SECURE"]);
+    const smtpSecure = smtpSecureValue ? smtpSecureValue.toLowerCase() === "true" : (smtpPort === 465);
+
+    return {
+        smtpEmail,
+        smtpPassword,
+        receiverEmail,
+        smtpHost: smtpHost || undefined,
+        smtpPort,
+        smtpSecure,
+    };
+}
+
+function getMissingConfig(config: MailConfig) {
+    const missing: string[] = [];
+    if (!config.smtpEmail) missing.push("SMTP email");
+    if (!config.smtpPassword) missing.push("SMTP password");
+    if (!config.receiverEmail) missing.push("Receiver email");
+    return missing;
 }
 
 export async function POST(request: NextRequest) {
@@ -51,31 +103,41 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const missingEnvVars = getMissingEnvVars();
-        if (missingEnvVars.length > 0) {
-            console.error(`Missing email environment variables: ${missingEnvVars.join(", ")}`);
+        const mailConfig = getMailConfig();
+        const missingConfig = getMissingConfig(mailConfig);
+
+        if (missingConfig.length > 0) {
+            console.error(`Missing email configuration: ${missingConfig.join(", ")}`);
             return NextResponse.json(
                 {
-                    error: "Email service is not configured correctly. Please try again later."
+                    error: "Email service is temporarily unavailable. Please try again later."
                 },
                 { status: 500 }
             );
         }
 
-        const smtpEmail = process.env.SMTP_EMAIL as string;
-        const smtpPassword = process.env.SMTP_PASSWORD as string;
-        const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL as string;
+        const { smtpEmail, smtpPassword, receiverEmail, smtpHost, smtpPort, smtpSecure } = mailConfig;
         const safeName = escapeHtml(body.name.trim());
         const safeSenderEmail = escapeHtml(body.email.trim());
         const safeMessage = escapeHtml(body.message.trim());
 
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: smtpEmail,
-                pass: smtpPassword
-            }
-        });
+        const transporter = smtpHost
+            ? nodemailer.createTransport({
+                host: smtpHost,
+                port: smtpPort ?? 587,
+                secure: smtpSecure,
+                auth: {
+                    user: smtpEmail,
+                    pass: smtpPassword,
+                },
+            })
+            : nodemailer.createTransport({
+                service: "gmail",
+                auth: {
+                    user: smtpEmail,
+                    pass: smtpPassword,
+                },
+            });
 
         await transporter.verify();
 
