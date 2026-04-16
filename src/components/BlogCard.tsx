@@ -1,5 +1,4 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { BlogPost } from "@/data/posts";
 
@@ -16,10 +15,11 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
             {/* Thumbnail */}
             <div className={`rounded-2xl overflow-hidden relative shadow-sm transition-all duration-500 group-hover:shadow-lg ${featured ? 'w-full md:w-1/2 aspect-[16/9]' : 'w-full aspect-[4/3]'} bg-slate-100`}>
                 {post.image ? (
-                    <img
+                    <Image
                         src={post.image}
                         alt={post.title}
-                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                        fill
+                        className="object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                 ) : (
                     <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-50 to-purple-50">

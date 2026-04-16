@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import LayoutShell from "@/components/LayoutShell";
@@ -15,6 +17,41 @@ export async function generateStaticParams() {
     }));
 }
 
+export async function generateMetadata({ params }: ProjectDetailPageProps): Promise<Metadata> {
+    const { id } = await params;
+    const project = getProjectById(id);
+
+    if (!project) {
+        return {
+            title: "Project Not Found",
+            description: "Dự án bạn đang tìm không tồn tại.",
+        };
+    }
+
+    const ogImage = `/projects/${project.id}/opengraph-image`;
+    const twitterImage = `/projects/${project.id}/twitter-image`;
+
+    return {
+        title: project.title,
+        description: project.summary,
+        alternates: {
+            canonical: `/projects/${project.id}`,
+        },
+        openGraph: {
+            title: `${project.title} | Kim Đình Phương`,
+            description: project.summary,
+            url: `/projects/${project.id}`,
+            type: "article",
+            images: [ogImage],
+        },
+        twitter: {
+            title: `${project.title} | Kim Đình Phương`,
+            description: project.summary,
+            images: [twitterImage],
+        },
+    };
+}
+
 export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
     const { id } = await params;
     const project = getProjectById(id);
@@ -23,9 +60,28 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         notFound();
     }
 
+    const creativeWorkJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        name: project.title,
+        description: project.summary,
+        url: `https://kimdinhphuong.dev/projects/${project.id}`,
+        image: project.thumbnail || "https://kimdinhphuong.dev/opengraph-image",
+        datePublished: `${project.year}-01-01`,
+        creator: {
+            "@type": "Person",
+            name: "Kim Đình Phương",
+        },
+        keywords: project.tags.join(", "),
+    };
+
     return (
         <LayoutShell>
             <article className="max-w-4xl mx-auto p-4 lg:p-6">
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkJsonLd) }}
+                />
                 {/* Back link */}
                 <Link
                     href="/projects"
@@ -42,10 +98,11 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                     {/* Banner */}
                     <div className={`h-64 ${project.thumbnailGradient} relative`}>
                         {project.thumbnail && (
-                            <img
+                            <Image
                                 src={project.thumbnail}
                                 alt={project.title}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         )}
                         {!project.thumbnail && (
@@ -137,12 +194,13 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
                         <section className="bg-white rounded-xl border border-gray-200 p-8">
                             <h2 className="text-xl font-semibold text-gray-900 mb-6">Gallery</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {project.images.map((image, index) => (
-                                    <div key={index} className="rounded-lg overflow-hidden">
-                                        <img
+                                {project.images.map((image, idx) => (
+                                    <div key={idx} className="rounded-lg overflow-hidden h-64 relative">
+                                        <Image
                                             src={image}
-                                            alt={`${project.title} - Image ${index + 1}`}
-                                            className="w-full h-auto"
+                                            alt={`${project.title} - Image ${idx + 1}`}
+                                            fill
+                                            className="object-cover"
                                         />
                                     </div>
                                 ))}

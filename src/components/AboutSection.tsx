@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { profileData } from "@/data/profile";
 
 export default function AboutSection() {
@@ -55,11 +56,12 @@ export default function AboutSection() {
                     <div className="flex items-center justify-between sm:block py-2 sm:py-0 border-b border-slate-100 sm:border-0 sm:pb-3">
                         <p className="text-xs font-medium text-slate-400 uppercase tracking-wide sm:mb-1.5">Location</p>
                         <div className="flex items-center gap-2">
-                            <div className="w-5 h-5 rounded-full overflow-hidden shadow-sm flex-shrink-0">
-                                <img
+                            <div className="w-5 h-5 rounded-full overflow-hidden shadow-sm flex-shrink-0 relative">
+                                <Image
                                     src={`https://flagcdn.com/w40/${profileData.location.countryCode}.png`}
                                     alt={`${profileData.location.country} flag`}
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    className="object-cover"
                                 />
                             </div>
                             <span className="text-sm font-medium text-gray-900">

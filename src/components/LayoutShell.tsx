@@ -59,16 +59,14 @@ export default function LayoutShell({ children }: LayoutShellProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 overflow-x-hidden">
-
-
+        <div className="min-h-screen bg-gray-50 overflow-x-hidden text-slate-900">
             {/* Mobile header */}
             <MobileHeader onMenuOpen={() => setSidebarOpen(true)} />
 
             <div className="lg:flex">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-                <main className="flex-1 lg:ml-[232px] min-h-[calc(100vh-44px)]">
+                <main className="flex-1 lg:ml-[210px] min-h-[calc(100vh-44px)]">
                     <TopShell />
                     {children}
                 </main>

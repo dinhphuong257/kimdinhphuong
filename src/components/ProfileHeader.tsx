@@ -1,31 +1,32 @@
 "use client";
 
-import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { profileData } from "@/data/profile";
 
 interface ProfileHeaderProps {
-    onVideoCall: () => void;
     onMessage: () => void;
 }
 
-export default function ProfileHeader({ onVideoCall, onMessage }: ProfileHeaderProps) {
+export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
     return (
         <div className="relative">
             {/* Compact Hero Section */}
-            <div className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-3 sm:pb-4">
+            <div className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-6 sm:pb-8">
 
-                {/* Glass Panel Container - Tighter */}
-                <div className="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-7 max-w-3xl mx-auto elevation-lg">
+                {/* Transparent Container since it's already inside an article card */}
+                <div className="p-6 sm:p-8 lg:p-10 max-w-3xl mx-auto text-center">
 
                     {/* Avatar - Smaller, More Refined */}
                     <div className="flex justify-center mb-4">
                         <div className="relative group">
                             <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white p-1 shadow-lg ring-1 ring-slate-100 transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
-                                <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
-                                    <img
+                                <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
+                                    <Image
                                         src={profileData.avatar}
                                         alt={profileData.name}
-                                        className="w-full h-full object-cover saturate-[0.85]"
+                                        fill
+                                        className="object-cover saturate-[0.85]"
                                     />
                                 </div>
                             </div>
@@ -83,7 +84,7 @@ export default function ProfileHeader({ onVideoCall, onMessage }: ProfileHeaderP
 
                     {/* Action Buttons - Prominent CTAs */}
                     <div className="flex flex-wrap items-center justify-center gap-3">
-                        <a
+                        <Link
                             href="/projects"
                             className="group h-9 sm:h-11 px-4 sm:px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm sm:text-base font-semibold shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center gap-2"
                         >
@@ -91,7 +92,7 @@ export default function ProfileHeader({ onVideoCall, onMessage }: ProfileHeaderP
                             <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
-                        </a>
+                        </Link>
 
                         <button
                             onClick={onMessage}

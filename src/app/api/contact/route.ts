@@ -1,37 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 interface ContactFormData {
     name: string;
     email: string;
-    projectType: string;
-    budgetRange?: string;
     message: string;
-}
-
-// Placeholder for email service integration
-// To integrate with a real email service (e.g., Resend, SendGrid, Nodemailer):
-// 1. Install the email service package: npm install resend
-// 2. Set up your API key in environment variables
-// 3. Replace the sendEmail function below with your implementation
-async function sendEmail(_data: ContactFormData): Promise<boolean> {
-    // TODO: Implement actual email sending
-    // Example with Resend:
-    // import { Resend } from 'resend';
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //   from: 'onboarding@resend.dev',
-    //   to: 'hello@amelie.com',
-    //   subject: `New contact from ${data.name}`,
-    //   html: `<p>Name: ${data.name}</p><p>Email: ${data.email}</p>...`
-    // });
-
-    console.log("📧 Email would be sent to: hello@amelie.com");
-    console.log("   (Replace this with actual email service)");
-
-    // Simulate async operation
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    return true;
 }
 
 export async function POST(request: NextRequest) {
@@ -51,10 +24,6 @@ export async function POST(request: NextRequest) {
             errors.push("Invalid email format");
         }
 
-        if (!body.projectType) {
-            errors.push("Project type is required");
-        }
-
         if (!body.message?.trim()) {
             errors.push("Message is required");
         } else if (body.message.trim().length < 20) {
@@ -68,32 +37,47 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Log submission to console
-        console.log("\n" + "=".repeat(50));
-        console.log("📬 New Contact Form Submission");
-        console.log("=".repeat(50));
-        console.log(`Name: ${body.name}`);
-        console.log(`Email: ${body.email}`);
-        console.log(`Project Type: ${body.projectType}`);
-        console.log(`Budget Range: ${body.budgetRange || "Not specified"}`);
-        console.log(`Message: ${body.message}`);
-        console.log(`Timestamp: ${new Date().toISOString()}`);
-        console.log("=".repeat(50) + "\n");
+        // Configure your actual email SMTP here
+        // Please set SMTP_EMAIL and SMTP_PASSWORD in your .env.local file
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.SMTP_EMAIL || 'your_email@gmail.com',
+                pass: process.env.SMTP_PASSWORD || 'your_app_password'
+            }
+        });
 
-        // Send email (placeholder)
-        await sendEmail(body);
+        // ⚠️ IF YOU DONT HAVE .ENV YET, THIS MIGHT FAIL IN PRODUCTION
+        // This is a setup for real email sending.
+        if (process.env.SMTP_EMAIL && process.env.SMTP_PASSWORD) {
+            await transporter.sendMail({
+                from: process.env.SMTP_EMAIL,
+                to: "kimdinhphuong.vn@gmail.com", // Your receiving email
+                subject: `[Portfolio] Tin nhắn mới từ ${body.name}`,
+                html: `
+                    <h3>Bạn có một tin nhắn mới từ Portfolio!</h3>
+                    <p><strong>Người gửi:</strong> ${body.name}</p>
+                    <p><strong>Email:</strong> ${body.email}</p>
+                    <p><strong>Nội dung:</strong></p>
+                    <p>${body.message.replace(/\\n/g, '<br>')}</p>
+                `
+            });
+        } else {
+            console.log("No SMTP credentials found in .env, falling back to console log:");
+            console.log(body);
+        }
 
         return NextResponse.json(
             {
                 success: true,
-                message: "Message received! I'll get back to you within 24-48 hours."
+                message: "Tin nhắn đã được gửi thành công! Tôi sẽ phản hồi sớm nhất có thể."
             },
             { status: 200 }
         );
     } catch (error) {
         console.error("Contact form error:", error);
         return NextResponse.json(
-            { error: "Something went wrong. Please try again later." },
+            { error: "Đã có lỗi xảy ra. Hãy thử gửi lại sau." },
             { status: 500 }
         );
     }

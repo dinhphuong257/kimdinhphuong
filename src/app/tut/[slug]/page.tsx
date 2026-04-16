@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getTutorialBySlug, tutorials } from '@/data/tutorials';
@@ -10,18 +11,37 @@ export async function generateStaticParams() {
     }));
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const tutorial = getTutorialBySlug(params.slug);
 
     if (!tutorial) {
         return {
             title: 'Tutorial Not Found',
+            description: 'Nội dung hướng dẫn bạn đang tìm không tồn tại.',
         };
     }
 
+    const ogImage = `/tut/${tutorial.slug}/opengraph-image`;
+    const twitterImage = `/tut/${tutorial.slug}/twitter-image`;
+
     return {
-        title: `${tutorial.title} | Kim Đình Phương`,
+        title: tutorial.title,
         description: tutorial.description,
+        alternates: {
+            canonical: `/tut/${tutorial.slug}`,
+        },
+        openGraph: {
+            title: `${tutorial.title} | Kim Đình Phương`,
+            description: tutorial.description,
+            url: `/tut/${tutorial.slug}`,
+            type: 'article',
+            images: [ogImage],
+        },
+        twitter: {
+            title: `${tutorial.title} | Kim Đình Phương`,
+            description: tutorial.description,
+            images: [twitterImage],
+        },
     };
 }
 
@@ -33,6 +53,37 @@ export default function TutorialDetailPage({ params }: { params: { slug: string 
     }
 
     const isVideo = tutorial.type === 'video';
+    const datePublished = new Date(tutorial.date).toISOString();
+
+    const tutorialJsonLd = isVideo
+        ? {
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            name: tutorial.title,
+            description: tutorial.description,
+            thumbnailUrl: [tutorial.thumbnail || "https://kimdinhphuong.dev/opengraph-image"],
+            uploadDate: datePublished,
+            embedUrl: tutorial.videoUrl || `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
+            url: `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
+            author: {
+                "@type": "Person",
+                name: "Kim Đình Phương",
+            },
+        }
+        : {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: tutorial.title,
+            description: tutorial.description,
+            datePublished,
+            dateModified: datePublished,
+            image: [tutorial.thumbnail || "https://kimdinhphuong.dev/opengraph-image"],
+            mainEntityOfPage: `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
+            author: {
+                "@type": "Person",
+                name: "Kim Đình Phương",
+            },
+        };
 
     // Get related tutorials (same category, excluding current)
     const relatedTutorials = tutorials
@@ -43,6 +94,10 @@ export default function TutorialDetailPage({ params }: { params: { slug: string 
         <LayoutShell>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(tutorialJsonLd) }}
+                    />
 
                     {/* Back Button */}
                     <Link

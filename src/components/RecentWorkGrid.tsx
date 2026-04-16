@@ -1,6 +1,5 @@
-"use client";
-
 import React, { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedProjects, Project } from "@/data/projects";
 
@@ -42,10 +41,11 @@ export default function RecentWorkGrid() {
                         >
                             <div className={`h-32 sm:h-40 rounded-2xl ${item.thumbnailGradient} mb-3 overflow-hidden relative shadow-sm transition-all duration-300 group-hover:shadow-lg group-hover:shadow-indigo-500/10 group-hover:-translate-y-1`}>
                                 {item.thumbnail ? (
-                                    <img
+                                    <Image
                                         src={item.thumbnail}
                                         alt={item.title}
-                                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                        fill
+                                        className="object-cover transform group-hover:scale-105 transition-transform duration-500"
                                     />
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center opacity-30">
@@ -79,10 +79,11 @@ export default function RecentWorkGrid() {
                     <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden animate-scale-up border border-white/20">
                         <div className={`h-48 sm:h-56 ${selectedProject.thumbnailGradient} relative`}>
                             {selectedProject.thumbnail && (
-                                <img
+                                <Image
                                     src={selectedProject.thumbnail}
                                     alt={selectedProject.title}
-                                    className="w-full h-full object-cover"
+                                    fill
+                                    className="object-cover"
                                 />
                             )}
                             {/* Gradient overlay for text legibility */}

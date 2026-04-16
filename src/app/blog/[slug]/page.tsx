@@ -1,10 +1,46 @@
-import React from "react";
+import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import LayoutShell from "@/components/LayoutShell";
 import { getPostBySlug } from "@/data/posts";
 
 // Next.js 15: params is a Promise <{ slug: string }>
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    const post = getPostBySlug(slug);
+
+    if (!post) {
+        return {
+            title: "Post Not Found",
+            description: "Bài viết bạn đang tìm không tồn tại.",
+        };
+    }
+
+    const ogImage = `/blog/${post.slug}/opengraph-image`;
+    const twitterImage = `/blog/${post.slug}/twitter-image`;
+
+    return {
+        title: post.title,
+        description: post.excerpt,
+        alternates: {
+            canonical: `/blog/${post.slug}`,
+        },
+        openGraph: {
+            title: post.title,
+            description: post.excerpt,
+            url: `/blog/${post.slug}`,
+            type: "article",
+            images: [ogImage],
+        },
+        twitter: {
+            title: post.title,
+            description: post.excerpt,
+            images: [twitterImage],
+        },
+    };
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const post = getPostBySlug(slug);
@@ -13,11 +49,40 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         notFound();
     }
 
+    const publishedAt = new Date(post.date);
+    const datePublished = Number.isNaN(publishedAt.getTime())
+        ? new Date().toISOString()
+        : publishedAt.toISOString();
+
+    const articleJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.title,
+        description: post.excerpt,
+        image: post.image ? [post.image] : ["https://kimdinhphuong.dev/opengraph-image"],
+        datePublished,
+        dateModified: datePublished,
+        author: {
+            "@type": "Person",
+            name: "Kim Đình Phương",
+            url: "https://kimdinhphuong.dev",
+        },
+        publisher: {
+            "@type": "Person",
+            name: "Kim Đình Phương",
+        },
+        mainEntityOfPage: `https://kimdinhphuong.dev/blog/${post.slug}`,
+    };
+
     return (
         <LayoutShell>
             <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 overflow-hidden">
                     <article className="animate-fade-in-up">
+                        <script
+                            type="application/ld+json"
+                            dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+                        />
                         {/* Compact Header */}
                         <div className="px-5 sm:px-6 lg:px-8 pt-5 sm:pt-6 lg:pt-8 pb-6 sm:pb-8 border-b border-slate-100">
                             {/* Back Link */}
@@ -56,11 +121,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         {/* Content Area */}
                         <div className="px-5 sm:px-6 lg:px-8 py-6 sm:py-8">
                             {post.image && (
-                                <div className="rounded-xl overflow-hidden shadow-md mb-8 aspect-video bg-slate-100">
-                                    <img
+                                <div className="rounded-xl overflow-hidden shadow-md mb-8 aspect-video bg-slate-100 relative">
+                                    <Image
                                         src={post.image}
                                         alt={post.title}
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        className="object-cover"
                                     />
                                 </div>
                             )}

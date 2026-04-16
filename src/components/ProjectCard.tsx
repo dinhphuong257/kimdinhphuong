@@ -1,6 +1,6 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Project } from "@/data/projects";
 
 interface ProjectCardProps {
@@ -10,21 +10,37 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
     return (
-        <article className="group relative card-hover rounded-2xl bg-white border border-slate-100 overflow-hidden elevation-sm hover:elevation-xl">
+        <motion.article 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -10, scale: 1.01, transition: { duration: 0.2, ease: "easeOut" } }}
+            className="group relative card-hover rounded-2xl bg-white border border-slate-100 overflow-hidden elevation-sm hover:elevation-xl"
+        >
             <Link href={`/projects/${project.id}`} className="absolute inset-0 z-10 focus:outline-none" aria-label={`View ${project.title}`} />
 
             {/* Thumbnail - Larger aspect ratio for product focus */}
-            <div className={`aspect-[16/10] w-full overflow-hidden relative ${project.thumbnail ? 'bg-slate-50' : project.thumbnailGradient}`}>
+            <div 
+                className="aspect-[16/10] w-full overflow-hidden relative bg-slate-50 flex items-center justify-center border-b border-slate-100"
+            >
                 {project.thumbnail ? (
-                    <img
+                    <Image
                         src={project.thumbnail}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                 ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                        {/* Subtle dot pattern */}
-                        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '20px 20px', color: 'black' }}></div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100/50 group-hover:bg-slate-100/80 transition-colors duration-500">
+                        {/* Simple soft icon placeholder representing the project */}
+                        <div className="w-16 h-16 rounded-2xl bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-400 group-hover:scale-110 group-hover:text-indigo-500 transition-all duration-500 mb-3">
+                            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <span className="text-xs font-semibold uppercase tracking-widest text-slate-400 group-hover:text-slate-500 transition-colors">
+                            {project.tags[0] || 'Project View'}
+                        </span>
                     </div>
                 )}
             </div>
@@ -65,6 +81,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                     )}
                 </div>
             </div>
-        </article>
+        </motion.article>
     );
 }
