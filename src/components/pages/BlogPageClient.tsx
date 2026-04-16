@@ -7,6 +7,7 @@ import { BLOG_POSTS, BLOG_CATEGORIES } from "@/data/posts";
 
 export default function BlogPageClient() {
     const [selectedCategory, setSelectedCategory] = useState("All");
+    const hasPosts = BLOG_POSTS.length > 0;
 
     const filteredPosts = selectedCategory === "All"
         ? BLOG_POSTS
@@ -28,20 +29,22 @@ export default function BlogPageClient() {
                         </p>
                     </div>
 
-                    <div className="mb-6 flex flex-wrap gap-2">
-                        {BLOG_CATEGORIES.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setSelectedCategory(category)}
-                                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 ${selectedCategory === category
-                                    ? "bg-slate-900 text-white shadow-md"
-                                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
-                                    }`}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
+                    {hasPosts && (
+                        <div className="mb-6 flex flex-wrap gap-2">
+                            {BLOG_CATEGORIES.map((category) => (
+                                <button
+                                    key={category}
+                                    onClick={() => setSelectedCategory(category)}
+                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 ${selectedCategory === category
+                                        ? "bg-slate-900 text-white shadow-md"
+                                        : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                                        }`}
+                                >
+                                    {category}
+                                </button>
+                            ))}
+                        </div>
+                    )}
 
                     <div className="space-y-8">
                         {featuredPost && (
@@ -68,7 +71,7 @@ export default function BlogPageClient() {
                                 </div>
                                 <h3 className="text-lg font-bold text-slate-900 mb-1">No posts found</h3>
                                 <p className="text-sm text-slate-600">
-                                    No articles in this category yet.
+                                    No content available yet.
                                 </p>
                             </div>
                         )}

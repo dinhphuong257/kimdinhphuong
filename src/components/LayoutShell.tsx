@@ -18,6 +18,8 @@ function MobileHeader({ onMenuOpen }: { onMenuOpen: () => void }) {
         if (pathname === "/") return "Overview";
         if (pathname === "/projects") return "Projects";
         if (pathname.startsWith("/projects/")) return "Case Study";
+        if (pathname === "/blog") return "Blog";
+        if (pathname.startsWith("/blog/")) return "Post";
         if (pathname === "/tut") return "Tutorials";
         if (pathname.startsWith("/tut/")) return "Tutorial";
         if (pathname === "/about") return "About";

@@ -8,6 +8,8 @@ import LayoutShell from "@/components/LayoutShell";
 export default function TutPageClient() {
     const [activeCategory, setActiveCategory] = useState("All");
     const [searchQuery, setSearchQuery] = useState("");
+    const hasTutorials = tutorials.length > 0;
+    const hasActiveFilters = activeCategory !== "All" || searchQuery.trim().length > 0;
 
     const filteredTutorials = useMemo(() => {
         let results = tutorials;
@@ -39,54 +41,60 @@ export default function TutPageClient() {
                         </p>
                     </div>
 
-                    <div className="mb-4">
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <svg
-                                    className="h-5 w-5 text-slate-400"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                    />
-                                </svg>
+                    {hasTutorials && (
+                        <div className="mb-4">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <svg
+                                        className="h-5 w-5 text-slate-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                        />
+                                    </svg>
+                                </div>
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    placeholder="Search tutorials..."
+                                    className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
+                                />
                             </div>
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                placeholder="Search tutorials..."
-                                className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-sm"
-                            />
                         </div>
-                    </div>
+                    )}
 
-                    <div className="mb-6 flex flex-wrap gap-2">
-                        {tutorialCategories.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setActiveCategory(category)}
-                                className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 ${activeCategory === category
-                                        ? "bg-slate-900 text-white shadow-md"
-                                        : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
-                                    }`}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
+                    {hasTutorials && (
+                        <div className="mb-6 flex flex-wrap gap-2">
+                            {tutorialCategories.map((category) => (
+                                <button
+                                    key={category}
+                                    onClick={() => setActiveCategory(category)}
+                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 ${activeCategory === category
+                                            ? "bg-slate-900 text-white shadow-md"
+                                            : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                                        }`}
+                                >
+                                    {category}
+                                </button>
+                            ))}
+                        </div>
+                    )}
 
-                    <div className="mb-5 flex items-center gap-3">
-                        <p className="text-xs sm:text-sm font-semibold text-slate-600">
-                            <span className="text-slate-900">{filteredTutorials.length}</span> {filteredTutorials.length === 1 ? "tutorial" : "tutorials"}
-                        </p>
-                        <div className="h-px bg-slate-200 flex-1"></div>
-                    </div>
+                    {hasTutorials && (
+                        <div className="mb-5 flex items-center gap-3">
+                            <p className="text-xs sm:text-sm font-semibold text-slate-600">
+                                <span className="text-slate-900">{filteredTutorials.length}</span> {filteredTutorials.length === 1 ? "tutorial" : "tutorials"}
+                            </p>
+                            <div className="h-px bg-slate-200 flex-1"></div>
+                        </div>
+                    )}
 
                     {filteredTutorials.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
@@ -109,17 +117,19 @@ export default function TutPageClient() {
                             </div>
                             <h3 className="text-lg font-bold text-slate-900 mb-1">No tutorials found</h3>
                             <p className="text-sm text-slate-600 mb-6 max-w-xs mx-auto">
-                                Try adjusting your search or filters.
+                                No content available yet.
                             </p>
-                            <button
-                                onClick={() => {
-                                    setActiveCategory("All");
-                                    setSearchQuery("");
-                                }}
-                                className="px-5 py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 hover:shadow-md transition-all duration-200 active:scale-95"
-                            >
-                                Clear filters
-                            </button>
+                            {hasTutorials && hasActiveFilters && (
+                                <button
+                                    onClick={() => {
+                                        setActiveCategory("All");
+                                        setSearchQuery("");
+                                    }}
+                                    className="px-5 py-2 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 hover:shadow-md transition-all duration-200 active:scale-95"
+                                >
+                                    Clear filters
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>
