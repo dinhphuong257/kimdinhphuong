@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { profileData } from "@/data/profile";
+import { LanguageProvider as ClientLanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -94,8 +95,8 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="vi">
-      <body className={`${inter.variable} font-sans antialiased`}>
+    <html lang="vi" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -104,7 +105,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        {children}
+        <ClientLanguageProvider>
+          {children}
+        </ClientLanguageProvider>
       </body>
     </html>
   );

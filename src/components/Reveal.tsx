@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 interface RevealProps {
     children: React.ReactNode;
@@ -15,62 +15,36 @@ export default function Reveal({
     delay = 0,
     className = "",
 }: RevealProps) {
-    const ref = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const currentRef = ref.current;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    // Optional: Stop observing once it's visible so it doesn't animate out and in repeatedly.
-                    // If you want it to trigger every time, remove the unobserve.
-                    if (currentRef) {
-                        observer.unobserve(currentRef);
-                    }
-                }
-            },
-            {
-                threshold: 0.1,    // Trigger when 10% visible
-                rootMargin: "0px 0px -50px 0px", // Trigger slightly before it hits the bottom
-            }
-        );
-
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) observer.unobserve(currentRef);
-        };
-    }, []);
-
-    const getDirectionClass = () => {
-        if (isVisible) return "translate-y-0 translate-x-0 opacity-100";
+    const getVariants = () => {
         switch (direction) {
             case "up":
-                return "translate-y-12 opacity-0";
+                return { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } };
             case "down":
-                return "-translate-y-12 opacity-0";
+                return { hidden: { opacity: 0, y: -50 }, visible: { opacity: 1, y: 0 } };
             case "left":
-                return "translate-x-12 opacity-0";
+                return { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0 } };
             case "right":
-                return "-translate-x-12 opacity-0";
+                return { hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0 } };
             case "none":
-                return "opacity-0";
             default:
-                return "translate-y-12 opacity-0";
+                return { hidden: { opacity: 0 }, visible: { opacity: 1 } };
         }
     };
 
     return (
-        <div
-            ref={ref}
-            className={`transition-all duration-1000 ease-[cubic-bezier(0.25,0.8,0.25,1)] ${getDirectionClass()} ${className}`}
-            style={{ transitionDelay: `${delay}ms` }}
+        <motion.div
+            variants={getVariants()}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{
+                duration: 0.6,
+                delay: delay / 1000, // framer-motion delay is in seconds, while the old one was likely ms or similar. If delay was passed in ms, e.g. 200, it becomes 0.2s
+                ease: [0.22, 1, 0.36, 1], // Custom easing for smooth fluid motion
+            }}
+            className={className}
         >
             {children}
-        </div>
+        </motion.div>
     );
 }

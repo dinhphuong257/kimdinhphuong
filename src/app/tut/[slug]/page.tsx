@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { getTutorialBySlug, tutorials } from '@/data/tutorials';
 import LayoutShell from '@/components/LayoutShell';
 import TutCard from '@/components/TutCard';
+import ReadingProgress from "@/components/ReadingProgress";
 
 export async function generateStaticParams() {
     return tutorials.map((tutorial) => ({
@@ -92,6 +93,7 @@ export default function TutorialDetailPage({ params }: { params: { slug: string 
 
     return (
         <LayoutShell>
+            <ReadingProgress />
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
                     <script

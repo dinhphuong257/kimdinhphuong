@@ -3,21 +3,32 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { profileData } from "@/data/profile";
+import TimelineSection from "./TimelineSection";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function AboutSection() {
     const [isExpanded, setIsExpanded] = useState(false);
+    const { language } = useLanguage();
 
-    const visibleParagraphs = isExpanded ? profileData.about : profileData.about.slice(0, 2);
+    const aboutTextEn = profileData.about;
+    const aboutTextVi = [
+        "Xin chào, mình là Kim Đình Phương, sinh viên năm 3 chuyên ngành Quản lý chuỗi cung ứng và Logistics tại trường Đại học Kỹ thuật Công nghệ Cần Thơ.",
+        "Mình có niềm đam mê đặc biệt với việc tối ưu hóa quy trình phân phối và kết hợp công nghệ vào trong kho thuật toán thực tiễn.",
+        "Là người luôn tìm kiếm và cải tiến để các dự án hoàn thành tốt và đạt hiệu quả về chi phí chuyên nghiệp nhất."
+    ];
+
+    const currentAbout = language === 'vi' ? aboutTextVi : aboutTextEn;
+    const visibleParagraphs = isExpanded ? currentAbout : currentAbout.slice(0, 2);
 
     return (
         <section className="px-4 sm:px-6 py-4 sm:py-6 border-t border-slate-100" aria-labelledby="experience-heading">
             {/* Section header */}
             <div className="mb-4">
                 <h2 id="experience-heading" className="text-base font-semibold text-gray-900">
-                    Academic Background
+                    {language === 'vi' ? 'Hành trình học vấn' : 'Academic Background'}
                 </h2>
                 <p className="text-slate-500 text-sm mt-1 leading-relaxed">
-                    Currently studying Logistics and Supply Chain Management.
+                    {language === 'vi' ? 'Đang học Logistics & Quản lý chuỗi cung ứng.' : 'Currently studying Logistics and Supply Chain Management.'}
                 </p>
             </div>
 
@@ -25,19 +36,19 @@ export default function AboutSection() {
             <div className="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 lg:gap-10">
                 {/* About me - Spans 2 columns */}
                 <div className="sm:col-span-2">
-                    <h3 className="text-sm font-semibold text-gray-900 mb-3">About me</h3>
+                    <h3 className="text-sm font-semibold text-gray-900 mb-3">{language === 'vi' ? 'Giới thiệu chung' : 'About me'}</h3>
                     <div className={`text-sm text-slate-600 leading-relaxed space-y-3 max-w-none text-justify transition-all duration-500 overflow-hidden ${isExpanded ? "max-h-[500px]" : "max-h-[120px] sm:max-h-[240px]"}`}>
                         {visibleParagraphs.map((paragraph, index) => (
                             <p key={index}>{paragraph}</p>
                         ))}
                     </div>
                     {/* Show read more if more than 2 paragraphs */}
-                    {profileData.about.length > 2 && (
+                    {currentAbout.length > 2 && (
                         <button
                             onClick={() => setIsExpanded(!isExpanded)}
                             className="text-sm font-semibold text-gray-900 mt-3 hover:text-indigo-600 flex items-center gap-1 transition-colors"
                         >
-                            {isExpanded ? "Show less" : "Read more"}
+                            {isExpanded ? (language === 'vi' ? 'Thu gọn' : 'Show less') : (language === 'vi' ? 'Xem thêm' : 'Read more')}
                             <svg
                                 className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
                                 fill="none"
@@ -114,6 +125,8 @@ export default function AboutSection() {
                     </div>
                 </div>
             </div>
+
+            <TimelineSection />
         </section>
     );
 }

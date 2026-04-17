@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
-const highlights = [
+const highlightsEn = [
     {
         icon: (
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,14 +42,24 @@ const highlights = [
     },
 ];
 
+const highlightsVi = [
+    { ...highlightsEn[0], label: "Kỹ Năng", value: "Logistics • Quản Lý Chuỗi Cung Ứng" },
+    { ...highlightsEn[1], label: "Công Cụ", value: "Next.js • React • Tailwind" },
+    { ...highlightsEn[2], label: "Lĩnh Vực", value: "Phát Triển Web • WMS" },
+    { ...highlightsEn[3], label: "Chứng Chỉ", value: "Chuyên viên quản trị" },
+];
+
 export default function HighlightsSection() {
+    const { language } = useLanguage();
+    const highlights = language === 'vi' ? highlightsVi : highlightsEn;
+
     return (
         <section className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
             <div className="max-w-5xl mx-auto">
                 {/* Section Header */}
                 <div className="text-center mb-4">
-                    <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-0.5">Quick Overview</h2>
-                    <p className="text-xs sm:text-sm text-slate-600">Core capabilities and focus areas</p>
+                    <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-0.5">{language === 'vi' ? 'Tổng Quan' : 'Quick Overview'}</h2>
+                    <p className="text-xs sm:text-sm text-slate-600">{language === 'vi' ? 'Các lĩnh vực chuyên môn chính' : 'Core capabilities and focus areas'}</p>
                 </div>
 
                 {/* Highlights Grid */}

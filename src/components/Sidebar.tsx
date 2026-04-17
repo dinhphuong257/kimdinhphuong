@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import SupportModal from "./SupportModal";
+import { useLanguage } from "@/context/LanguageContext";
 
 const HomeIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,6 +63,7 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [showSupportModal, setShowSupportModal] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   // ESC key handler
   React.useEffect(() => {
@@ -82,12 +85,12 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   }, [isOpen, onClose]);
 
   const navItems: NavItem[] = [
-    { label: "Overview", icon: <HomeIcon />, href: "/" },
-    { label: "Projects", icon: <ProjectsIcon />, href: "/projects" },
-    { label: "Blog", icon: <BlogIcon />, href: "/blog" },
-    { label: "Tutorials", icon: <TutIcon />, href: "/tut" },
-    { label: "About", icon: <AboutIcon />, href: "/about" },
-    { label: "Contact", icon: <ContactIcon />, href: "/contact" },
+    { label: language === "vi" ? "Tổng quan" : "Overview", icon: <HomeIcon />, href: "/" },
+    { label: language === "vi" ? "Dự án" : "Projects", icon: <ProjectsIcon />, href: "/projects" },
+    { label: language === "vi" ? "Bài viết" : "Blog", icon: <BlogIcon />, href: "/blog" },
+    { label: language === "vi" ? "Hướng dẫn" : "Tutorials", icon: <TutIcon />, href: "/tut" },
+    { label: language === "vi" ? "Thông tin" : "About", icon: <AboutIcon />, href: "/about" },
+    { label: language === "vi" ? "Liên hệ" : "Contact", icon: <ContactIcon />, href: "/contact" },
   ];
 
   const handleNavClick = () => {
@@ -118,7 +121,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <aside
         className={`
           fixed top-0 flex flex-col z-50 transition-all duration-300 ease-out
-          lg:left-6 lg:top-1/2 lg:-translate-y-1/2 lg:h-fit lg:w-48 lg:rounded-3xl
+          lg:left-6 lg:top-1/2 lg:-translate-y-1/2 lg:h-fit lg:w-48 lg:rounded-2xl
           ${isOpen ? "left-0 h-full w-[280px] translate-y-0" : "-left-full lg:left-6"}
           bg-white shadow-[0_2px_40px_-12px_rgba(0,0,0,0.1)]
           lg:ring-1 lg:ring-slate-200/50
@@ -146,30 +149,63 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                   href={item.href}
                   onClick={handleNavClick}
                   className={`
-                    group relative flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200
+                    group relative flex items-center gap-3 px-3 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 overflow-hidden
                     ${isActive(item.href)
-                      ? "text-slate-900 bg-indigo-50 border border-indigo-200/50"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-50/80"
+                      ? "text-indigo-700 bg-indigo-50 shadow-sm ring-1 ring-indigo-100/50"
+                      : "text-slate-600 hover:text-indigo-600 hover:bg-slate-50/80"
                     }
                   `}
                 >
+                  {/* Hover background effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
                   {/* Active indicator - Stronger left border */}
                   {isActive(item.href) && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-9 bg-indigo-500 rounded-r-full shadow-sm" />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-9 bg-indigo-500 rounded-r-full shadow-[0_0_8px_rgba(99,102,241,0.5)]" />
                   )}
 
-                  <span className={`${isActive(item.href) ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"} transition-colors`}>
+                  <span className={`relative z-10 transition-all duration-300 ${isActive(item.href) ? "text-indigo-600 scale-110" : "text-slate-400 group-hover:text-indigo-500 group-hover:scale-110 group-hover:-rotate-3"}`}>
                     {item.icon}
                   </span>
-                  <span>{item.label}</span>
+                  <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">{item.label}</span>
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        {/* Bottom section - Smaller Get Help */}
-        <div className="p-4 border-t border-slate-100">
+        {/* Bottom section - Smaller Get Help & Download CV */}
+        <div className="p-4 border-t border-slate-100 flex flex-col gap-2">
+          {/* Language Switcher */}
+          <div className="flex flex-col bg-slate-100/80 p-1.5 rounded-xl mb-1 gap-1">
+            <button
+              onClick={() => setLanguage("vi")}
+              className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "vi" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
+            >
+              <Image src="https://flagcdn.com/w20/vn.png" alt="VN" width={20} height={14} className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" unoptimized />
+              <span>Tiếng Việt</span>
+            </button>
+            <button
+              onClick={() => setLanguage("en")}
+              className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "en" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
+            >
+              <Image src="https://flagcdn.com/w20/us.png" alt="US" width={20} height={14} className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" unoptimized />
+              <span>Tiếng Anh</span>
+            </button>
+          </div>
+
+          <a
+            href="/cv/kim-dinh-phuong-cv.pdf"
+            download
+            className="w-full px-3 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-200"
+            aria-label="Download CV"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>{language === "vi" ? "Tải CV" : "Download CV"}</span>
+          </a>
+
           <button
             onClick={() => setShowSupportModal(true)}
             className="w-full px-3 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-lg transition-all flex items-center justify-center gap-1.5 group"
@@ -178,7 +214,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             <svg className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
             </svg>
-            <span>Get Help</span>
+            <span>{language === "vi" ? "Trợ giúp" : "Get Help"}</span>
           </button>
         </div>
       </aside>

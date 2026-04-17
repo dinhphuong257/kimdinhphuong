@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import HomeClient from "@/components/pages/HomeClient";
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Home | Kim Đình Phương",
   description:
     "Portfolio of Kim Đình Phương - a third-year Logistics student focused on supply chain optimization and warehouse operations.",
   alternates: {

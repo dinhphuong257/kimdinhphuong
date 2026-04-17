@@ -30,7 +30,7 @@ export interface Project {
     images: string[];
 }
 
-export const projects: Project[] = [
+export const projectsEn: Project[] = [
     {
         id: "rap-phim-chill",
         title: "Rạp Phim Chill",
@@ -67,21 +67,48 @@ export const projects: Project[] = [
     }
 ];
 
-export function getProjectById(id: string): Project | undefined {
-    return projects.find((project) => project.id === id);
+export const projectsVi: Project[] = [
+    {
+        ...projectsEn[0],
+        summary: "Nền tảng xem phim trực tuyến cao cấp, mang lại trải nghiệm mượt mà và sống động. Thiết kế giao diện hiện đại tối ưu hiệu suất.",
+        role: "Trưởng nhóm phát triển",
+        problem: "Người xem thường xuyên gặp khó khăn với các trang web phim chứa quá nhiều quảng cáo rác, chậm trễ và khó theo dõi trên nhiều thiết bị.",
+        process: "Thiết kế xoay quanh trải nghiệm người dùng với theme điện ảnh tối màu, tối ưu hóa tải phương tiện và kiến trúc đáp ứng nhanh.",
+        solution: "Phát triển web phim giao diện trực quan, ưu tiên khám phá nội dung dễ dàng, trình phát video liền mạch và mượt mà.",
+        outcome: "Đã ra mắt thành công nền tảng chiếu phim ổn định, xử lý phim độ phân giải cao thu hút tệp khán giả ngày càng lớn."
+    },
+    {
+        ...projectsEn[1],
+        summary: "Hệ thống Quản lý Kho bãi quy trình lạnh với giao diện bảo mật, theo dõi nhiệt độ container trực tuyến thời gian thực, và cảnh báo an toàn tức thì.",
+        role: "Lập trình viên Fullstack",
+        problem: "Các nhóm quản lý kho lạnh phải theo dõi thủ công kho bãi thông qua nhiều công cụ ngắt kết nối, gây chậm trễ xử lý các vấn đề khẩn cấp.",
+        process: "Phân tích quy trình luân chuyển kho phức tạp, thiết kế hệ thống theo dõi toàn diện từ nhận hàng, xác thực bảo mật đến cảnh báo.",
+        solution: "Xây dựng hệ thống WMS nền web nhằm tập trung quản lý trên một nền tảng, tạo khả năng kiểm soát liên tục theo thời gian thực.",
+        outcome: "Tối ưu hóa khả năng truy xuất, giảm công việc chân tay và đảm bảo chất lượng hệ thống kho quy trình lạnh."
+    }
+];
+
+export const projects = projectsEn; // Mặc định cho những components chưa chuyển ngữ
+
+export function getProjectById(id: string, lang: 'vi' | 'en' = 'en'): Project | undefined {
+    const list = lang === 'vi' ? projectsVi : projectsEn;
+    return list.find((project) => project.id === id);
 }
 
-export function getFeaturedProjects(): Project[] {
-    return projects.filter((project) => project.featured);
+export function getFeaturedProjects(lang: 'vi' | 'en' = 'en'): Project[] {
+    const list = lang === 'vi' ? projectsVi : projectsEn;
+    return list.filter((project) => project.featured);
 }
 
-export function getProjectsByTag(tag: ProjectTag): Project[] {
-    return projects.filter((project) => project.tags.includes(tag));
+export function getProjectsByTag(tag: ProjectTag, lang: 'vi' | 'en' = 'en'): Project[] {
+    const list = lang === 'vi' ? projectsVi : projectsEn;
+    return list.filter((project) => project.tags.includes(tag));
 }
 
-export function searchProjects(query: string): Project[] {
+export function searchProjects(query: string, lang: 'vi' | 'en' = 'en'): Project[] {
+    const list = lang === 'vi' ? projectsVi : projectsEn;
     const lowerQuery = query.toLowerCase();
-    return projects.filter(
+    return list.filter(
         (project) =>
             project.title.toLowerCase().includes(lowerQuery) ||
             project.summary.toLowerCase().includes(lowerQuery) ||

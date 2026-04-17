@@ -3,12 +3,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { profileData } from "@/data/profile";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface ProfileHeaderProps {
     onMessage: () => void;
 }
 
 export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
+    const { language } = useLanguage();
+
     return (
         <div className="relative">
             {/* Compact Hero Section */}
@@ -49,11 +52,11 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
                             {profileData.name}
                         </h1>
                         <p className="text-base sm:text-lg text-indigo-600 font-semibold text-balance">
-                            {profileData.title}
+                            {language === 'vi' ? "Sinh viên ngành Logistics năm 3" : profileData.title}
                         </p>
                         {/* Value Proposition */}
                         <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto text-balance leading-relaxed pt-1">
-                            Passionate about optimizing supply chains and creating efficient logistics solutions.
+                            {language === 'vi' ? "Đam mê tối ưu hóa chuỗi cung ứng và kiến tạo các giải pháp logistics hiệu quả." : "Passionate about optimizing supply chains and creating efficient logistics solutions."}
                         </p>
                     </div>
 
@@ -63,14 +66,14 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
                             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            <span className="font-semibold">3rd Year Student</span>
+                            <span className="font-semibold">{language === 'vi' ? "Sinh viên năm 3" : "3rd Year Student"}</span>
                         </div>
                         <div className="w-1 h-1 rounded-full bg-slate-300" />
                         <div className="flex items-center gap-1.5 text-slate-600">
                             <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
                             </svg>
-                            <span className="font-semibold">Academic Projects</span>
+                            <span className="font-semibold">{language === 'vi' ? "Dự án học thuật" : "Academic Projects"}</span>
                         </div>
                         <div className="w-1 h-1 rounded-full bg-slate-300" />
                         <div className="flex items-center gap-1.5 text-slate-600">
@@ -88,7 +91,7 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
                             href="/projects"
                             className="group h-9 sm:h-11 px-4 sm:px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm sm:text-base font-semibold shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center gap-2"
                         >
-                            <span>View Projects</span>
+                            <span>{language === 'vi' ? "Xem Dự Án" : "View Projects"}</span>
                             <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
@@ -101,7 +104,7 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
                             <svg className="w-4 h-4 text-slate-500 group-hover:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
-                            <span>Contact Me</span>
+                            <span>{language === 'vi' ? "Liên hệ" : "Contact Me"}</span>
                         </button>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import LayoutShell from "@/components/LayoutShell";
+import ReadingProgressBar from "@/components/ReadingProgressBar";
 import { getPostBySlug } from "@/data/posts";
 
 // Next.js 15: params is a Promise <{ slug: string }>
@@ -76,6 +77,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
     return (
         <LayoutShell>
+            <ReadingProgressBar />
             <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 overflow-hidden">
                     <article className="animate-fade-in-up">

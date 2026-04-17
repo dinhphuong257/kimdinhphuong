@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { Toast, useToast } from "./Toast";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface FormData {
     name: string;
@@ -16,6 +17,8 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
+    const { language } = useLanguage();
+    const isVi = language === 'vi';
     const [formData, setFormData] = useState<FormData>({
         name: "",
         email: "",
@@ -34,19 +37,19 @@ export default function ContactForm() {
         const newErrors: FormErrors = {};
 
         if (!formData.name.trim()) {
-            newErrors.name = "Name is required";
+            newErrors.name = isVi ? "Tên là bắt buộc" : "Name is required";
         }
 
         if (!formData.email.trim()) {
-            newErrors.email = "Email is required";
+            newErrors.email = isVi ? "Email là bắt buộc" : "Email is required";
         } else if (!validateEmail(formData.email)) {
-            newErrors.email = "Please enter a valid email address";
+            newErrors.email = isVi ? "Vui lòng nhập địa chỉ email hợp lệ" : "Please enter a valid email address";
         }
 
         if (!formData.message.trim()) {
-            newErrors.message = "Message is required";
+            newErrors.message = isVi ? "Tin nhắn là bắt buộc" : "Message is required";
         } else if (formData.message.trim().length < 20) {
-            newErrors.message = "Message should be at least 20 characters";
+            newErrors.message = isVi ? "Tin nhắn phải có ít nhất 20 ký tự" : "Message should be at least 20 characters";
         }
 
         setErrors(newErrors);
@@ -75,7 +78,7 @@ export default function ContactForm() {
 
             if (response.ok) {
                 showToast(
-                    data.message || "Your message has been sent successfully! I will get back to you as soon as possible.",
+                    data.message || (isVi ? "Tin nhắn của bạn đã được gửi thành công! Tôi sẽ phản hồi sớm nhất có thể." : "Your message has been sent successfully! I will get back to you as soon as possible."),
                     "success"
                 );
                 setFormData({
@@ -85,10 +88,10 @@ export default function ContactForm() {
                 });
                 setErrors({});
             } else {
-                showToast(data.error || "An error occurred. Please try again.", "error");
+                showToast(data.error || (isVi ? "Đã xảy ra lỗi. Vui lòng thử lại." : "An error occurred. Please try again."), "error");
             }
         } catch {
-            showToast("Unable to send your message right now. Please try again later.", "error");
+            showToast(isVi ? "Không thể gửi tin nhắn ngay bây giờ. Vui lòng thử lại sau." : "Unable to send your message right now. Please try again later.", "error");
         } finally {
             setIsSubmitting(false);
         }
@@ -111,7 +114,7 @@ export default function ContactForm() {
                 {/* Name field */}
                 <div>
                     <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-2">
-                        Name <span className="text-red-500">*</span>
+                        {isVi ? "Tên" : "Name"} <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="text"
@@ -121,7 +124,7 @@ export default function ContactForm() {
                         onChange={handleChange}
                         className={`w-full px-5 py-4 bg-slate-50 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-transparent transition-all placeholder:text-slate-400 ${errors.name ? "border-red-300 bg-red-50" : "border-slate-200"
                             }`}
-                        placeholder="Your name"
+                        placeholder={isVi ? "Tên của bạn" : "Your name"}
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? "name-error" : undefined}
                     />
@@ -136,7 +139,7 @@ export default function ContactForm() {
                 {/* Email field */}
                 <div>
                     <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-2">
-                        Email <span className="text-red-500">*</span>
+                        {isVi ? "Email" : "Email"} <span className="text-red-500">*</span>
                     </label>
                     <input
                         type="email"
@@ -146,7 +149,7 @@ export default function ContactForm() {
                         onChange={handleChange}
                         className={`w-full px-5 py-4 bg-slate-50 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-transparent transition-all placeholder:text-slate-400 ${errors.email ? "border-red-300 bg-red-50" : "border-slate-200"
                             }`}
-                        placeholder="you@example.com"
+                        placeholder={isVi ? "you@example.com" : "you@example.com"}
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? "email-error" : undefined}
                     />
@@ -161,7 +164,7 @@ export default function ContactForm() {
                 {/* Message textarea */}
                 <div>
                     <label htmlFor="message" className="block text-sm font-semibold text-slate-700 mb-2">
-                        Message <span className="text-red-500">*</span>
+                        {isVi ? "Tin nhắn" : "Message"} <span className="text-red-500">*</span>
                     </label>
                     <textarea
                         id="message"
@@ -171,7 +174,7 @@ export default function ContactForm() {
                         rows={6}
                         className={`w-full px-5 py-4 bg-slate-50 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white focus:border-transparent transition-all resize-none placeholder:text-slate-400 ${errors.message ? "border-red-300 bg-red-50" : "border-slate-200"
                             }`}
-                        placeholder="Tell me about your project..."
+                        placeholder={isVi ? "Kể cho tôi nghe về dự án của bạn..." : "Tell me about your project..."}
                         aria-invalid={!!errors.message}
                         aria-describedby={errors.message ? "message-error" : undefined}
                     />
@@ -207,11 +210,11 @@ export default function ContactForm() {
                                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                 />
                             </svg>
-                            Sending...
+                            {isVi ? "Đang gửi..." : "Sending..."}
                         </>
                     ) : (
                         <>
-                            Send Message
+                            {isVi ? "Gửi tin nhắn" : "Send Message"}
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                             </svg>

@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { getFeaturedProjects } from "@/data/projects";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ExperienceCards() {
-    const featuredProjects = getFeaturedProjects().slice(0, 2);
+    const { language } = useLanguage();
+    const featuredProjects = getFeaturedProjects(language).slice(0, 2);
 
     return (
-        <section className="py-5 border-t border-slate-100" aria-label="Featured projects">
+        <section className="py-5 border-t border-slate-100" aria-label={language === 'vi' ? "Dự án nổi bật" : "Featured projects"}>
             <div className="px-4 sm:px-6 mb-4">
-                <h2 className="text-lg font-bold text-slate-900">Featured projects</h2>
-                <p className="text-sm text-slate-500">My two latest projects</p>
+                <h2 className="text-lg font-bold text-slate-900">{language === 'vi' ? 'Các dự án nổi bật' : 'Featured projects'}</h2>
+                <p className="text-sm text-slate-500">{language === 'vi' ? 'Hai dự án mới nhất của tôi' : 'My two latest projects'}</p>
             </div>
 
             <div className="w-full px-4 sm:px-6 pb-2">
@@ -32,13 +34,13 @@ export default function ExperienceCards() {
 
                                         <div className="relative z-10 flex flex-col items-center justify-center text-center space-y-2">
                                             <span className="px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-cyan-300 border border-cyan-500/30 rounded-full bg-cyan-500/10 uppercase">
-                                                Enterprise Logistics
+                                                {language === 'vi' ? 'Giải Pháp Doanh Nghiệp' : 'Enterprise Logistics'}
                                             </span>
                                             <h3 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-cyan-100 to-blue-400 tracking-tight leading-none">
                                                 WMS<br />ECOFRESH
                                             </h3>
                                             <p className="text-cyan-200/80 font-bold tracking-[0.12em] text-[10px] uppercase flex flex-wrap justify-center gap-2 items-center">
-                                                <span>Real-Time</span><span className="w-1 h-1 rounded-full bg-cyan-500"></span><span>IoT Sync</span>
+                                                <span>{language === 'vi' ? 'Thời Gian Thực' : 'Real-Time'}</span><span className="w-1 h-1 rounded-full bg-cyan-500"></span><span>{language === 'vi' ? 'Đồng Bộ IoT' : 'IoT Sync'}</span>
                                             </p>
                                         </div>
 
@@ -55,13 +57,13 @@ export default function ExperienceCards() {
 
                                         <div className="relative z-10 flex flex-col items-center justify-center text-center space-y-2">
                                             <span className="px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-indigo-300 border border-indigo-500/30 rounded-full bg-indigo-500/10 uppercase">
-                                                Original Platform
+                                                {language === 'vi' ? 'Nền Tảng Độc Quyền' : 'Original Platform'}
                                             </span>
                                             <h3 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-indigo-100 to-indigo-400 tracking-tight leading-none">
                                                 RAP PHIM<br />CHILL
                                             </h3>
                                             <p className="text-indigo-200/80 font-bold tracking-[0.12em] text-[10px] uppercase flex flex-wrap justify-center gap-2 items-center">
-                                                <span>No Ads</span><span className="w-1 h-1 rounded-full bg-indigo-500"></span><span>4K</span>
+                                                <span>{language === 'vi' ? 'Không Quảng Cáo' : 'No Ads'}</span><span className="w-1 h-1 rounded-full bg-indigo-500"></span><span>4K</span>
                                             </p>
                                         </div>
 
@@ -85,7 +87,7 @@ export default function ExperienceCards() {
                                         href="/projects"
                                         className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
                                     >
-                                        View details
+                                        {language === 'vi' ? 'Xem chi tiết' : 'View details'}
                                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                         </svg>
@@ -98,7 +100,7 @@ export default function ExperienceCards() {
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-800"
                                         >
-                                            Visit website
+                                            {language === 'vi' ? 'Truy cập trang' : 'Visit website'}
                                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                             </svg>

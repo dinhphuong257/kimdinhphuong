@@ -32,7 +32,7 @@ export default function HomeClient() {
             <AboutSection />
           </Reveal>
 
-          <Reveal direction="up" delay={350}>
+          <Reveal direction="up" delay={300}>
             <ExperienceCards />
           </Reveal>
         </article>

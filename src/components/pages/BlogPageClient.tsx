@@ -1,20 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import LayoutShell from "@/components/LayoutShell";
 import BlogCard from "@/components/BlogCard";
-import { BLOG_POSTS, BLOG_CATEGORIES } from "@/data/posts";
+import { BLOG_POSTS_EN, BLOG_POSTS_VI, BLOG_CATEGORIES_EN, BLOG_CATEGORIES_VI } from "@/data/posts";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function BlogPageClient() {
-    const [selectedCategory, setSelectedCategory] = useState("All");
+    const { language } = useLanguage();
+    const isVi = language === 'vi';
+    
+    const BLOG_POSTS = isVi ? BLOG_POSTS_VI : BLOG_POSTS_EN;
+    const BLOG_CATEGORIES = isVi ? BLOG_CATEGORIES_VI : BLOG_CATEGORIES_EN;
+
+    const ALL_CATEGORY = isVi ? "Tất cả" : "All";
+    const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
+    const [searchQuery, setSearchQuery] = useState("");
+
+    // Cập nhật selectedCategory nếu người dùng đổi ngôn ngữ nhưng đang chọn "All" hoặc "Tất cả"
+    useMemo(() => {
+        if (selectedCategory === "All" && isVi) setSelectedCategory("Tất cả");
+        if (selectedCategory === "Tất cả" && !isVi) setSelectedCategory("All");
+    }, [isVi, selectedCategory]);
+
     const hasPosts = BLOG_POSTS.length > 0;
 
-    const filteredPosts = selectedCategory === "All"
+    const filteredByCategory = selectedCategory === ALL_CATEGORY
         ? BLOG_POSTS
         : BLOG_POSTS.filter(post => post.category === selectedCategory);
 
-    const featuredPost = selectedCategory === "All" ? filteredPosts[0] : null;
-    const gridPosts = selectedCategory === "All" ? filteredPosts.slice(1) : filteredPosts;
+    const filteredPosts = filteredByCategory.filter(post =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+    );
+
+    const featuredPost = (selectedCategory === ALL_CATEGORY && searchQuery === "") ? filteredPosts[0] : null;
+    const gridPosts = (selectedCategory === ALL_CATEGORY && searchQuery === "") ? filteredPosts.slice(1) : filteredPosts;
 
     return (
         <LayoutShell>
@@ -22,15 +44,16 @@ export default function BlogPageClient() {
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
                     <div className="mb-6 space-y-2 animate-fade-in-up">
                         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                            Blog
+                            {isVi ? 'Bài Viết' : 'Blog'}
                         </h1>
                         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                            Sharing experiences, design processes, and thoughts on product design.
+                            {isVi ? 'Chia sẻ trải nghiệm, quá trình và những suy nghĩ về thiết kế giao diện.' : 'Sharing experiences, design processes, and thoughts on product design.'}
                         </p>
                     </div>
 
-                    {hasPosts && (
-                        <div className="mb-6 flex flex-wrap gap-2 animate-fade-in-up" style={{ animationDelay: "80ms" }}>
+                    {/* Always show the Search Bar and Categories for demo purposes, or only when there are posts. Let's just remove the hasPosts wrapper for the top bar so the search is visible. */}
+                    <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in-up" style={{ animationDelay: "80ms" }}>
+                        <div className="flex flex-wrap gap-2">
                             {BLOG_CATEGORIES.map((category, index) => (
                                 <button
                                     key={category}
@@ -45,28 +68,48 @@ export default function BlogPageClient() {
                                 </button>
                             ))}
                         </div>
-                    )}
+                        
+                        {/* Search Bar */}
+                        <div className="relative w-full sm:w-64 flex-shrink-0">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <input
+                                type="text"
+                                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200"
+                                placeholder={isVi ? 'Tìm theo nội dung, tag...' : 'Search by title, tag...'}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                        </div>
+                    </div>
 
                     <div className="space-y-8">
-                        {featuredPost && (
-                            <div key={featuredPost.id} className="mb-8 animate-fade-in-up" style={{ animationDelay: "140ms" }}>
-                                <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">Featured Story</h2>
-                                <BlogCard post={featuredPost} featured={true} />
-                            </div>
-                        )}
-
-                        {gridPosts.length > 0 ? (
-                            <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                                {gridPosts.map((post, index) => (
-                                    <div
-                                        key={post.id}
-                                        className="animate-fade-in-up"
-                                        style={{ animationDelay: `${160 + index * 60}ms` }}
-                                    >
-                                        <BlogCard post={post} />
+                        {filteredPosts.length > 0 ? (
+                            <>
+                                {featuredPost && (
+                                    <div key={featuredPost.id} className="mb-8 animate-fade-in-up" style={{ animationDelay: "140ms" }}>
+                                        <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">{isVi ? 'Tiêu Điểm' : 'Featured Story'}</h2>
+                                        <BlogCard post={featuredPost} featured={true} />
                                     </div>
-                                ))}
-                            </div>
+                                )}
+
+                                {gridPosts.length > 0 && (
+                                    <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                                        {gridPosts.map((post, index) => (
+                                            <div
+                                                key={post.id}
+                                                className="animate-fade-in-up"
+                                                style={{ animationDelay: `${160 + index * 60}ms` }}
+                                            >
+                                                <BlogCard post={post} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </>
                         ) : (
                             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-12 text-center">
                                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-slate-100">
@@ -74,9 +117,11 @@ export default function BlogPageClient() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                     </svg>
                                 </div>
-                                <h3 className="text-lg font-bold text-slate-900 mb-1">No posts found</h3>
+                                <h3 className="text-lg font-bold text-slate-900 mb-1">{isVi ? 'Không Tồn Tại' : 'No posts found'}</h3>
                                 <p className="text-sm text-slate-600">
-                                    No content available yet.
+                                    {searchQuery 
+                                        ? (isVi ? "Thử lại với các cụm từ khoá khác nhau." : "Try different keywords to find what you are looking for.") 
+                                        : (isVi ? "Chưa có bài viết ở đây." : "No content available yet.")}
                                 </p>
                             </div>
                         )}
