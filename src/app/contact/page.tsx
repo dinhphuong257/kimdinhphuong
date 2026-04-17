@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import LayoutShell from "@/components/LayoutShell";
 import ContactForm from "@/components/ContactForm";
+import Reveal from "@/components/Reveal";
 import { profileData } from "@/data/profile";
 
 export const metadata: Metadata = {
@@ -28,49 +29,56 @@ export default function ContactPage() {
                             {/* Left Column: Info & Connect */}
                             <div className="lg:col-span-5 bg-slate-50 p-8 sm:p-12 border-b lg:border-b-0 lg:border-r border-slate-200/60">
                                 <div>
-                                    <header className="mb-10">
-                                        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Let&apos;s Connect</h1>
-                                        <p className="text-slate-600 text-base leading-relaxed pr-2">
-                                            I&apos;m always open to discussing product design work or partnership opportunities. Reach out and let&apos;s create something great together.
-                                        </p>
-                                    </header>
+                                    <Reveal direction="down" delay={100}>
+                                        <header className="mb-10">
+                                            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">Let&apos;s Connect</h1>
+                                            <p className="text-slate-600 text-base leading-relaxed pr-2">
+                                                I&apos;m always open to discussing product design work or partnership opportunities. Reach out and let&apos;s create something great together.
+                                            </p>
+                                        </header>
+                                    </Reveal>
 
                                     {/* Contact info details */}
                                     <div className="space-y-6">
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 flex items-center justify-center flex-shrink-0 mt-1">
-                                                <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                                </svg>
+                                        <Reveal direction="left" delay={200}>
+                                            <div className="flex items-start gap-4">
+                                                <div className="w-12 h-12 rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 flex items-center justify-center flex-shrink-0 mt-1">
+                                                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                                <div className="flex flex-col justify-center min-w-0 pt-0.5">
+                                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Email</p>
+                                                    <a href={`mailto:${profileData.email}`} className="text-[15px] xl:text-base font-semibold text-slate-900 hover:text-indigo-600 transition-colors block whitespace-nowrap tracking-tight">
+                                                        {profileData.email}
+                                                    </a>
+                                                </div>
                                             </div>
-                                            <div className="flex flex-col justify-center min-w-0 pt-0.5">
-                                                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Email</p>
-                                                <a href={`mailto:${profileData.email}`} className="text-[15px] xl:text-base font-semibold text-slate-900 hover:text-indigo-600 transition-colors block whitespace-nowrap tracking-tight">
-                                                    {profileData.email}
-                                                </a>
-                                            </div>
-                                        </div>
+                                        </Reveal>
 
-                                        <div className="flex items-start gap-4">
-                                            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 flex items-center justify-center flex-shrink-0 mt-1">
-                                                <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
+                                        <Reveal direction="left" delay={300}>
+                                            <div className="flex items-start gap-4">
+                                                <div className="w-12 h-12 rounded-2xl bg-white shadow-sm ring-1 ring-slate-200/60 flex items-center justify-center flex-shrink-0 mt-1">
+                                                    <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Location</p>
+                                                    <p className="text-base font-semibold text-slate-900">
+                                                        {profileData.location.city}, {profileData.location.country}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Location</p>
-                                                <p className="text-base font-semibold text-slate-900">
-                                                    {profileData.location.city}, {profileData.location.country}
-                                                </p>
-                                            </div>
-                                        </div>
+                                        </Reveal>
                                     </div>
                                 </div>
                                 
                                 {/* Social Links Row */}
-                                <div className="mt-12 pt-8 border-t border-slate-200/60">
-                                    <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Follow Me</p>
+                                <Reveal direction="up" delay={400}>
+                                    <div className="mt-12 pt-8 border-t border-slate-200/60">
+                                        <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Follow Me</p>
                                     <div className="grid grid-cols-2 gap-3 sm:gap-4">
                                         {profileData.socialLinks.map((link) => {
                                             let icon = null;
@@ -124,22 +132,32 @@ export default function ContactPage() {
                                         })}
                                     </div>
                                 </div>
+                                </Reveal>
                             </div>
 
                             {/* Right Column: Contact Form */}
                             <div className="lg:col-span-7 p-8 sm:p-12">
-                                <h2 className="text-2xl font-bold text-slate-900 mb-8 pb-4 border-b border-slate-100">
-                                    Send a Message
-                                </h2>
-                                <ContactForm />
+                                <Reveal direction="down" delay={200}>
+                                    <h2 className="text-2xl font-bold text-slate-900 mb-8 pb-4 border-b border-slate-100">
+                                        Send a Message
+                                    </h2>
+                                </Reveal>
+
+                                <Reveal direction="up" delay={300}>
+                                    <div>
+                                        <ContactForm />
+                                    </div>
+                                </Reveal>
                                 
                                 {/* Response Time Badge */}
-                                <div className="mt-8 flex items-center gap-3 text-slate-500 bg-slate-50 p-4 rounded-2xl ring-1 ring-slate-200/50">
-                                    <svg className="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <span className="text-sm font-medium">I usually respond within 24-48 hours.</span>
-                                </div>
+                                <Reveal direction="up" delay={400}>
+                                    <div className="mt-8 flex items-center gap-3 text-slate-500 bg-slate-50 p-4 rounded-2xl ring-1 ring-slate-200/50">
+                                        <svg className="w-5 h-5 text-indigo-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span className="text-sm font-medium">I usually respond within 24-48 hours.</span>
+                                    </div>
+                                </Reveal>
                             </div>
 
                         </div>
