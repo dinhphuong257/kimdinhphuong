@@ -71,7 +71,7 @@ export default function ContactPage() {
                                 {/* Social Links Row */}
                                 <div className="mt-12 pt-8 border-t border-slate-200/60">
                                     <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Follow Me</p>
-                                    <div className="flex flex-wrap gap-2.5">
+                                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
                                         {profileData.socialLinks.map((link) => {
                                             let icon = null;
                                             let activeColor = "group-hover:text-indigo-600";
@@ -111,7 +111,7 @@ export default function ContactPage() {
                                                     href={link.url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className={`px-4 py-2.5 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200/60 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2 group ${ringColor}`}
+                                                    className={`px-5 py-3.5 bg-white rounded-2xl shadow-sm ring-1 ring-slate-200/60 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2.5 group ${ringColor}`}
                                                 >
                                                     <span className={`text-slate-400 transition-colors duration-300 ${activeColor}`}>
                                                         {icon}
