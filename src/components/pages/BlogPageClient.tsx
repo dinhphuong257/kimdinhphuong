@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import LayoutShell from "@/components/LayoutShell";
 import BlogCard from "@/components/BlogCard";
+import Reveal from "@/components/Reveal";
 import { BLOG_POSTS_EN, BLOG_POSTS_VI, BLOG_CATEGORIES_EN, BLOG_CATEGORIES_VI } from "@/data/posts";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -42,70 +43,73 @@ export default function BlogPageClient() {
         <LayoutShell>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
-                    <div className="mb-6 space-y-2 animate-fade-in-up">
-                        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                            {isVi ? 'Bài Viết' : 'Blog'}
-                        </h1>
-                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                            {isVi ? 'Chia sẻ trải nghiệm, quá trình và những suy nghĩ về thiết kế giao diện.' : 'Sharing experiences, design processes, and thoughts on product design.'}
-                        </p>
-                    </div>
+                    <Reveal direction="down" delay={100}>
+                        <div className="mb-6 space-y-2">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                                {isVi ? 'Bài Viết' : 'Blog'}
+                            </h1>
+                            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                                {isVi ? 'Chia sẻ trải nghiệm, quá trình và những suy nghĩ về thiết kế giao diện.' : 'Sharing experiences, design processes, and thoughts on product design.'}
+                            </p>
+                        </div>
+                    </Reveal>
 
                     {/* Always show the Search Bar and Categories for demo purposes, or only when there are posts. Let's just remove the hasPosts wrapper for the top bar so the search is visible. */}
-                    <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in-up" style={{ animationDelay: "80ms" }}>
-                        <div className="flex flex-wrap gap-2">
-                            {BLOG_CATEGORIES.map((category, index) => (
-                                <button
-                                    key={category}
-                                    onClick={() => setSelectedCategory(category)}
-                                    className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] ${selectedCategory === category
-                                        ? "bg-slate-900 text-white shadow-md"
-                                        : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
-                                        }`}
-                                    style={{ animationDelay: `${100 + index * 40}ms` }}
-                                >
-                                    {category}
-                                </button>
-                            ))}
-                        </div>
-                        
-                        {/* Search Bar */}
-                        <div className="relative w-full sm:w-64 flex-shrink-0">
-                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                    <Reveal direction="up" delay={150}>
+                        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="flex flex-wrap gap-2">
+                                {BLOG_CATEGORIES.map((category, index) => (
+                                    <button
+                                        key={category}
+                                        onClick={() => setSelectedCategory(category)}
+                                        className={`px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-[0.98] ${selectedCategory === category
+                                            ? "bg-slate-900 text-white shadow-md"
+                                            : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
+                                            }`}
+                                    >
+                                        {category}
+                                    </button>
+                                ))}
                             </div>
-                            <input
-                                type="text"
-                                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200"
-                                placeholder={isVi ? 'Tìm theo nội dung, tag...' : 'Search by title, tag...'}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                            />
+                            
+                            {/* Search Bar */}
+                            <div className="relative w-full sm:w-64 flex-shrink-0">
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <svg className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <input
+                                    type="text"
+                                    className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200"
+                                    placeholder={isVi ? 'Tìm theo nội dung, tag...' : 'Search by title, tag...'}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </Reveal>
 
                     <div className="space-y-8">
                         {filteredPosts.length > 0 ? (
                             <>
                                 {featuredPost && (
-                                    <div key={featuredPost.id} className="mb-8 animate-fade-in-up" style={{ animationDelay: "140ms" }}>
-                                        <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">{isVi ? 'Tiêu Điểm' : 'Featured Story'}</h2>
-                                        <BlogCard post={featuredPost} featured={true} />
-                                    </div>
+                                    <Reveal direction="up" delay={200}>
+                                        <div key={featuredPost.id} className="mb-8">
+                                            <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">{isVi ? 'Tiêu Điểm' : 'Featured Story'}</h2>
+                                            <BlogCard post={featuredPost} featured={true} />
+                                        </div>
+                                    </Reveal>
                                 )}
 
                                 {gridPosts.length > 0 && (
                                     <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                                         {gridPosts.map((post, index) => (
-                                            <div
-                                                key={post.id}
-                                                className="animate-fade-in-up"
-                                                style={{ animationDelay: `${160 + index * 60}ms` }}
-                                            >
-                                                <BlogCard post={post} />
-                                            </div>
+                                            <Reveal direction="up" delay={250 + index * 50} key={post.id}>
+                                                <div>
+                                                    <BlogCard post={post} />
+                                                </div>
+                                            </Reveal>
                                         ))}
                                     </div>
                                 )}
