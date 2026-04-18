@@ -37,7 +37,7 @@ export const profileData: ProfileData = {
   website: "https://kimdinhphuong.dev",
   portfolio: "@kimdinhphuong",
   socialLinks: [
-    { platform: "Facebook", url: "https://www.facebook.com/dinhphuongkimm/", label: "dinhphuongkimm" },
+    { platform: "Facebook", url: "https://www.facebook.com/dinhphuongkim250705/", label: "dinhphuongkim250705" },
     { platform: "LinkedIn", url: "https://www.linkedin.com/in/dinhphuongkim/", label: "dinhphuongkim" },
     { platform: "Instagram", url: "https://www.instagram.com/dinhphuongkim/", label: "@dinhphuongkim" },
     { platform: "TikTok", url: "https://www.tiktok.com/@dinhphuongkim", label: "@dinhphuongkim" },
