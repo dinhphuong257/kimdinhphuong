@@ -182,14 +182,14 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               onClick={() => setLanguage("vi")}
               className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "vi" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
             >
-              <Image src="https://flagcdn.com/w20/vn.png" alt="VN" width={20} height={14} className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" unoptimized />
+              <Image src="https://flagcdn.com/w20/vn.png" alt="VN" width={20} height={14} sizes="20px" className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" />
               <span>Tiếng Việt</span>
             </button>
             <button
               onClick={() => setLanguage("en")}
               className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "en" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
             >
-              <Image src="https://flagcdn.com/w20/us.png" alt="US" width={20} height={14} className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" unoptimized />
+              <Image src="https://flagcdn.com/w20/us.png" alt="US" width={20} height={14} sizes="20px" className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" />
               <span>Tiếng Anh</span>
             </button>
           </div>

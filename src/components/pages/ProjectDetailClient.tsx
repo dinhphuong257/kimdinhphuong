@@ -5,8 +5,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProjectById } from "@/data/projects";
 import { useLanguage } from "@/context/LanguageContext";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import Reveal from "@/components/Reveal";
+import WMSPerformanceChart from "@/components/WMSPerformanceChart";
 
 interface ProjectDetailClientProps {
     id: string;
@@ -155,48 +155,8 @@ export default function ProjectDetailClient({ id }: ProjectDetailClientProps) {
                         </h2>
                         <p className="text-gray-600 leading-relaxed mb-6">{project.outcome}</p>
                         
-                        {/* Recharts Data Visualization block for WMS EcoFresh or others */}
                         {project.id === "wms-ecofresh" && (
-                            <div className="mt-8">
-                                <h3 className="text-lg font-bold text-slate-800 mb-4">
-                                    {language === 'vi' ? 'Hiệu suất kho hàng (Trước vs Sau khi triển khai WMS)' : 'Warehouse Performance (Before vs After WMS)'}
-                                </h3>
-                                <div className="h-72 w-full bg-slate-50 rounded-xl p-4 border border-slate-100">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart
-                                            data={[
-                                                {
-                                                    name: language === 'vi' ? 'Thời gian nhận (giờ)' : 'Receiving Time (hrs)',
-                                                    Before: 4.5,
-                                                    After: 1.2,
-                                                },
-                                                {
-                                                    name: language === 'vi' ? 'Lỗi tồn kho (%)' : 'Inventory Error (%)',
-                                                    Before: 8.0,
-                                                    After: 0.5,
-                                                },
-                                                {
-                                                    name: language === 'vi' ? 'Thời gian nhặt (phút/đơn)' : 'Picking Time (min/order)',
-                                                    Before: 15,
-                                                    After: 4,
-                                                },
-                                            ]}
-                                            margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
-                                        >
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
-                                            <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} />
-                                            <Tooltip 
-                                                cursor={{ fill: 'rgba(241, 245, 249, 0.5)' }}
-                                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
-                                            />
-                                            <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} iconType="circle" />
-                                            <Bar dataKey="Before" name={language === 'vi' ? 'Trước khi áp dụng' : 'Before'} fill="#cbd5e1" radius={[4, 4, 4, 4]} barSize={32} />
-                                            <Bar dataKey="After" name={language === 'vi' ? 'Sau khi áp dụng' : 'After'} fill="#4f46e5" radius={[4, 4, 4, 4]} barSize={32} />
-                                        </BarChart>
-                                    </ResponsiveContainer>
-                                </div>
-                            </div>
+                            <WMSPerformanceChart language={language} />
                         )}
                     </section>
                 </Reveal>
