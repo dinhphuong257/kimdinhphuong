@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import SupportModal from "./SupportModal";
 import { useLanguage } from "@/context/LanguageContext";
 import ThemeToggle from "./ThemeToggle";
 
@@ -63,7 +62,6 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
-  const [showSupportModal, setShowSupportModal] = useState(false);
   const { language, setLanguage, t } = useLanguage();
 
   // ESC key handler
@@ -206,24 +204,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </svg>
             <span>{language === "vi" ? "Tải CV" : "Download CV"}</span>
           </a>
-
-          <button
-            onClick={() => setShowSupportModal(true)}
-            className="w-full px-3 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-lg transition-all flex items-center justify-center gap-1.5 group"
-            aria-label="Get support"
-          >
-            <svg className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <span>{language === "vi" ? "Trợ giúp" : "Get Help"}</span>
-          </button>
         </div>
       </aside>
-
-      <SupportModal
-        isOpen={showSupportModal}
-        onClose={() => setShowSupportModal(false)}
-      />
     </>
   );
 }
