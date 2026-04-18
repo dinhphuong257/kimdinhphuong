@@ -3,6 +3,7 @@
 import { useState, ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import TopShell from "./TopShell";
 import Sidebar from "./Sidebar";
 
@@ -59,6 +60,7 @@ function MobileHeader({ onMenuOpen }: { onMenuOpen: () => void }) {
 
 export default function LayoutShell({ children }: LayoutShellProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const pathname = usePathname();
 
     return (
         <div className="min-h-screen bg-gray-50 overflow-x-hidden text-slate-900">
@@ -68,9 +70,16 @@ export default function LayoutShell({ children }: LayoutShellProps) {
             <div className="lg:flex">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-                <main className="flex-1 lg:ml-[210px] min-h-[calc(100vh-44px)]">
+                <main className="flex-1 lg:ml-[210px] min-h-[calc(100vh-44px)] overflow-hidden">
                     <TopShell />
-                    {children}
+                    <motion.div
+                        key={pathname}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                    >
+                        {children}
+                    </motion.div>
                 </main>
             </div>
         </div>

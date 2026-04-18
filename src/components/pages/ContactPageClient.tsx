@@ -18,7 +18,7 @@ export default function ContactPageClient() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
                             
                             {/* Left Column: Info & Connect */}
-                            <div className="lg:col-span-5 bg-slate-50 p-8 sm:p-12 border-b lg:border-b-0 lg:border-r border-slate-200/60 flex flex-col justify-between">
+                            <div className="lg:col-span-5 bg-slate-50 p-8 sm:p-12 border-b lg:border-b-0 lg:border-r border-slate-200/60 flex flex-col">
                                 <div>
                                     <Reveal direction="down" delay={100}>
                                         <header className="mb-10">
@@ -74,7 +74,7 @@ export default function ContactPageClient() {
                                 
                                 {/* Social Links Row */}
                                 <Reveal direction="up" delay={400}>
-                                    <div className="mt-12 pt-8 border-t border-slate-200/60">
+                                    <div className="mt-8 pt-8 border-t border-slate-200/60">
                                         <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">
                                             {isVi ? "Theo dõi tôi" : "Follow Me"}
                                         </p>

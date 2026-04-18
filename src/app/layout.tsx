@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { profileData } from "@/data/profile";
+import CustomCursor from "@/components/CustomCursor";
+import CommandPalette from "@/components/CommandPalette";
 import { LanguageProvider as ClientLanguageProvider } from "@/context/LanguageContext";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -113,9 +116,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <ClientLanguageProvider>
-          {children}
-        </ClientLanguageProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ClientLanguageProvider>
+            {children}
+            <CommandPalette />
+          </ClientLanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -1,76 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resendSecretConfig = process.env.RESEND_API_KEY;
+const resend = resendSecretConfig ? new Resend(resendSecretConfig) : null;
+
+// The email where you want to receive messages from your portfolio
+const receiverEmail = process.env.CONTACT_RECEIVER_EMAIL || process.env.SMTP_EMAIL || process.env.GMAIL_USER || "";
 
 interface ContactFormData {
     name: string;
     email: string;
     message: string;
-}
-
-interface MailConfig {
-    smtpEmail: string;
-    smtpPassword: string;
-    receiverEmail: string;
-    smtpHost?: string;
-    smtpPort?: number;
-    smtpSecure: boolean;
-}
-
-function escapeHtml(value: string) {
-    return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
-function getEnvValue(keys: string[]) {
-    for (const key of keys) {
-        const value = process.env[key]?.trim();
-        if (value) {
-            return value;
-        }
-    }
-    return "";
-}
-
-function getMailConfig(): MailConfig {
-    const smtpEmail = getEnvValue(["SMTP_EMAIL", "SMTP_USER", "EMAIL_USER", "GMAIL_USER"]);
-    const smtpPassword = getEnvValue([
-        "SMTP_PASSWORD",
-        "SMTP_PASS",
-        "EMAIL_PASSWORD",
-        "GMAIL_APP_PASSWORD",
-        "GMAIL_PASS",
-    ]);
-    const receiverEmail = getEnvValue([
-        "CONTACT_RECEIVER_EMAIL",
-        "RECEIVER_EMAIL",
-        "TO_EMAIL",
-    ]) || smtpEmail;
-    const smtpHost = getEnvValue(["SMTP_HOST"]);
-    const smtpPortRaw = getEnvValue(["SMTP_PORT"]);
-    const smtpPort = smtpPortRaw ? Number(smtpPortRaw) : undefined;
-    const smtpSecureValue = getEnvValue(["SMTP_SECURE"]);
-    const smtpSecure = smtpSecureValue ? smtpSecureValue.toLowerCase() === "true" : (smtpPort === 465);
-
-    return {
-        smtpEmail,
-        smtpPassword,
-        receiverEmail,
-        smtpHost: smtpHost || undefined,
-        smtpPort,
-        smtpSecure,
-    };
-}
-
-function getMissingConfig(config: MailConfig) {
-    const missing: string[] = [];
-    if (!config.smtpEmail) missing.push("SMTP email");
-    if (!config.smtpPassword) missing.push("SMTP password");
-    if (!config.receiverEmail) missing.push("Receiver email");
-    return missing;
 }
 
 export async function POST(request: NextRequest) {
@@ -103,70 +43,38 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const mailConfig = getMailConfig();
-        const missingConfig = getMissingConfig(mailConfig);
-
-        if (missingConfig.length > 0) {
-            console.error(`Missing email configuration: ${missingConfig.join(", ")}`);
+        if (!resend || !receiverEmail) {
+            console.error("Missing RESEND_API_KEY or CONTACT_RECEIVER_EMAIL configuration.");
             return NextResponse.json(
                 {
-                    error: "Email service is temporarily unavailable. Please try again later."
+                    error: "Email service is temporarily unavailable. Missing Resend Configuration."
                 },
                 { status: 500 }
             );
         }
 
-        const { smtpEmail, smtpPassword, receiverEmail, smtpHost, smtpPort, smtpSecure } = mailConfig;
-        const safeName = escapeHtml(body.name.trim());
-        const safeSenderEmail = escapeHtml(body.email.trim());
-        const safeMessage = escapeHtml(body.message.trim());
+        const safeName = body.name.trim();
+        const safeSenderEmail = body.email.trim();
+        const safeMessage = body.message.trim();
 
-        const transporter = smtpHost
-            ? nodemailer.createTransport({
-                host: smtpHost,
-                port: smtpPort ?? 587,
-                secure: smtpSecure,
-                auth: {
-                    user: smtpEmail,
-                    pass: smtpPassword,
-                },
-            })
-            : nodemailer.createTransport({
-                service: "gmail",
-                auth: {
-                    user: smtpEmail,
-                    pass: smtpPassword,
-                },
-            });
-
-        await transporter.verify();
-
-        const result = await transporter.sendMail({
-            from: `Portfolio Contact <${smtpEmail}>`,
+        const { data, error } = await resend.emails.send({
+            from: "Portfolio Contact <onboarding@resend.dev>", // Requires verified domain in production, 'onboarding@resend.dev' works for testing if verifying single email
             to: receiverEmail,
-            replyTo: body.email,
-            subject: `[Portfolio] New message from ${body.name}`,
-            text: [
-                "You have a new message from your portfolio!",
-                `Sender: ${body.name}`,
-                `Email: ${body.email}`,
-                "Message:",
-                body.message.trim()
-            ].join("\n"),
+            replyTo: safeSenderEmail,
+            subject: `[Portfolio] Tin nhắn mới từ ${safeName}`,
             html: `
-                <h3>You have a new message from your portfolio!</h3>
-                <p><strong>Sender:</strong> ${safeName}</p>
-                <p><strong>Email:</strong> ${safeSenderEmail}</p>
-                <p><strong>Message:</strong></p>
-                <p>${safeMessage.replace(/\n/g, '<br>')}</p>
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+                    <h3 style="color: #4f46e5;">Bạn có một tin nhắn mới từ Portfolio!</h3>
+                    <p style="color: #333;"><strong>Người gửi:</strong> ${safeName}</p>
+                    <p style="color: #333;"><strong>Email:</strong> ${safeSenderEmail}</p>
+                    <hr style="border-top: 1px solid #eee; margin: 20px 0;" />
+                    <p style="color: #555; white-space: pre-wrap;">${safeMessage}</p>
+                </div>
             `,
-            headers: {
-                "X-Auto-Response-Suppress": "OOF, AutoReply"
-            }
         });
 
-        if (result.rejected.length > 0) {
-            console.error("Email rejected by SMTP provider:", result.rejected);
+        if (error) {
+            console.error("Email delivery failed:", error);
             return NextResponse.json(
                 { error: "Email delivery failed. Please try again later." },
                 { status: 502 }

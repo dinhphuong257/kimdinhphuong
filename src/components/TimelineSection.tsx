@@ -2,8 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import Reveal from "./Reveal";
-
-const timelineDataEn = [
+export const timelineDataEn = [
   {
     id: 1,
     year: "Sep 2023",
@@ -65,23 +64,25 @@ export default function TimelineSection() {
 
   return (
     <div className="mt-8 pt-8 border-t border-slate-100">
-      <div className="mb-8">
+      <div className="mb-8 relative">
         <h3 className="text-sm font-semibold text-gray-900 mb-3">{language === 'vi' ? 'Tiến Trình Phát Triển' : 'Career Journey'}</h3>
         <p className="text-sm text-slate-500">{language === 'vi' ? 'Các cột mốc quan trọng trong học tập và cá nhân.' : 'Milestones in my educational and professional path.'}</p>
       </div>
 
-      <div className="relative space-y-6 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
+      <div className="relative space-y-6 md:space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-200 before:to-transparent">
+
         {timelineData.map((item, index) => (
           <Reveal key={item.id} direction="up" delay={index * 150} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-            {/* Timeline Icon */}
-            <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-50 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform duration-300 group-hover:scale-110 group-hover:bg-indigo-50 group-hover:border-indigo-100">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-white bg-slate-50 shadow-md shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform duration-500 group-hover:scale-125 group-hover:bg-indigo-50 group-hover:border-indigo-200 relative">
               {item.icon}
+              {/* Pulse effect */}
+              <div className="absolute inset-0 rounded-full border-2 border-indigo-400 opacity-0 group-hover:animate-ping"></div>
             </div>
             
             {/* Timeline Content */}
-            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow group-hover:border-indigo-100 relative">
+            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-lg transition-all duration-300 group-hover:border-indigo-200 dark:group-hover:border-indigo-500/30 group-hover:-translate-y-1 relative">
               {/* Arrow */}
-              <div className="absolute top-5 -left-2 md:left-auto md:group-even:-left-2 md:group-odd:-right-2 w-4 h-4 bg-white border-l border-t border-slate-100 md:group-odd:border-r md:group-odd:border-t-0 md:group-odd:-border-l md:group-even:border-l md:group-even:border-t rotate-[-45deg] md:group-odd:rotate-[135deg] group-hover:border-indigo-100 z-0"></div>
+              <div className="absolute top-5 -left-2 md:left-auto md:group-even:-left-2 md:group-odd:-right-2 w-4 h-4 bg-white dark:bg-slate-900 border-l border-t border-slate-100 dark:border-slate-800 md:group-odd:border-r md:group-odd:border-t-0 md:group-odd:-border-l md:group-even:border-l md:group-even:border-t rotate-[-45deg] md:group-odd:rotate-[135deg] transition-all group-hover:border-indigo-200 dark:group-hover:border-indigo-500/30 z-0"></div>
               
               <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                 <h4 className="text-sm font-bold text-slate-800">{item.title}</h4>

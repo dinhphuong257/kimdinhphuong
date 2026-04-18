@@ -24,24 +24,25 @@ export default function AboutPageClient() {
 
     return (
         <LayoutShell>
-            <div className="max-w-4xl mx-auto p-4 lg:p-6 text-gray-900">
-                {/* Header */}
-                <Reveal direction="down" delay={100}>
-                    <header className="mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">{isVi ? "Giới thiệu" : "About Me"}</h1>
-                        <p className="text-gray-500">
-                            {isVi ? "Tìm hiểu thêm về nền tảng, kỹ năng và động lực của tôi." : "Learn more about my background, skills, and what drives me."}
-                        </p>
-                    </header>
-                </Reveal>
+            <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
+                <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
+                    {/* Header */}
+                    <Reveal direction="down" delay={100}>
+                        <header className="mb-10">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">{isVi ? "Giới thiệu" : "About Me"}</h1>
+                            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                                {isVi ? "Tìm hiểu thêm về nền tảng, kỹ năng và động lực của tôi." : "Learn more about my background, skills, and what drives me."}
+                            </p>
+                        </header>
+                    </Reveal>
 
                 {/* Profile section */}
                 <Reveal direction="up" delay={200}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8 mb-8 shadow-sm">
-                        <div className="flex flex-col md:flex-row gap-8">
+                    <section className="mb-14">
+                        <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-center">
                             {/* Avatar */}
                             <div className="flex-shrink-0 transition-transform duration-500 hover:scale-105">
-                                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-gray-100 shadow-lg relative">
+                                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden ring-4 ring-slate-50/80 shadow-md relative">
                                     <Image
                                         src={profileData.avatar}
                                         alt={profileData.name}
@@ -52,15 +53,15 @@ export default function AboutPageClient() {
                             </div>
 
                             {/* Info */}
-                            <div className="flex-1 flex flex-col justify-center items-start">
-                                <div className="flex items-center gap-1 mb-1">
-                                    <h2 className="text-2xl font-bold text-gray-900">{profileData.name}</h2>
-                                    <svg className="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                            <div className="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-900">{profileData.name}</h2>
+                                    <svg className="w-6 h-6 md:w-7 md:h-7 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
                                         <title>Verified</title>
                                         <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 011.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
                                     </svg>
                                 </div>
-                                <p className="text-lg text-gray-500 mb-6">{isVi ? "Sinh viên Quản lý chuỗi cung ứng & Logistics" : profileData.title}</p>
+                                <p className="text-lg md:text-xl text-slate-500">{isVi ? "Sinh viên Quản lý chuỗi cung ứng & Logistics" : profileData.title}</p>
                             </div>
                         </div>
                     </section>
@@ -68,11 +69,14 @@ export default function AboutPageClient() {
 
                 {/* Biography */}
                 <Reveal direction="up" delay={300}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8 mb-8 shadow-sm">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">{isVi ? "Tiểu sử" : "Biography"}</h2>
-                        <div className="prose prose-gray max-w-none space-y-4">
+                    <section className="mb-12">
+                        <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            {isVi ? "Tiểu sử" : "Biography"}
+                            <span className="inline-block w-8 h-px bg-indigo-600 ml-2"></span>
+                        </h2>
+                        <div className="prose prose-slate max-w-none space-y-4">
                             {currentAbout.map((paragraph, idx) => (
-                                <p key={idx} className="text-gray-600 leading-relaxed">
+                                <p key={idx} className="text-slate-600 leading-relaxed text-justify">
                                     {paragraph}
                                 </p>
                             ))}
@@ -82,8 +86,11 @@ export default function AboutPageClient() {
 
                 {/* Skills */}
                 <Reveal direction="up" delay={400}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8 mb-8 shadow-sm">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">{isVi ? "Kỹ năng" : "Skills"}</h2>
+                    <section className="mb-12">
+                        <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            {isVi ? "Kỹ năng" : "Skills"}
+                            <span className="inline-block w-8 h-px bg-indigo-600 ml-2"></span>
+                        </h2>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                             {profileData.skills.map((skill, index) => (
                                 <div
@@ -100,9 +107,12 @@ export default function AboutPageClient() {
 
                 {/* Tools */}
                 <Reveal direction="up" delay={500}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8 mb-8 shadow-sm">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-6">{isVi ? "Công cụ tôi sử dụng" : "Tools I Use"}</h2>
-                        <div className="flex flex-wrap gap-3">
+                    <section className="mb-8">
+                        <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                            {isVi ? "Công cụ tôi sử dụng" : "Tools I Use"}
+                            <span className="inline-block w-8 h-px bg-indigo-600 ml-2"></span>
+                        </h2>
+                        <div className="flex flex-wrap gap-2">
                             {profileData.tools.map((tool) => (
                                 <span
                                     key={tool}
@@ -114,6 +124,7 @@ export default function AboutPageClient() {
                         </div>
                     </section>
                 </Reveal>
+                </div>
             </div>
         </LayoutShell>
     );
