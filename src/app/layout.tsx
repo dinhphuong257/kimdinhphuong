@@ -64,6 +64,9 @@ export const metadata: Metadata = {
     creator: "@kimdinhphuong",
       images: ["/twitter-image"],
   },
+  verification: {
+    google: "YaUDnln4NGHRH0rpMVIs9tpxpEQ5VaXOuT1-pbjaNOo",
+  },
 };
 
 export default function RootLayout({
