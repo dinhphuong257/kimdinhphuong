@@ -7,7 +7,7 @@ type Language = "vi" | "en";
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string, _namespace?: string) => string;
+  t: (key: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -18,6 +18,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedLang = localStorage.getItem("preferred_language") as Language;
     if (savedLang && (savedLang === "vi" || savedLang === "en")) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLanguage(savedLang);
     }
   }, []);
@@ -29,8 +30,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Simple mock translation function for structural UI, the real data comes from components directly switching based on 'language' value
-  const t = (key: string, _namespace: string = "common") => {
-    // Implement standard translations later in dictionary
+  const t = (key: string) => {
     return key; 
   };
 
