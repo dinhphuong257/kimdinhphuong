@@ -46,7 +46,7 @@ export const projectsEn: Project[] = [
         solution: "Developed a fast, clean, and intuitive movie streaming website that prioritizes content discovery, seamless playback, and user engagement.",
         outcome: "Successfully launched a modern streaming platform handling high-quality video content with a growing user base.",
         images: [],
-        caseStudyUrl: "https://rapphimchill.pro",
+        caseStudyUrl: "https://rapphimchill.app",
     },
     {
         id: "wms-ecofresh",

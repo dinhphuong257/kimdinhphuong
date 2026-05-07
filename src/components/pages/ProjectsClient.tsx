@@ -69,7 +69,7 @@ export default function ProjectsClient() {
 
                                         <div className="absolute bottom-6 left-6 z-10 px-4 py-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/20 text-white shadow-2xl text-sm font-medium flex items-center gap-2 group-hover/poster:bg-indigo-600/90 transition-colors duration-300">
                                             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                                            rapphimchill.pro
+                                            rapphimchill.app
                                         </div>
                                     </>
                                 )}
