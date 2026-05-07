@@ -65,10 +65,7 @@ export default function CommandPalette() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Update selected index when filtered results change
-  useEffect(() => {
-    setSelectedIndex(0);
-  }, [query]);
+  // Selected index reset is now handled in input onChange to avoid cascading renders
 
   // Handle keyboard navigation within the palette
   useEffect(() => {
@@ -137,7 +134,10 @@ export default function CommandPalette() {
                   placeholder={language === "vi" ? "Tìm kiếm trang hoặc lệnh..." : "Search pages or commands..."}
                   className="flex-1 bg-transparent border-none outline-none text-slate-800 dark:text-slate-200 placeholder-slate-400 text-lg"
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    setSelectedIndex(0);
+                  }}
                 />
                 <div className="flex gap-1 ml-3 shrink-0">
                   <kbd className="px-2 py-1 text-[10px] font-semibold text-slate-500 bg-slate-100 dark:bg-slate-800 rounded-md">ESC</kbd>

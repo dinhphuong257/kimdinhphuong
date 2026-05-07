@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { tutorialsEn, tutorialsVi, getTutorialsByCategory, searchTutorials, tutorialCategoriesEn, tutorialCategoriesVi } from "@/data/tutorials";
 import TutCard from "@/components/TutCard";
 import LayoutShell from "@/components/LayoutShell";
@@ -18,7 +18,7 @@ export default function TutPageClient() {
     const [searchQuery, setSearchQuery] = useState("");
 
     // Điều chỉnh filter "All" khi chuyển đổi ngôn ngữ
-    useMemo(() => {
+    useEffect(() => {
         if (activeCategory === "All" && isVi) setActiveCategory("Tất cả");
         if (activeCategory === "Tất cả" && !isVi) setActiveCategory("All");
     }, [isVi, activeCategory]);

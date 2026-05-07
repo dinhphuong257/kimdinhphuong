@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import LayoutShell from "@/components/LayoutShell";
 import BlogCard from "@/components/BlogCard";
 import Reveal from "@/components/Reveal";
@@ -19,7 +19,7 @@ export default function BlogPageClient() {
     const [searchQuery, setSearchQuery] = useState("");
 
     // Cập nhật selectedCategory nếu người dùng đổi ngôn ngữ nhưng đang chọn "All" hoặc "Tất cả"
-    useMemo(() => {
+    useEffect(() => {
         if (selectedCategory === "All" && isVi) setSelectedCategory("Tất cả");
         if (selectedCategory === "Tất cả" && !isVi) setSelectedCategory("All");
     }, [isVi, selectedCategory]);

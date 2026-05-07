@@ -4,28 +4,22 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Language = "vi" | "en";
 
-interface TranslationData {
-  [key: string]: any;
-}
-
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string, namespace?: string) => string;
+  t: (key: string, _namespace?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>("vi");
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const savedLang = localStorage.getItem("preferred_language") as Language;
     if (savedLang && (savedLang === "vi" || savedLang === "en")) {
       setLanguage(savedLang);
     }
-    setMounted(true);
   }, []);
 
   const handleSetLanguage = (lang: Language) => {
@@ -35,7 +29,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Simple mock translation function for structural UI, the real data comes from components directly switching based on 'language' value
-  const t = (key: string, namespace: string = "common") => {
+  const t = (key: string, _namespace: string = "common") => {
     // Implement standard translations later in dictionary
     return key; 
   };
