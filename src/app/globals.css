@@ -536,7 +536,8 @@ body {
   margin-top: 2.5em;
   margin-bottom: 2.5em;
   box-shadow: var(--shadow-sm);
-  text-align: left !important;
+  text-align: justify !important;
+  text-justify: inter-word;
   position: relative;
   overflow: hidden;
 }
@@ -549,7 +550,8 @@ body {
 }
 .prose .callout p {
   margin-bottom: 0;
-  text-align: left !important;
+  text-align: justify !important;
+  text-justify: inter-word;
 }
 .prose strong {
   font-weight: 700;
