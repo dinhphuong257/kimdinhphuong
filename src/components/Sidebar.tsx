@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Link from "next/link";
+import { Link } from '@/components/ViewTransitions';
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from '@/components/ViewTransitions';
 import { motion } from "framer-motion";
 import { Project } from "@/data/projects";
 

@@ -7,6 +7,7 @@ import CommandPalette from "@/components/CommandPalette";
 import { LanguageProvider as ClientLanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import LayoutContent from "@/components/LayoutContent";
+import { ViewTransitions } from '@/components/ViewTransitions';
 import "./globals.css";
 
 const inter = Inter({
@@ -106,30 +107,32 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="vi" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://flagcdn.com" />
-      </head>
-      <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
-        <Script
-          id="person-jsonld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
-        <Script
-          id="website-jsonld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ClientLanguageProvider>
-            <LayoutContent>{children}</LayoutContent>
-            <CommandPalette />
-          </ClientLanguageProvider>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="vi" suppressHydrationWarning>
+        <head>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+          <link rel="dns-prefetch" href="https://flagcdn.com" />
+        </head>
+        <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
+          <Script
+            id="person-jsonld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+          />
+          <Script
+            id="website-jsonld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          />
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <ClientLanguageProvider>
+              <LayoutContent>{children}</LayoutContent>
+              <CommandPalette />
+            </ClientLanguageProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
