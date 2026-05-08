@@ -428,3 +428,144 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* === CUSTOM PROSE FALLBACK (PREMIUM TYPOGRAPHY) === */
+.prose {
+  color: var(--slate-700);
+  line-height: 1.8;
+  font-size: 1.125rem;
+}
+.prose p {
+  margin-bottom: 1.5em;
+  text-align: justify !important;
+  text-justify: inter-word;
+}
+.prose h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  color: var(--slate-900);
+  letter-spacing: -0.01em;
+  text-align: left !important;
+}
+.prose blockquote {
+  border-left: 4px solid var(--indigo-500);
+  background: linear-gradient(to right, var(--indigo-50), transparent);
+  padding: 1.5rem 2rem;
+  border-radius: 0 1rem 1rem 0;
+  font-style: italic;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+  color: var(--slate-800);
+  font-weight: 500;
+  position: relative;
+  text-align: left !important;
+}
+.prose blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -15px;
+  left: 10px;
+  font-size: 5rem;
+  color: var(--indigo-200);
+  opacity: 0.3;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+.prose blockquote p {
+  text-align: left !important;
+  font-size: 1.1em;
+  line-height: 1.7;
+}
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--slate-200), transparent);
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+.prose .lead {
+  font-size: 1.25rem;
+  color: var(--slate-800);
+  font-weight: 500;
+  line-height: 1.8;
+  margin-bottom: 2.5em;
+  text-align: justify !important;
+  text-justify: inter-word;
+}
+.prose .lead::first-letter {
+  font-size: 3.5rem;
+  font-weight: 800;
+  float: left;
+  line-height: 1;
+  margin-top: 0.1rem;
+  margin-right: 0.5rem;
+  margin-bottom: -0.2rem;
+  color: var(--indigo-600);
+  font-family: Georgia, serif;
+}
+.prose ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5em;
+  color: var(--slate-700);
+  text-align: left !important;
+}
+.prose ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5em;
+  color: var(--slate-700);
+  text-align: left !important;
+}
+.prose li {
+  margin-bottom: 0.5em;
+  line-height: 1.8;
+}
+.prose li p {
+  margin-bottom: 0.5em;
+  text-align: left !important;
+}
+.prose .callout {
+  background: var(--surface-elevated);
+  border: 1px solid var(--indigo-100);
+  border-left: 4px solid var(--indigo-400);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+  box-shadow: var(--shadow-sm);
+  text-align: left !important;
+  position: relative;
+  overflow: hidden;
+}
+.prose .callout::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(135deg, transparent, rgba(99, 102, 241, 0.05));
+  pointer-events: none;
+}
+.prose .callout p {
+  margin-bottom: 0;
+  text-align: left !important;
+}
+.prose strong {
+  font-weight: 700;
+  color: var(--slate-900);
+}
+.prose em {
+  font-style: italic;
+}
+@media (min-width: 640px) {
+  .prose {
+    font-size: 1.15rem;
+  }
+  .prose h3 {
+    font-size: 1.85rem;
+  }
+  .prose .lead {
+    font-size: 1.35rem;
+  }
+}

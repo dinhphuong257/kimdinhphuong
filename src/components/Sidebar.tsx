@@ -86,7 +86,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     { label: language === "vi" ? "Tổng quan" : "Overview", icon: <HomeIcon />, href: "/" },
     { label: language === "vi" ? "Dự án" : "Projects", icon: <ProjectsIcon />, href: "/projects" },
     { label: language === "vi" ? "Bài viết" : "Blog", icon: <BlogIcon />, href: "/blog" },
-    { label: language === "vi" ? "Hướng dẫn" : "Tutorials", icon: <TutIcon />, href: "/tut" },
+    { label: language === "vi" ? "Thủ thuật" : "Tutorials", icon: <TutIcon />, href: "/tut" },
     { label: language === "vi" ? "Thông tin" : "About", icon: <AboutIcon />, href: "/about" },
     { label: language === "vi" ? "Liên hệ" : "Contact", icon: <ContactIcon />, href: "/contact" },
   ];
