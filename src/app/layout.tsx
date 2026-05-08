@@ -6,6 +6,7 @@ import CustomCursor from "@/components/CustomCursor";
 import CommandPalette from "@/components/CommandPalette";
 import { LanguageProvider as ClientLanguageProvider } from "@/context/LanguageContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import LayoutContent from "@/components/LayoutContent";
 import "./globals.css";
 
 const inter = Inter({
@@ -124,7 +125,7 @@ export default function RootLayout({
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ClientLanguageProvider>
-            {children}
+            <LayoutContent>{children}</LayoutContent>
             <CommandPalette />
           </ClientLanguageProvider>
         </ThemeProvider>

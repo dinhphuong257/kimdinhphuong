@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Tutorial } from '@/data/tutorials';
 
 interface TutCardProps {
@@ -16,8 +17,18 @@ export default function TutCard({ tutorial }: TutCardProps) {
 
             {/* Thumbnail */}
             <div className="aspect-[16/10] w-full overflow-hidden relative bg-gradient-to-br from-indigo-50 to-slate-100">
-                {/* Placeholder gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/50 to-slate-100/50" />
+                {/* Thumbnail Image */}
+                {tutorial.thumbnail ? (
+                    <Image
+                        src={tutorial.thumbnail}
+                        alt={tutorial.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/50 to-slate-100/50" />
+                )}
 
                 {/* Type Badge */}
                 <div className="absolute top-4 left-4 z-20">
@@ -37,15 +48,6 @@ export default function TutCard({ tutorial }: TutCardProps) {
                         </span>
                     )}
                 </div>
-
-                {/* Featured Badge */}
-                {tutorial.featured && (
-                    <div className="absolute top-4 right-4 z-20">
-                        <span className="inline-block px-2.5 py-1 rounded-full bg-indigo-600 text-white text-xs font-bold shadow-md">
-                            ⭐ Featured
-                        </span>
-                    </div>
-                )}
 
                 {/* Play Icon Overlay for Videos */}
                 {isVideo && (

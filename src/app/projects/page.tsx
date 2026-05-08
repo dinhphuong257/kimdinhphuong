@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import LayoutShell from "@/components/LayoutShell";
 import ProjectsClient from "@/components/pages/ProjectsClient";
 
 export const metadata: Metadata = {
@@ -18,12 +17,12 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
     return (
-        <LayoutShell>
+        <>
             <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="bg-white rounded-[2rem] overflow-hidden shadow-sm ring-1 ring-slate-200/60 p-6 sm:p-10">
                     <ProjectsClient />
                 </div>
             </div>
-        </LayoutShell>
+        </>
     );
 }

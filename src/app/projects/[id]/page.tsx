@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import LayoutShell from "@/components/LayoutShell";
 import { getProjectById, projects } from "@/data/projects";
 import ProjectDetailClient from "@/components/pages/ProjectDetailClient";
 
@@ -60,8 +59,8 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
     }
 
     return (
-        <LayoutShell>
+        <>
             <ProjectDetailClient id={id} />
-        </LayoutShell>
+        </>
     );
 }

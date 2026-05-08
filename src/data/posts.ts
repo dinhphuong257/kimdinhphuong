@@ -149,8 +149,8 @@ export const BLOG_POSTS_VI: BlogPost[] = [
 
 export const BLOG_POSTS = BLOG_POSTS_EN; // Default
 
-export const BLOG_CATEGORIES_EN = ["All", "Life", "Thoughts", "Experience"];
-export const BLOG_CATEGORIES_VI = ["Tất cả", "Cuộc sống", "Chút suy tư", "Trải nghiệm"];
+export const BLOG_CATEGORIES_EN = ["All", "Life", "Thoughts", "Experience", "Logistics"];
+export const BLOG_CATEGORIES_VI = ["Tất cả", "Cuộc sống", "Chút suy tư", "Trải nghiệm", "Logistics"];
 
 export const BLOG_CATEGORIES = BLOG_CATEGORIES_EN; // Default
 

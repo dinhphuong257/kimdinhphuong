@@ -7,6 +7,7 @@ import { getProjectById } from "@/data/projects";
 import { useLanguage } from "@/context/LanguageContext";
 import Reveal from "@/components/Reveal";
 import WMSPerformanceChart from "@/components/WMSPerformanceChart";
+import ProjectChart from "@/components/ProjectChart";
 
 interface ProjectDetailClientProps {
     id: string;
@@ -153,9 +154,25 @@ export default function ProjectDetailClient({ id }: ProjectDetailClientProps) {
                             </span>
                             {language === 'vi' ? 'Kết Quả' : 'Outcome'}
                         </h2>
-                        <p className="text-gray-600 leading-relaxed mb-6">{project.outcome}</p>
+                        <p className="text-gray-600 leading-relaxed mb-8">{project.outcome}</p>
                         
-                        {project.id === "wms-ecofresh" && (
+                        {project.results && project.results.length > 0 && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                {project.results.map((result, idx) => (
+                                    <div key={idx} className="space-y-2">
+                                        <div className="flex items-baseline justify-between">
+                                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-tight">{result.label}</h3>
+                                            <span className="text-2xl font-black text-indigo-600">{result.value}</span>
+                                        </div>
+                                        {result.chartData && (
+                                            <ProjectChart data={result.chartData} label={language === 'vi' ? 'Phân tích' : 'Analysis'} />
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        {project.id === "wms-ecofresh" && !project.results && (
                             <WMSPerformanceChart language={language} />
                         )}
                     </section>

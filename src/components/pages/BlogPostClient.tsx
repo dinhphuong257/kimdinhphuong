@@ -3,12 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
-import LayoutShell from "@/components/LayoutShell";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import Reveal from "@/components/Reveal";
 import { getPostBySlug } from "@/data/posts";
 import { useLanguage } from "@/context/LanguageContext";
 import { notFound } from "next/navigation";
+import MDXContent from "@/components/MDXContent";
 
 export default function BlogPostClient({ slug }: { slug: string }) {
     const { language } = useLanguage();
@@ -46,7 +46,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
     };
 
     return (
-        <LayoutShell>
+        <>
             <ReadingProgressBar />
             <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 overflow-hidden">
@@ -117,7 +117,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                             {/* Main Content */}
                             <div className="prose max-w-3xl mx-auto">
                                 {post.content ? (
-                                    <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                                    <MDXContent content={post.content} />
                                 ) : (
                                     <p className="text-slate-500 italic text-center">
                                         {isVi ? 'Nội dung bài viết đang được cập nhật...' : 'Content for this article is coming soon...'}
@@ -217,6 +217,6 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                     </Reveal>
                 </div>
             </div>
-        </LayoutShell>
+        </>
     );
 }

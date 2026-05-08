@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import LayoutShell from "@/components/LayoutShell";
 import { profileData } from "@/data/profile";
 import Reveal from "@/components/Reveal";
 import { useLanguage } from "@/context/LanguageContext";
@@ -23,7 +22,7 @@ export default function AboutPageClient() {
     const currentAbout = isVi ? aboutTextVi : aboutTextEn;
 
     return (
-        <LayoutShell>
+        <>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
                     {/* Header */}
@@ -126,6 +125,6 @@ export default function AboutPageClient() {
                 </Reveal>
                 </div>
             </div>
-        </LayoutShell>
+        </>
     );
 }

@@ -28,6 +28,11 @@ export interface Project {
     solution: string;
     outcome: string;
     images: string[];
+    results?: {
+        label: string;
+        value: string;
+        chartData?: { name: string; value: number }[];
+    }[];
 }
 
 export const projectsEn: Project[] = [
@@ -62,6 +67,24 @@ export const projectsEn: Project[] = [
         process: "Analyzed warehouse workflows, designed the EcoFresh login-to-dashboard experience, and mapped critical modules for inbound/outbound tracking, real-time monitoring, and alert handling.",
         solution: "Built a web-based WMS with secure authentication, centralized warehouse control, continuous container temperature visibility, and instant warning notifications for risk conditions.",
         outcome: "Operations became faster and more reliable with fewer manual steps, better traceability, and improved cold-chain safety for daily warehouse execution.",
+        results: [
+            { 
+                label: "Inventory Accuracy", 
+                value: "+99.2%", 
+                chartData: [
+                    { name: "Before", value: 85 },
+                    { name: "After", value: 99 }
+                ] 
+            },
+            { 
+                label: "Order Fulfillment Speed", 
+                value: "45% Faster",
+                chartData: [
+                    { name: "Manual", value: 120 },
+                    { name: "WMS", value: 65 }
+                ]
+            }
+        ],
         images: [],
         caseStudyUrl: "https://logisticsprojects.vercel.app/login",
     }
@@ -84,7 +107,25 @@ export const projectsVi: Project[] = [
         problem: "Các nhóm quản lý kho lạnh phải theo dõi thủ công kho bãi thông qua nhiều công cụ ngắt kết nối, gây chậm trễ xử lý các vấn đề khẩn cấp.",
         process: "Phân tích quy trình luân chuyển kho phức tạp, thiết kế hệ thống theo dõi toàn diện từ nhận hàng, xác thực bảo mật đến cảnh báo.",
         solution: "Xây dựng hệ thống WMS nền web nhằm tập trung quản lý trên một nền tảng, tạo khả năng kiểm soát liên tục theo thời gian thực.",
-        outcome: "Tối ưu hóa khả năng truy xuất, giảm công việc chân tay và đảm bảo chất lượng hệ thống kho quy trình lạnh."
+        outcome: "Tối ưu hóa khả năng truy xuất, giảm công việc chân tay và đảm bảo chất lượng hệ thống kho quy trình lạnh.",
+        results: [
+            { 
+                label: "Độ chính xác tồn kho", 
+                value: "+99.2%", 
+                chartData: [
+                    { name: "Trước", value: 85 },
+                    { name: "Sau", value: 99 }
+                ] 
+            },
+            { 
+                label: "Tốc độ xử lý đơn hàng", 
+                value: "Nhanh hơn 45%",
+                chartData: [
+                    { name: "Thủ công", value: 120 },
+                    { name: "WMS", value: 65 }
+                ]
+            }
+        ]
     }
 ];
 

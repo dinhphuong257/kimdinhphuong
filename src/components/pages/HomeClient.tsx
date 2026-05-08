@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import LayoutShell from "@/components/LayoutShell";
 import ProfileHeader from "@/components/ProfileHeader";
 import HighlightsSection from "@/components/HighlightsSection";
 import AboutSection from "@/components/AboutSection";
@@ -13,7 +12,7 @@ export default function HomeClient() {
   const [showVideoCall, setShowVideoCall] = useState(false);
 
   return (
-    <LayoutShell>
+    <>
       <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
         <article className="bg-white sm:rounded-3xl shadow-sm ring-1 ring-slate-200/60 overflow-hidden">
           <Reveal direction="down">
@@ -39,6 +38,6 @@ export default function HomeClient() {
       </div>
 
       <VideoCallModal isOpen={showVideoCall} onClose={() => setShowVideoCall(false)} />
-    </LayoutShell>
+    </>
   );
 }

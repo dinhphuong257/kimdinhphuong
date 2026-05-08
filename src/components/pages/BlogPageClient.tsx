@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import LayoutShell from "@/components/LayoutShell";
+import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
 import Reveal from "@/components/Reveal";
 import { BLOG_POSTS_EN, BLOG_POSTS_VI, BLOG_CATEGORIES_EN, BLOG_CATEGORIES_VI } from "@/data/posts";
@@ -36,11 +36,10 @@ export default function BlogPageClient() {
         (post.tags && post.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
     );
 
-    const featuredPost = (selectedCategory === ALL_CATEGORY && searchQuery === "") ? filteredPosts[0] : null;
-    const gridPosts = (selectedCategory === ALL_CATEGORY && searchQuery === "") ? filteredPosts.slice(1) : filteredPosts;
+    const gridPosts = filteredPosts;
 
     return (
-        <LayoutShell>
+        <>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
                     <Reveal direction="down" delay={100}>
@@ -90,30 +89,24 @@ export default function BlogPageClient() {
                         </div>
                     </Reveal>
 
-                    <div className="space-y-8">
-                        {filteredPosts.length > 0 ? (
-                            <>
-                                {featuredPost && (
-                                    <Reveal direction="up" delay={200}>
-                                        <div key={featuredPost.id} className="mb-8">
-                                            <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wide mb-4">{isVi ? 'Tiêu Điểm' : 'Featured Story'}</h2>
-                                            <BlogCard post={featuredPost} featured={true} />
-                                        </div>
-                                    </Reveal>
-                                )}
+                    <Reveal direction="up" delay={200}>
+                        <div className="mb-5 flex items-center gap-3">
+                        <p className="text-xs sm:text-sm font-semibold text-slate-600">
+                            <span className="text-slate-900">{gridPosts.length}</span> {isVi ? 'bài viết' : (gridPosts.length === 1 ? "post" : "posts")}
+                        </p>
+                            <div className="h-px bg-slate-200 flex-1"></div>
+                        </div>
+                    </Reveal>
 
-                                {gridPosts.length > 0 && (
-                                    <div key={selectedCategory} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                                        {gridPosts.map((post, index) => (
-                                            <Reveal direction="up" delay={250 + index * 50} key={post.id}>
-                                                <div>
-                                                    <BlogCard post={post} />
-                                                </div>
-                                            </Reveal>
-                                        ))}
-                                    </div>
-                                )}
-                            </>
+                    <div className="space-y-8">
+                        {gridPosts.length > 0 ? (
+                            <div key={`${selectedCategory}-${searchQuery}`} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                                {gridPosts.map((post, index) => (
+                                    <Reveal direction="up" delay={250 + index * 50} key={post.id}>
+                                        <BlogCard post={post} />
+                                    </Reveal>
+                                ))}
+                            </div>
                         ) : (
                             <div className="bg-slate-50 border border-slate-200 rounded-2xl p-12 text-center">
                                 <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm border border-slate-100">
@@ -132,6 +125,6 @@ export default function BlogPageClient() {
                     </div>
                 </div>
             </div>
-        </LayoutShell>
+        </>
     );
 }

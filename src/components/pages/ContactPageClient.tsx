@@ -1,6 +1,5 @@
 "use client";
 
-import LayoutShell from "@/components/LayoutShell";
 import ContactForm from "@/components/ContactForm";
 import Reveal from "@/components/Reveal";
 import { profileData } from "@/data/profile";
@@ -11,7 +10,7 @@ export default function ContactPageClient() {
     const isVi = language === 'vi';
 
     return (
-        <LayoutShell>
+        <>
             <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
                 {/* Unified Container */}
                 <div className="bg-white rounded-[2rem] shadow-sm ring-1 ring-slate-200/60 overflow-hidden">
@@ -142,6 +141,6 @@ export default function ContactPageClient() {
                     </div>
                 </div>
             </div>
-        </LayoutShell>
+        </>
     );
 }

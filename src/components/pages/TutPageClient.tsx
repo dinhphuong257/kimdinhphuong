@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { tutorialsEn, tutorialsVi, getTutorialsByCategory, searchTutorials, tutorialCategoriesEn, tutorialCategoriesVi } from "@/data/tutorials";
 import TutCard from "@/components/TutCard";
-import LayoutShell from "@/components/LayoutShell";
+import Reveal from "@/components/Reveal";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function TutPageClient() {
@@ -44,19 +44,22 @@ export default function TutPageClient() {
     }, [activeCategory, searchQuery, tutorials, language, ALL_CATEGORY]);
 
     return (
-        <LayoutShell>
+        <>
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
-                    <div className="mb-6 space-y-2 animate-fade-in-up">
-                        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                            {isVi ? 'Hướng Dẫn & Tài Liệu' : 'Tutorials & Guides'}
-                        </h1>
-                        <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-                            {isVi ? 'Học hỏi từ kinh nghiệm thực tiễn của tôi về hệ thống Logistics và Lập trình Web. Tất cả đều miễn phí.' : 'Learn from my experience in logistics and web development. Free tutorials, guides, and insights.'}
-                        </p>
-                    </div>
+                    <Reveal direction="down" delay={100}>
+                        <div className="mb-6 space-y-2">
+                            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+                                {isVi ? 'Hướng Dẫn & Tài Liệu' : 'Tutorials & Guides'}
+                            </h1>
+                            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                                {isVi ? 'Học hỏi từ kinh nghiệm thực tiễn của tôi về hệ thống Logistics và Lập trình Web. Tất cả đều miễn phí.' : 'Learn from my experience in logistics and web development. Free tutorials, guides, and insights.'}
+                            </p>
+                        </div>
+                    </Reveal>
 
-                    <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in-up" style={{ animationDelay: "80ms" }}>
+                    <Reveal direction="up" delay={150}>
+                        <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="flex flex-wrap gap-2">
                             {tutorialCategories.map((category, index) => (
                                 <button
@@ -96,26 +99,25 @@ export default function TutPageClient() {
                                 placeholder={isVi ? 'Tìm kiếm...' : 'Search tutorials...'}
                                 className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition-all duration-200"
                             />
+                            </div>
                         </div>
-                    </div>
+                    </Reveal>
 
-                    <div className="mb-5 flex items-center gap-3 animate-fade-in-up" style={{ animationDelay: "160ms" }}>
+                    <Reveal direction="up" delay={200}>
+                        <div className="mb-5 flex items-center gap-3">
                         <p className="text-xs sm:text-sm font-semibold text-slate-600">
                             <span className="text-slate-900">{filteredTutorials.length}</span> {isVi ? 'tài liệu' : (filteredTutorials.length === 1 ? "tutorial" : "tutorials")}
                         </p>
-                        <div className="h-px bg-slate-200 flex-1"></div>
-                    </div>
+                            <div className="h-px bg-slate-200 flex-1"></div>
+                        </div>
+                    </Reveal>
 
                     {filteredTutorials.length > 0 ? (
                         <div key={`${activeCategory}-${searchQuery}`} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                             {filteredTutorials.map((tutorial, index) => (
-                                <div
-                                    key={tutorial.id}
-                                    className="animate-fade-in-up"
-                                    style={{ animationDelay: `${180 + index * 60}ms` }}
-                                >
-                                        <TutCard tutorial={tutorial} />
-                                </div>
+                                <Reveal key={tutorial.id} direction="up" delay={250 + index * 50}>
+                                    <TutCard tutorial={tutorial} />
+                                </Reveal>
                             ))}
                         </div>
                     ) : (
@@ -144,6 +146,6 @@ export default function TutPageClient() {
                     )}
                 </div>
             </div>
-        </LayoutShell>
+        </>
     );
 }
