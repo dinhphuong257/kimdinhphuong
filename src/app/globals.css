@@ -362,6 +362,11 @@ body {
 .text-balance {
   text-wrap: balance;
 }
+.text-justify-pretty {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 
 .prose-lg {
   font-size: 1.125rem;

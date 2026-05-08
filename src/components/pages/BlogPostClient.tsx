@@ -169,7 +169,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                                                     </Link>
                                                     <div className="w-px h-4 bg-slate-200 mx-1"></div>
-                                                    <Link href="/#contact" className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition-colors flex items-center gap-1 group">
+                                                    <Link href="/contact" className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition-colors flex items-center gap-1 group">
                                                         {isVi ? 'Kết nối' : 'Connect'}
                                                         <svg className="w-4 h-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -191,7 +191,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                                             </Link>
                                             <div className="w-px h-4 bg-slate-200 mx-1"></div>
                                             <Link 
-                                                href="/#contact" 
+                                                href="/contact" 
                                                 className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition-colors flex items-center gap-1 group"
                                             >
                                                 {isVi ? 'Kết nối' : 'Connect'}
@@ -203,7 +203,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                                     </div>
                                     
                                     <div className="pt-4 border-t border-slate-100">
-                                        <p className="text-slate-600 text-base leading-relaxed">
+                                        <p className="text-slate-600 text-base leading-relaxed text-justify-pretty">
                                             {isVi 
                                                 ? 'Một người bình thường đang trên hành trình khám phá bản thân và thế giới. Blog này là góc nhỏ tĩnh lặng nơi mình lưu giữ những trải nghiệm, bài học nhỏ bé và góc nhìn cá nhân giữa cuộc sống ồn ào.'
                                                 : 'Just an ordinary person on a journey of self-discovery. This blog is a quiet space where I keep my experiences, small lessons, and personal perspectives amidst a noisy world.'

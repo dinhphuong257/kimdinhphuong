@@ -76,7 +76,7 @@ export default function AboutPageClient() {
                         </h2>
                         <div className="prose prose-slate max-w-none space-y-4">
                             {currentAbout.map((paragraph, idx) => (
-                                <p key={idx} className="text-slate-600 leading-relaxed text-justify">
+                                <p key={idx} className="text-slate-600 leading-relaxed text-justify-pretty">
                                     {paragraph}
                                 </p>
                             ))}
