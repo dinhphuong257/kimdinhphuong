@@ -115,12 +115,12 @@ export default function RootLayout({
           <link rel="dns-prefetch" href="https://flagcdn.com" />
         </head>
         <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
-          <Script
+          <script
             id="person-jsonld"
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
           />
-          <Script
+          <script
             id="website-jsonld"
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}

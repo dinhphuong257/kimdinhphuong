@@ -38,7 +38,48 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
 }
 
+import { notFound } from "next/navigation";
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    return <BlogPostClient slug={slug} />;
+    const post = getPostBySlug(slug);
+
+    if (!post) {
+        notFound();
+    }
+
+    const publishedAt = new Date(post.date);
+    const datePublished = Number.isNaN(publishedAt.getTime())
+        ? new Date().toISOString()
+        : publishedAt.toISOString();
+
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.title,
+        description: post.excerpt,
+        image: post.image ? [post.image] : ["https://kimdinhphuong.dev/opengraph-image"],
+        datePublished,
+        dateModified: datePublished,
+        author: {
+            "@type": "Person",
+            name: "Kim Đình Phương",
+            url: "https://kimdinhphuong.dev",
+        },
+        publisher: {
+            "@type": "Person",
+            name: "Kim Đình Phương",
+        },
+        mainEntityOfPage: `https://kimdinhphuong.dev/blog/${post.slug}`,
+    };
+
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <BlogPostClient slug={slug} />
+        </>
+    );
 }

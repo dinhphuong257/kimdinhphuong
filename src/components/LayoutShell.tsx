@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import TopShell from "./TopShell";
 import Sidebar from "./Sidebar";
+import ScrollHint from "./ScrollHint";
 
 interface LayoutShellProps {
     children: ReactNode;
@@ -82,6 +83,7 @@ export default function LayoutShell({ children }: LayoutShellProps) {
                     </motion.div>
                 </main>
             </div>
+            <ScrollHint />
         </div>
     );
 }

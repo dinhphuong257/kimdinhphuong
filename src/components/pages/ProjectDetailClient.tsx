@@ -19,27 +19,8 @@ export default function ProjectDetailClient({ id }: ProjectDetailClientProps) {
 
     if (!project) return null;
 
-    const creativeWorkJsonLd = {
-        "@context": "https://schema.org",
-        "@type": "CreativeWork",
-        name: project.title,
-        description: project.summary,
-        url: `https://kimdinhphuong.dev/projects/${project.id}`,
-        image: project.thumbnail || "https://kimdinhphuong.dev/opengraph-image",
-        datePublished: `${project.year}-01-01`,
-        creator: {
-            "@type": "Person",
-            name: "Kim Đình Phương",
-        },
-        keywords: project.tags.join(", "),
-    };
-
     return (
         <article className="max-w-4xl mx-auto p-4 lg:p-6">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkJsonLd) }}
-            />
             {/* Back link */}
             <Reveal direction="down" delay={100}>
                 <Link
@@ -64,6 +45,7 @@ export default function ProjectDetailClient({ id }: ProjectDetailClientProps) {
                                 alt={project.title}
                                 fill
                                 className="object-cover"
+                                style={{ viewTransitionName: `project-image-${project.id}` }}
                             />
                         ) : (
                             <div className="absolute inset-0 flex items-center justify-center opacity-30">

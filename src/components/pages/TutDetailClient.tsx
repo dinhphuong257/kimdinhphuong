@@ -20,38 +20,6 @@ export default function TutDetailClient({ slug }: { slug: string }) {
     }
 
     const isVideo = tutorial.type === 'video';
-    const datePublished = new Date(tutorial.date).toISOString();
-
-    const tutorialJsonLd = isVideo
-        ? {
-            "@context": "https://schema.org",
-            "@type": "VideoObject",
-            name: tutorial.title,
-            description: tutorial.description,
-            thumbnailUrl: [tutorial.thumbnail || "https://kimdinhphuong.dev/opengraph-image"],
-            uploadDate: datePublished,
-            embedUrl: tutorial.videoUrl || `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
-            url: `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
-            author: {
-                "@type": "Person",
-                name: "Kim Đình Phương",
-            },
-        }
-        : {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: tutorial.title,
-            description: tutorial.description,
-            datePublished,
-            dateModified: datePublished,
-            image: [tutorial.thumbnail || "https://kimdinhphuong.dev/opengraph-image"],
-            mainEntityOfPage: `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
-            author: {
-                "@type": "Person",
-                name: "Kim Đình Phương",
-            },
-        };
-
     // Get related tutorials (same category, excluding current)
     const relatedTutorials = tutorials
         .filter(t => t.category === tutorial.category && t.id !== tutorial.id)
@@ -62,10 +30,6 @@ export default function TutDetailClient({ slug }: { slug: string }) {
             <ReadingProgress />
             <div className="max-w-6xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 p-5 sm:p-6 lg:p-8">
-                    <script
-                        type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(tutorialJsonLd) }}
-                    />
 
                     {/* Back Button */}
                     <Link

@@ -58,8 +58,27 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
         notFound();
     }
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        name: project.title,
+        description: project.summary,
+        url: `https://kimdinhphuong.dev/projects/${project.id}`,
+        image: project.thumbnail || "https://kimdinhphuong.dev/opengraph-image",
+        datePublished: `${project.year}-01-01`,
+        creator: {
+            "@type": "Person",
+            name: "Kim Đình Phương",
+        },
+        keywords: project.tags.join(", "),
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <ProjectDetailClient id={id} />
         </>
     );

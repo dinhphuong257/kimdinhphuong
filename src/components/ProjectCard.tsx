@@ -29,6 +29,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                         alt={project.title}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        style={{ viewTransitionName: `project-image-${project.id}` }}
                     />
                 ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-slate-50 to-slate-100/50 group-hover:bg-slate-100/80 transition-colors duration-500">

@@ -14,7 +14,7 @@ export default function HomeClient() {
   return (
     <>
       <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
-        <article className="bg-white sm:rounded-3xl shadow-sm ring-1 ring-slate-200/60 overflow-hidden">
+        <article className="glass-premium sm:rounded-3xl overflow-hidden relative">
           <Reveal direction="down">
             <ProfileHeader
               onMessage={() => {
@@ -41,3 +41,4 @@ export default function HomeClient() {
     </>
   );
 }
+

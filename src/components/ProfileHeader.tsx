@@ -23,7 +23,7 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
                     {/* Avatar - Smaller, More Refined */}
                     <div className="flex justify-center mb-4">
                         <div className="relative group">
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white p-1 shadow-lg ring-1 ring-slate-100 transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
+                            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full glass-premium p-1 shadow-lg ring-1 ring-white/50 transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
                                 <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
                                     <Image
                                         src={profileData.avatar}

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Script from "next/script";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
 import Reveal from "@/components/Reveal";
 import { getPostBySlug } from "@/data/posts";
@@ -20,31 +19,6 @@ export default function BlogPostClient({ slug }: { slug: string }) {
         notFound();
     }
 
-    const publishedAt = new Date(post.date);
-    const datePublished = Number.isNaN(publishedAt.getTime())
-        ? new Date().toISOString()
-        : publishedAt.toISOString();
-
-    const articleJsonLd = {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: post.title,
-        description: post.excerpt,
-        image: post.image ? [post.image] : ["https://kimdinhphuong.dev/opengraph-image"],
-        datePublished,
-        dateModified: datePublished,
-        author: {
-            "@type": "Person",
-            name: "Kim Đình Phương",
-            url: "https://kimdinhphuong.dev",
-        },
-        publisher: {
-            "@type": "Person",
-            name: "Kim Đình Phương",
-        },
-        mainEntityOfPage: `https://kimdinhphuong.dev/blog/${post.slug}`,
-    };
-
     return (
         <>
             <ReadingProgressBar />
@@ -52,11 +26,6 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 overflow-hidden">
                     <Reveal direction="up" delay={100}>
                         <article>
-                        <Script
-                            id="article-jsonld"
-                            type="application/ld+json"
-                            dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
-                        />
                         
                         {/* Standard Vertical Header */}
                         <div className="px-6 sm:px-10 lg:px-14 pt-8 sm:pt-10 lg:pt-14 pb-8 sm:pb-12 border-b border-slate-100">

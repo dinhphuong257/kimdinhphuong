@@ -47,5 +47,52 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function TutorialDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    return <TutDetailClient slug={slug} />;
+    const tutorial = getTutorialBySlug(slug);
+
+    if (!tutorial) {
+        notFound();
+    }
+
+    const isVideo = tutorial.type === 'video';
+    const datePublished = new Date(tutorial.date).toISOString();
+
+    const jsonLd = isVideo
+        ? {
+            "@context": "https://schema.org",
+            "@type": "VideoObject",
+            name: tutorial.title,
+            description: tutorial.description,
+            thumbnailUrl: [tutorial.thumbnail || "https://kimdinhphuong.dev/opengraph-image"],
+            uploadDate: datePublished,
+            embedUrl: tutorial.videoUrl || `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
+            url: `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
+            author: {
+                "@type": "Person",
+                name: "Kim Đình Phương",
+            },
+        }
+        : {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: tutorial.title,
+            description: tutorial.description,
+            datePublished,
+            dateModified: datePublished,
+            image: [tutorial.thumbnail || "https://kimdinhphuong.dev/opengraph-image"],
+            mainEntityOfPage: `https://kimdinhphuong.dev/tut/${tutorial.slug}`,
+            author: {
+                "@type": "Person",
+                name: "Kim Đình Phương",
+            },
+        };
+
+    return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <TutDetailClient slug={slug} />
+        </>
+    );
 }
