@@ -4,111 +4,150 @@ import Image from "next/image";
 import Link from "next/link";
 import { profileData } from "@/data/profile";
 import { useLanguage } from "@/context/LanguageContext";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface ProfileHeaderProps {
     onMessage: () => void;
 }
 
-export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
-    const { language } = useLanguage();
+const TAGLINES_VI = ["Web Developer", "Người xây dựng sản phẩm số", "Logistics Enthusiast"];
+const TAGLINES_EN = ["Web Developer", "Digital Product Builder", "Logistics Enthusiast"];
+const SKILL_BADGES = ["Next.js", "React", "Tailwind", "TypeScript", "Logistics"];
+
+const SOCIAL_LINKS = [
+    {
+        label: "GitHub",
+        href: "https://github.com/kimdinhphuong",
+        icon: (
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+        ),
+    },
+    {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/in/dinhphuongkim/",
+        icon: (
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+        ),
+    },
+    {
+        label: "Facebook",
+        href: "https://www.facebook.com/dinhphuongkim250705/",
+        icon: (
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
+        ),
+    },
+];
+
+function TypingText({ texts }: { texts: string[] }) {
+    const [displayed, setDisplayed] = useState("");
+    const [textIdx, setTextIdx] = useState(0);
+    const [charIdx, setCharIdx] = useState(0);
+    const [deleting, setDeleting] = useState(false);
+
+    useEffect(() => {
+        const current = texts[textIdx];
+        let timeout: ReturnType<typeof setTimeout>;
+        if (!deleting && charIdx < current.length) {
+            timeout = setTimeout(() => setCharIdx((c) => c + 1), 60);
+        } else if (!deleting && charIdx === current.length) {
+            timeout = setTimeout(() => setDeleting(true), 2200);
+        } else if (deleting && charIdx > 0) {
+            timeout = setTimeout(() => setCharIdx((c) => c - 1), 30);
+        } else if (deleting && charIdx === 0) {
+            setDeleting(false);
+            setTextIdx((i) => (i + 1) % texts.length);
+        }
+        setDisplayed(current.slice(0, charIdx));
+        return () => clearTimeout(timeout);
+    }, [charIdx, deleting, textIdx, texts]);
 
     return (
-        <div className="relative">
-            {/* Compact Hero Section */}
-            <div className="relative px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-6 sm:pb-8">
+        <span>
+            {displayed}
+            <span className="inline-block w-0.5 h-5 bg-indigo-500 ml-0.5 align-middle animate-pulse" />
+        </span>
+    );
+}
 
-                {/* Transparent Container since it's already inside an article card */}
-                <div className="p-6 sm:p-8 lg:p-10 max-w-3xl mx-auto text-center">
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } };
+const fadeUp = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+};
 
-                    {/* Avatar - Smaller, More Refined */}
-                    <div className="flex justify-center mb-4">
-                        <div className="relative group">
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full glass-premium p-1 shadow-lg ring-1 ring-white/50 transition-all duration-300 group-hover:shadow-xl group-hover:scale-[1.02]">
-                                <div className="w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50 relative">
+export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
+    const { language } = useLanguage();
+    const taglines = language === "vi" ? TAGLINES_VI : TAGLINES_EN;
+
+    return (
+        <div className="relative overflow-hidden">
+            {/* Dot grid */}
+            <div className="absolute inset-0 dot-grid-bg opacity-30 pointer-events-none" />
+            {/* Top accent */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent" />
+
+            <div className="relative px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-8 sm:pb-10">
+                <motion.div
+                    className="max-w-2xl mx-auto flex flex-col items-center text-center"
+                    variants={stagger}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    {/* Avatar */}
+                    <motion.div variants={fadeUp} className="relative group cursor-pointer mb-6">
+                        {/* Glow halo */}
+                        <div className="absolute inset-0 rounded-full bg-indigo-300/0 group-hover:bg-indigo-400/20 blur-3xl scale-125 transition-all duration-700" />
+                        {/* Rotating dashed ring */}
+                        <div className="absolute -inset-4 rounded-full border border-dashed border-indigo-200/0 group-hover:border-indigo-300/50 transition-all duration-500 animate-spin-slow" />
+
+                        {/* Gradient ring wrapper */}
+                        <div className="p-[3px] rounded-full bg-gradient-to-br from-indigo-400 via-indigo-300 to-slate-200 shadow-xl shadow-indigo-100 group-hover:shadow-2xl group-hover:shadow-indigo-200/60 transition-all duration-300 group-hover:scale-[1.04]">
+                            <div className="p-[3px] rounded-full bg-white">
+                                <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 rounded-full overflow-hidden">
                                     <Image
                                         src={profileData.avatar}
                                         alt={profileData.name}
                                         fill
-                                        className="object-cover saturate-[0.85]"
+                                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                                     />
                                 </div>
                             </div>
-
-                            {/* Verified Badge - Refined */}
-                            <div className="absolute bottom-1 right-1 z-10" title="Verified Professional">
-                                <div className="bg-white rounded-full p-0.5 shadow-md ring-2 ring-white">
-                                    <svg className="w-6 h-6 text-indigo-500" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74Z" />
-                                        <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                </div>
-                            </div>
                         </div>
-                    </div>
 
-                    {/* Name and Title - Tighter Spacing, Bolder */}
-                    <div className="text-center space-y-1.5 mb-4">
-                        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight leading-none text-balance">
-                            {profileData.name}
-                        </h1>
-                        <p className="text-base sm:text-lg text-indigo-600 font-semibold text-balance">
-                            {language === 'vi' ? "Sinh viên ngành Logistics năm 3" : profileData.title}
-                        </p>
-                        {/* Value Proposition */}
-                        <p className="text-sm sm:text-base text-slate-600 max-w-lg mx-auto text-balance leading-relaxed pt-1">
-                            {language === 'vi' ? "Đam mê tối ưu hóa chuỗi cung ứng và kiến tạo các giải pháp logistics hiệu quả." : "Passionate about optimizing supply chains and creating efficient logistics solutions."}
-                        </p>
-                    </div>
-
-                    {/* Quick Stats - More Compact */}
-                    <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-5 mb-5 text-xs sm:text-sm">
-                        <div className="flex items-center gap-1.5 text-slate-600">
-                            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        {/* Verified badge */}
+                        <div className="absolute bottom-2 right-2 z-10 bg-white rounded-full p-[3px] shadow-md ring-2 ring-white">
+                            <svg className="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74Z" />
+                                <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            <span className="font-semibold">{language === 'vi' ? "Sinh viên năm 3" : "3rd Year Student"}</span>
                         </div>
-                        <div className="w-1 h-1 rounded-full bg-slate-300" />
-                        <div className="flex items-center gap-1.5 text-slate-600">
-                            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-                            </svg>
-                            <span className="font-semibold">{language === 'vi' ? "Dự án học thuật" : "Academic Projects"}</span>
-                        </div>
-                        <div className="w-1 h-1 rounded-full bg-slate-300" />
-                        <div className="flex items-center gap-1.5 text-slate-600">
-                            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span className="font-semibold">{profileData.location.city}</span>
-                        </div>
-                    </div>
+                    </motion.div>
 
-                    {/* Action Buttons - Prominent CTAs */}
-                    <div className="flex flex-wrap items-center justify-center gap-3">
-                        <Link
-                            href="/projects"
-                            className="group h-9 sm:h-11 px-4 sm:px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm sm:text-base font-semibold shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center gap-2"
-                        >
-                            <span>{language === 'vi' ? "Xem Dự Án" : "View Projects"}</span>
-                            <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
-                        </Link>
+                    {/* Name */}
+                    <motion.h1
+                        variants={fadeUp}
+                        className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2"
+                    >
+                        {profileData.name}
+                    </motion.h1>
 
-                        <button
-                            onClick={onMessage}
-                            className="group h-9 sm:h-11 px-4 sm:px-6 bg-white border-2 border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-indigo-300 rounded-xl text-sm sm:text-base font-semibold shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 flex items-center gap-2"
-                        >
-                            <svg className="w-4 h-4 text-slate-500 group-hover:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                            <span>{language === 'vi' ? "Liên hệ" : "Contact Me"}</span>
-                        </button>
-                    </div>
-                </div>
+                    {/* Typing tagline */}
+                    <motion.p variants={fadeUp} className="text-base sm:text-lg font-semibold text-indigo-600 min-h-[1.75rem] mb-4">
+                        <TypingText texts={taglines} />
+                    </motion.p>
+
+                </motion.div>
             </div>
+
+            {/* Bottom separator */}
+            <div className="mx-6 sm:mx-10 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
         </div>
     );
 }

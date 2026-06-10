@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Be_Vietnam_Pro } from "next/font/google";
 import Script from "next/script";
 import { profileData } from "@/data/profile";
 import CustomCursor from "@/components/CustomCursor";
@@ -10,10 +10,10 @@ import LayoutContent from "@/components/LayoutContent";
 import { ViewTransitions } from '@/components/ViewTransitions';
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+const beVietnamPro = Be_Vietnam_Pro({
+  subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-inter",
+  variable: "--font-be-vietnam-pro",
   display: "swap",
   preload: true,
 });
@@ -114,7 +114,7 @@ export default function RootLayout({
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link rel="dns-prefetch" href="https://flagcdn.com" />
         </head>
-        <body className={`${inter.variable} font-sans antialiased`} suppressHydrationWarning>
+        <body className={`${beVietnamPro.variable} font-sans antialiased`} suppressHydrationWarning>
           <script
             id="person-jsonld"
             type="application/ld+json"

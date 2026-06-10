@@ -117,7 +117,7 @@
 @theme inline {
   --color-background: var(--surface-primary);
   --color-foreground: var(--text-primary);
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-be-vietnam-pro), "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-primary: var(--indigo-500);
   --color-primary-hover: var(--indigo-600);
 }
@@ -138,7 +138,7 @@ body {
 body {
   background: var(--surface-primary);
   color: var(--text-primary);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-be-vietnam-pro), "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.6;
 
@@ -350,6 +350,21 @@ body {
 
 .delay-400 {
   animation-delay: 400ms;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* Dot grid background texture */
+.dot-grid-bg {
+  background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* === SCROLLBAR === */

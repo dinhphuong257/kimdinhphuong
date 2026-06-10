@@ -5,6 +5,7 @@ import { Link } from '@/components/ViewTransitions';
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
+import { profileData } from "@/data/profile";
 
 const HomeIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
