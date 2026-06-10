@@ -6,29 +6,43 @@ interface RevealProps {
     children: React.ReactNode;
     direction?: "up" | "down" | "left" | "right" | "none";
     delay?: number;
+    duration?: number;
     className?: string;
+    blur?: boolean;
+    scale?: boolean;
+    once?: boolean;
 }
 
 export default function Reveal({
     children,
     direction = "up",
     delay = 0,
+    duration = 0.6,
     className = "",
+    blur = true,
+    scale = true,
+    once = true,
 }: RevealProps) {
     const getVariants = () => {
-        switch (direction) {
-            case "up":
-                return { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } };
-            case "down":
-                return { hidden: { opacity: 0, y: -50 }, visible: { opacity: 1, y: 0 } };
-            case "left":
-                return { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0 } };
-            case "right":
-                return { hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0 } };
-            case "none":
-            default:
-                return { hidden: { opacity: 0 }, visible: { opacity: 1 } };
-        }
+        const initialX = direction === "left" ? 40 : direction === "right" ? -40 : 0;
+        const initialY = direction === "up" ? 40 : direction === "down" ? -40 : 0;
+
+        return {
+            hidden: {
+                opacity: 0,
+                x: initialX,
+                y: initialY,
+                scale: scale ? 0.95 : 1,
+                filter: blur ? "blur(8px)" : "blur(0px)",
+            },
+            visible: {
+                opacity: 1,
+                x: 0,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+            },
+        };
     };
 
     return (
@@ -36,11 +50,14 @@ export default function Reveal({
             variants={getVariants()}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
+            viewport={{ once, margin: "-40px" }}
             transition={{
-                duration: 0.6,
-                delay: delay / 1000, // framer-motion delay is in seconds, while the old one was likely ms or similar. If delay was passed in ms, e.g. 200, it becomes 0.2s
-                ease: [0.22, 1, 0.36, 1], // Custom easing for smooth fluid motion
+                type: "spring",
+                stiffness: 70,
+                damping: 15,
+                mass: 0.8,
+                duration: duration,
+                delay: delay / 1000,
             }}
             className={className}
         >

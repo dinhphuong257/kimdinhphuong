@@ -23,6 +23,8 @@ export default function TutCard({ tutorial }: TutCardProps) {
                         src={tutorial.thumbnail}
                         alt={tutorial.title}
                         fill
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxIDEiPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4="
                         className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />

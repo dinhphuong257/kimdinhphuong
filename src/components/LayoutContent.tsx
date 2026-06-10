@@ -4,6 +4,9 @@ import { useState, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Sidebar from "./Sidebar";
 import TopShell from "./TopShell";
+import { useLanguage } from "@/context/LanguageContext";
+import { profileData } from "@/data/profile";
+import { motion } from "framer-motion";
 
 function MobileHeader({ onMenuOpen }: { onMenuOpen: () => void }) {
     const pathname = usePathname();
@@ -43,6 +46,7 @@ function MobileHeader({ onMenuOpen }: { onMenuOpen: () => void }) {
 export default function LayoutContent({ children }: { children: ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const pathname = usePathname();
+    const { language } = useLanguage();
 
     return (
         <div className="min-h-screen bg-gray-50 overflow-x-hidden text-slate-900 flex flex-col lg:flex-row">
@@ -54,9 +58,27 @@ export default function LayoutContent({ children }: { children: ReactNode }) {
 
             <main className="flex-1 lg:ml-[210px] min-h-screen overflow-hidden flex flex-col">
                 <TopShell />
-                <div className="flex-1 h-full">
+
+                <motion.div
+                    key={pathname}
+                    initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex-1 h-full flex flex-col"
+                >
                     {children}
-                </div>
+                </motion.div>
+
+                {/* Shared Website Footer */}
+                <footer className="py-4 px-6 sm:px-10 lg:px-14 border-t border-slate-100 dark:border-slate-800/40 text-slate-400 dark:text-slate-500 text-xs flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto w-full mt-4">
+                    <div className="font-medium">
+                        Copyright © 2026 Personal Website. All rights reserved.
+                    </div>
+                    <div className="flex items-center gap-1 font-medium">
+                        <span>{language === "vi" ? "Được thiết kế bởi" : "Designed by"}</span>
+                        <span className="font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">{profileData.name}</span>
+                    </div>
+                </footer>
             </main>
         </div>
     );

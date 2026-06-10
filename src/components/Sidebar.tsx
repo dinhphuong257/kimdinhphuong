@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { profileData } from "@/data/profile";
+import { Toast, useToast } from "@/components/Toast";
 
 const HomeIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -63,6 +64,7 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { language, setLanguage, t } = useLanguage();
+  const { toast, showToast, hideToast } = useToast();
 
   // ESC key handler
   React.useEffect(() => {
@@ -176,7 +178,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* Bottom section - Smaller Get Help & Download CV */}
         <div className="p-4 border-t border-slate-100 flex flex-col gap-2">
           {/* Language Switcher */}
-          <div className="flex flex-col bg-slate-100/80 p-1.5 rounded-xl mb-1 gap-1">
+          <div className="flex flex-col bg-slate-100/80 p-1.5 rounded-xl gap-1">
             <button
               onClick={() => setLanguage("vi")}
               className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "vi" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
@@ -193,19 +195,34 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </button>
           </div>
 
-          <a
-            href="/cv/kim-dinh-phuong-cv.pdf"
-            download
-            className="w-full px-3 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-200"
+          <button
+            onClick={() => {
+              showToast(
+                language === "vi"
+                  ? "Tài liệu CV hiện chưa khả dụng (đang cập nhật)..."
+                  : "CV document is currently unavailable (updating)...",
+                "info"
+              );
+            }}
+            className="w-full px-3 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-all flex items-center justify-center gap-1.5 shadow-sm shadow-indigo-200 cursor-pointer"
             aria-label="Download CV"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
             <span>{language === "vi" ? "Tải CV" : "Download CV"}</span>
-          </a>
+          </button>
         </div>
       </aside>
+
+      {/* Toast Portal */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={hideToast}
+        />
+      )}
     </>
   );
 }

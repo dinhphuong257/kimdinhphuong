@@ -5,6 +5,7 @@ import ProfileHeader from "@/components/ProfileHeader";
 import HighlightsSection from "@/components/HighlightsSection";
 import AboutSection from "@/components/AboutSection";
 import ExperienceCards from "@/components/ExperienceCards";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import VideoCallModal from "@/components/VideoCallModal";
 import Reveal from "@/components/Reveal";
 
@@ -13,7 +14,7 @@ export default function HomeClient() {
 
   return (
     <>
-      <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
+      <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6">
         <article className="glass-premium sm:rounded-3xl overflow-hidden relative">
           <Reveal direction="down">
             <ProfileHeader
@@ -33,6 +34,10 @@ export default function HomeClient() {
 
           <Reveal direction="up" delay={300}>
             <ExperienceCards />
+          </Reveal>
+
+          <Reveal direction="up" delay={350}>
+            <TestimonialsSection />
           </Reveal>
         </article>
       </div>

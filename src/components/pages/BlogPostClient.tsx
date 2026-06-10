@@ -22,7 +22,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
     return (
         <>
             <ReadingProgressBar />
-            <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6 min-h-screen">
+            <div className="max-w-5xl mx-auto py-0 px-0 sm:py-4 sm:px-4 lg:py-6 lg:px-6 lg:pr-6">
                 <div className="bg-white sm:rounded-2xl shadow-sm sm:border border-slate-200 overflow-hidden">
                     <Reveal direction="up" delay={100}>
                         <article>

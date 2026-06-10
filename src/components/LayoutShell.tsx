@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import TopShell from "./TopShell";
 import Sidebar from "./Sidebar";
 import ScrollHint from "./ScrollHint";
+import { useLanguage } from "@/context/LanguageContext";
+import { profileData } from "@/data/profile";
 
 interface LayoutShellProps {
     children: ReactNode;
@@ -62,6 +64,7 @@ function MobileHeader({ onMenuOpen }: { onMenuOpen: () => void }) {
 export default function LayoutShell({ children }: LayoutShellProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const pathname = usePathname();
+    const { language } = useLanguage();
 
     return (
         <div className="min-h-screen bg-gray-50 overflow-x-hidden text-slate-900">
@@ -78,9 +81,21 @@ export default function LayoutShell({ children }: LayoutShellProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
+                        className="flex-1"
                     >
                         {children}
                     </motion.div>
+
+                    {/* Shared Website Footer */}
+                    <footer className="py-8 px-6 sm:px-10 lg:px-14 border-t border-slate-100 dark:border-slate-800/40 text-slate-400 dark:text-slate-500 text-xs flex flex-col sm:flex-row items-center justify-between gap-4 max-w-5xl mx-auto w-full mt-10">
+                        <div className="font-medium">
+                            © {new Date().getFullYear()} {profileData.name}. All rights reserved.
+                        </div>
+                        <div className="flex items-center gap-1 font-medium">
+                            <span>{language === "vi" ? "Được thiết kế bởi" : "Designed by"}</span>
+                            <span className="font-bold text-slate-600 dark:text-slate-300 hover:text-indigo-600 transition-colors">{profileData.name}</span>
+                        </div>
+                    </footer>
                 </main>
             </div>
             <ScrollHint />

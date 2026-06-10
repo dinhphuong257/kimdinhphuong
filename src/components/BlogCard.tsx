@@ -19,6 +19,8 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
                         src={post.image}
                         alt={post.title}
                         fill
+                        placeholder="blur"
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxIDEiPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4="
                         sizes={featured
                             ? "(max-width: 768px) 100vw, 50vw"
                             : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

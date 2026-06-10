@@ -6,6 +6,8 @@ import { profileData } from "@/data/profile";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
+import { BadgeCheck } from "lucide-react";
+import ParticleCanvas from "@/components/ParticleCanvas";
 
 interface ProfileHeaderProps {
     onMessage: () => void;
@@ -90,6 +92,8 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
         <div className="relative overflow-hidden">
             {/* Dot grid */}
             <div className="absolute inset-0 dot-grid-bg opacity-30 pointer-events-none" />
+            {/* Particle Canvas Background */}
+            <ParticleCanvas />
             {/* Top accent */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent" />
 
@@ -102,40 +106,45 @@ export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
                 >
                     {/* Avatar */}
                     <motion.div variants={fadeUp} className="relative group cursor-pointer mb-6">
-                        {/* Glow halo */}
-                        <div className="absolute inset-0 rounded-full bg-indigo-300/0 group-hover:bg-indigo-400/20 blur-3xl scale-125 transition-all duration-700" />
-                        {/* Rotating dashed ring */}
-                        <div className="absolute -inset-4 rounded-full border border-dashed border-indigo-200/0 group-hover:border-indigo-300/50 transition-all duration-500 animate-spin-slow" />
+                        {/* Subtle clean hover glow */}
+                        <div className="absolute inset-0 rounded-full bg-indigo-500/0 group-hover:bg-indigo-500/5 blur-2xl transition-all duration-500 scale-110 pointer-events-none" />
 
                         {/* Gradient ring wrapper */}
-                        <div className="p-[3px] rounded-full bg-gradient-to-br from-indigo-400 via-indigo-300 to-slate-200 shadow-xl shadow-indigo-100 group-hover:shadow-2xl group-hover:shadow-indigo-200/60 transition-all duration-300 group-hover:scale-[1.04]">
-                            <div className="p-[3px] rounded-full bg-white">
+                        <div className="relative p-[3px] rounded-full bg-gradient-to-br from-indigo-400 via-indigo-300 to-slate-200 shadow-xl shadow-indigo-100 group-hover:shadow-2xl group-hover:shadow-indigo-200/60 transition-all duration-300 group-hover:scale-[1.04]">
+                            <div className="p-[3px] rounded-full bg-white dark:bg-slate-900">
                                 <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 rounded-full overflow-hidden">
                                     <Image
                                         src={profileData.avatar}
                                         alt={profileData.name}
                                         fill
+                                        placeholder="blur"
+                                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxIDEiPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4="
+                                        sizes="(max-width: 640px) 128px, (max-width: 1024px) 160px, 176px"
                                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        {/* Verified badge */}
-                        <div className="absolute bottom-2 right-2 z-10 bg-white rounded-full p-[3px] shadow-md ring-2 ring-white">
-                            <svg className="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.74Z" />
-                                <path d="M9 12l2 2 4-4" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        </div>
+
                     </motion.div>
 
-                    {/* Name */}
+                    {/* Name + Verified badge */}
                     <motion.h1
                         variants={fadeUp}
-                        className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2"
+                        className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2 flex items-center justify-center gap-2"
                     >
                         {profileData.name}
+                        <span
+                            title="Verified"
+                            aria-label="Verified"
+                            className="inline-flex items-center justify-center flex-shrink-0"
+                        >
+                            <BadgeCheck
+                                className="w-7 h-7 sm:w-8 sm:h-8 text-[#1877F2] drop-shadow-sm"
+                                strokeWidth={1.5}
+                            />
+                        </span>
                     </motion.h1>
 
                     {/* Typing tagline */}

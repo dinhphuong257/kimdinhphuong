@@ -361,6 +361,15 @@ body {
   animation: spin-slow 8s linear infinite;
 }
 
+@keyframes spin-reverse-slow {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-spin-reverse-slow {
+  animation: spin-reverse-slow 12s linear infinite;
+}
+
 /* Dot grid background texture */
 .dot-grid-bg {
   background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);

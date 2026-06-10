@@ -45,6 +45,9 @@ export default function RecentWorkGrid() {
                                         src={item.thumbnail}
                                         alt={item.title}
                                         fill
+                                        placeholder="blur"
+                                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxIDEiPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4="
+                                        sizes="(max-width: 640px) 192px, 224px"
                                         className="object-cover transform group-hover:scale-105 transition-transform duration-500"
                                     />
                                 ) : (
@@ -83,6 +86,9 @@ export default function RecentWorkGrid() {
                                     src={selectedProject.thumbnail}
                                     alt={selectedProject.title}
                                     fill
+                                    placeholder="blur"
+                                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxIDEiPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNlMmU4ZjAiLz48L3N2Zz4="
+                                    sizes="(max-width: 640px) 100vw, 512px"
                                     className="object-cover"
                                 />
                             )}
