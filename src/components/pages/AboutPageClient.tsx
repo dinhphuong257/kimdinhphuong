@@ -18,7 +18,6 @@ export default function AboutPageClient() {
         "Khi không học tập, bạn có thể tìm thấy tôi khám phá văn hóa sông nước nhộn nhịp của Cần Thơ, đọc về những đổi mới trong chuỗi cung ứng, hoặc làm việc trên các tình huống nghiên cứu logistics điển hình."
     ];
     
-    // Fallback if the arrays are not the same length
     const currentAbout = isVi ? aboutTextVi : aboutTextEn;
 
     return (
@@ -94,10 +93,10 @@ export default function AboutPageClient() {
                             {profileData.skills.map((skill, index) => (
                                 <div
                                     key={skill}
-                                    className="px-4 py-3 bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-lg text-center transition-transform hover:-translate-y-1 hover:shadow-md duration-300"
+                                    className="px-4 py-3 bg-indigo-50 border border-indigo-100 hover:border-indigo-300 hover:bg-indigo-100 rounded-xl text-center transition-all hover:-translate-y-0.5 hover:shadow-sm duration-200"
                                     style={{ transitionDelay: `${index * 50}ms` }}
                                 >
-                                    <span className="text-sm font-medium text-gray-800">{skill}</span>
+                                    <span className="text-sm font-semibold text-indigo-700">{skill}</span>
                                 </div>
                             ))}
                         </div>
@@ -115,7 +114,7 @@ export default function AboutPageClient() {
                             {profileData.tools.map((tool) => (
                                 <span
                                     key={tool}
-                                    className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-full transition-transform hover:scale-105 hover:bg-blue-600 duration-300"
+                                    className="px-4 py-2 bg-slate-900 text-white text-sm font-semibold rounded-full transition-all hover:scale-105 hover:bg-indigo-600 duration-200"
                                 >
                                     {tool}
                                 </span>
