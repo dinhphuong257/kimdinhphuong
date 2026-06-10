@@ -5,7 +5,7 @@ import Link from "next/link";
 import { profileData } from "@/data/profile";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 
 interface ProfileHeaderProps {
     onMessage: () => void;
@@ -76,10 +76,10 @@ function TypingText({ texts }: { texts: string[] }) {
     );
 }
 
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } };
-const fadeUp = {
+const stagger: Variants = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } };
+const fadeUp: Variants = {
     hidden: { opacity: 0, y: 16 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0, 0, 0.2, 1] } },
 };
 
 export default function ProfileHeader({ onMessage }: ProfileHeaderProps) {
