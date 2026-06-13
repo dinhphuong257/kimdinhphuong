@@ -387,13 +387,21 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.2);
+  background: rgba(71, 85, 105, 0.55);
   border-radius: var(--radius-full);
   transition: background var(--transition-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.4);
+  background: rgba(71, 85, 105, 0.75);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(203, 213, 225, 0.35);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(203, 213, 225, 0.55);
 }
 
 .scrollbar-hide {
