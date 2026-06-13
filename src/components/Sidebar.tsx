@@ -205,6 +205,10 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               />
               <span className="relative z-10">Tiếng Việt</span>
             </button>
+            
+            {/* Horizontal Divider Line */}
+            <div className="h-px bg-slate-200/60 dark:bg-slate-800/40 my-0.5 mx-2" />
+
             <button
               onClick={() => setLanguage("en")}
               className={`w-full relative flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-colors duration-200 z-10 ${
