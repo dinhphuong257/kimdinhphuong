@@ -191,7 +191,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               {language === "vi" && (
                 <motion.div
                   layoutId="activeLang"
-                  className="absolute inset-0 bg-white rounded-lg shadow-sm border border-indigo-100 dark:border-indigo-900/60 shadow-[0_0_12px_rgba(99,102,241,0.2)] dark:shadow-[0_0_12px_rgba(99,102,241,0.15)] ring-1.5 ring-indigo-500/20 dark:ring-indigo-500/30 -z-10"
+                  className="absolute inset-0 bg-white dark:bg-slate-900 rounded-lg border border-indigo-200/80 dark:border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.35)] dark:shadow-[0_0_15px_rgba(99,102,241,0.45)] ring-2 ring-indigo-500/20 dark:ring-indigo-500/30 -z-10"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
@@ -216,7 +216,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               {language === "en" && (
                 <motion.div
                   layoutId="activeLang"
-                  className="absolute inset-0 bg-white rounded-lg shadow-sm border border-indigo-100 dark:border-indigo-900/60 shadow-[0_0_12px_rgba(99,102,241,0.2)] dark:shadow-[0_0_12px_rgba(99,102,241,0.15)] ring-1.5 ring-indigo-500/20 dark:ring-indigo-500/30 -z-10"
+                  className="absolute inset-0 bg-white dark:bg-slate-900 rounded-lg border border-indigo-200/80 dark:border-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.35)] dark:shadow-[0_0_15px_rgba(99,102,241,0.45)] ring-2 ring-indigo-500/20 dark:ring-indigo-500/30 -z-10"
                   transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
