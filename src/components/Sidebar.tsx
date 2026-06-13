@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { profileData } from "@/data/profile";
 import { Toast, useToast } from "@/components/Toast";
+import { motion } from "framer-motion";
 
 const HomeIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,20 +179,56 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         {/* Bottom section - Smaller Get Help & Download CV */}
         <div className="p-4 border-t border-slate-100 flex flex-col gap-2">
           {/* Language Switcher */}
-          <div className="flex flex-col bg-slate-100/80 p-1.5 rounded-xl gap-1">
+          <div className="flex flex-col bg-slate-100/80 p-1.5 rounded-xl gap-1 relative">
             <button
               onClick={() => setLanguage("vi")}
-              className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "vi" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
+              className={`w-full relative flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-colors duration-200 z-10 ${
+                language === "vi"
+                  ? "text-indigo-600"
+                  : "text-slate-500 hover:text-slate-700"
+              }`}
             >
-              <Image src="https://flagcdn.com/w20/vn.png" alt="VN" width={20} height={14} sizes="20px" className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" />
-              <span>Tiếng Việt</span>
+              {language === "vi" && (
+                <motion.div
+                  layoutId="activeLang"
+                  className="absolute inset-0 bg-white rounded-lg shadow-sm border border-indigo-100 dark:border-indigo-900/60 shadow-[0_0_12px_rgba(99,102,241,0.2)] dark:shadow-[0_0_12px_rgba(99,102,241,0.15)] ring-1.5 ring-indigo-500/20 dark:ring-indigo-500/30 -z-10"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <Image 
+                src="https://flagcdn.com/w20/vn.png" 
+                alt="VN" 
+                width={20} 
+                height={14} 
+                sizes="20px" 
+                className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0 relative z-10" 
+              />
+              <span className="relative z-10">Tiếng Việt</span>
             </button>
             <button
               onClick={() => setLanguage("en")}
-              className={`w-full flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-all ${language === "en" ? "bg-white text-indigo-600 shadow-sm ring-1 ring-slate-200/50" : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"}`}
+              className={`w-full relative flex items-center gap-3 py-2.5 px-3 text-xs font-bold rounded-lg transition-colors duration-200 z-10 ${
+                language === "en"
+                  ? "text-indigo-600"
+                  : "text-slate-500 hover:text-slate-700"
+              }`}
             >
-              <Image src="https://flagcdn.com/w20/us.png" alt="US" width={20} height={14} sizes="20px" className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0" />
-              <span>English</span>
+              {language === "en" && (
+                <motion.div
+                  layoutId="activeLang"
+                  className="absolute inset-0 bg-white rounded-lg shadow-sm border border-indigo-100 dark:border-indigo-900/60 shadow-[0_0_12px_rgba(99,102,241,0.2)] dark:shadow-[0_0_12px_rgba(99,102,241,0.15)] ring-1.5 ring-indigo-500/20 dark:ring-indigo-500/30 -z-10"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <Image 
+                src="https://flagcdn.com/w20/us.png" 
+                alt="US" 
+                width={20} 
+                height={14} 
+                sizes="20px" 
+                className="rounded-[2px] shadow-[0_1px_2px_rgba(0,0,0,0.2)] shrink-0 relative z-10" 
+              />
+              <span className="relative z-10">English</span>
             </button>
           </div>
 
