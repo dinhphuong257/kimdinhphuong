@@ -207,7 +207,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
             </button>
             
             {/* Horizontal Divider Line */}
-            <div className="h-px bg-slate-200/60 dark:bg-slate-800/40 my-0.5 mx-2" />
+            <div className="h-px bg-slate-300 dark:bg-slate-700/60 my-1 mx-2" />
 
             <button
               onClick={() => setLanguage("en")}
