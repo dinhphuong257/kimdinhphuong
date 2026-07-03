@@ -9,7 +9,7 @@ interface SupportModalProps {
 
 export default function SupportModal({ isOpen, onClose }: SupportModalProps) {
     const [copied, setCopied] = useState(false);
-    const email = "kimdinhphuong.vn@gmail.com";
+    const email = "kimdinhphuong205@gmail.com";
 
     // Handle ESC key to close modal
     const handleKeyDown = useCallback(
