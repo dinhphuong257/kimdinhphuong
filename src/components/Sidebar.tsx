@@ -129,7 +129,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Sidebar - Premium Minimal */}
       <aside
         className={`
-          fixed top-0 flex flex-col z-50 transition-all duration-300 ease-out
+          fixed top-0 flex flex-col z-50 transition-all duration-300 ease-out overflow-hidden
           lg:left-6 lg:top-1/2 lg:-translate-y-1/2 lg:h-fit lg:w-48 lg:rounded-2xl
           ${isOpen ? "left-0 h-full w-[280px] translate-y-0" : "-left-full lg:left-6"}
           glass-premium shadow-xl
