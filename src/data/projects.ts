@@ -37,6 +37,23 @@ export interface Project {
 
 export const projectsEn: Project[] = [
     {
+        id: "nghien-phim-relax",
+        title: "Nghiện Phim Relax",
+        summary: "A premium movie streaming platform focused on content discovery, responsive UI/UX, and high-performance playback, offering a relaxing entertainment experience.",
+        role: "Lead Developer",
+        year: 2026,
+        thumbnail: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop",
+        thumbnailGradient: "bg-gradient-to-br from-purple-900 via-rose-900 to-slate-900",
+        tags: ["Web Development", "Streaming Platform", "UI/UX Design"],
+        featured: true,
+        problem: "Buffering delays and disruptive ads often ruin the movie watching experience for users trying to relax.",
+        process: "Designed an efficient streaming UI with fluid layout transitions, dark cinematic colors, and optimized media rendering.",
+        solution: "Built a modern, user-friendly video streaming portal that plays high-quality media with no lags and clean navigations.",
+        outcome: "Launched Nghiện Phim Relax successfully, providing a clean interface for users to relax and stream movies without friction.",
+        images: [],
+        caseStudyUrl: "https://nghienphimrelax.top",
+    },
+    {
         id: "rap-phim-chill",
         title: "Rạp Phim Chill",
         summary: "A premium movie streaming platform providing a seamless and immersive viewing experience. Built with performance and modern UI/UX design in mind.",
@@ -93,6 +110,15 @@ export const projectsEn: Project[] = [
 export const projectsVi: Project[] = [
     {
         ...projectsEn[0],
+        summary: "Nền tảng xem phim trực tuyến cao cấp tập trung vào khám phá nội dung, giao diện responsive mượt mà và trình phát hiệu năng cao, mang lại trải nghiệm giải trí thư giãn.",
+        role: "Trưởng nhóm phát triển",
+        problem: "Tình trạng giật lag khi tải video và quảng cáo phiền nhiễu thường phá hỏng trải nghiệm xem phim của người dùng khi muốn thư giãn.",
+        process: "Thiết kế giao diện phát trực tuyến tối ưu với các hiệu ứng chuyển cảnh mượt mà, tông màu điện ảnh tối và tối ưu hóa hiển thị phương tiện.",
+        solution: "Xây dựng cổng xem phim hiện đại, thân thiện, phát video chất lượng cao không giật lag và điều hướng trực quan sạch sẽ.",
+        outcome: "Ra mắt thành công Nghiện Phim Relax, cung cấp giao diện tinh giản giúp người dùng thư giãn và xem phim trơn tru không gặp trở ngại."
+    },
+    {
+        ...projectsEn[1],
         summary: "Nền tảng xem phim trực tuyến cao cấp, mang lại trải nghiệm mượt mà và sống động. Thiết kế giao diện hiện đại tối ưu hiệu suất.",
         role: "Trưởng nhóm phát triển",
         problem: "Người xem thường xuyên gặp khó khăn với các trang web phim chứa quá nhiều quảng cáo rác, chậm trễ và khó theo dõi trên nhiều thiết bị.",
@@ -101,7 +127,7 @@ export const projectsVi: Project[] = [
         outcome: "Đã ra mắt thành công nền tảng chiếu phim ổn định, xử lý phim độ phân giải cao thu hút tệp khán giả ngày càng lớn."
     },
     {
-        ...projectsEn[1],
+        ...projectsEn[2],
         summary: "Hệ thống Quản lý Kho bãi quy trình lạnh với giao diện bảo mật, theo dõi nhiệt độ container trực tuyến thời gian thực, và cảnh báo an toàn tức thì.",
         role: "Lập trình viên Fullstack",
         problem: "Các nhóm quản lý kho lạnh phải theo dõi thủ công kho bãi thông qua nhiều công cụ ngắt kết nối, gây chậm trễ xử lý các vấn đề khẩn cấp.",
