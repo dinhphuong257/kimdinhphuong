@@ -37,6 +37,40 @@ export interface Project {
 
 export const projectsEn: Project[] = [
     {
+        id: "ez-tool",
+        title: "Ez Tool",
+        summary: "A comprehensive developer utility and coding tricks hub, providing curated resources, tools, and code snippets to streamline workflow productivity.",
+        role: "Lead Developer",
+        year: 2026,
+        thumbnail: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2070&auto=format&fit=crop",
+        thumbnailGradient: "bg-gradient-to-br from-teal-900 via-emerald-900 to-slate-900",
+        tags: ["Web Development", "Next.js", "UI/UX Design"],
+        featured: true,
+        problem: "Developers spend too much time searching for reliable code snippets, small utilities, and development tricks across scattered sources.",
+        process: "Designed a clean, search-first tools catalog with instant copy buttons, clean syntax highlighting, and categorized navigation paths.",
+        solution: "Developed Ez Tool, an interactive developers portal loaded with high-speed utility scripts, syntax cheatsheets, and productivity tricks.",
+        outcome: "Created a highly visited utility catalog used by fellow students and developers to speed up their daily coding workflows.",
+        images: [],
+        caseStudyUrl: "https://eztool.academy",
+    },
+    {
+        id: "ez-study",
+        title: "Ez Study",
+        summary: "An interactive educational platform specializing in logistics, supply chain operations, and academic subjects, offering structured lessons and resources.",
+        role: "Lead Developer",
+        year: 2026,
+        thumbnail: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=2070&auto=format&fit=crop",
+        thumbnailGradient: "bg-gradient-to-br from-amber-900 via-orange-950 to-slate-900",
+        tags: ["Web Development", "Logistics", "Supply Chain"],
+        featured: true,
+        problem: "Students lack concentrated, easy-to-understand study resources for logistics concepts, inventory formulas, and supply chain strategies.",
+        process: "Mapped key academic syllabus modules, designed responsive learning views, and built interactive cheat sheets for formulas.",
+        solution: "Built a dedicated, modern learning portal containing structured study materials, logistics operations articles, and academic guides.",
+        outcome: "Delivered a centralized academic repository that helps students at Can Tho University of Technology study logistics concepts more effectively.",
+        images: [],
+        caseStudyUrl: "https://ezstudy.one",
+    },
+    {
         id: "nghien-phim-relax",
         title: "Nghiện Phim Relax",
         summary: "A premium movie streaming platform focused on content discovery, responsive UI/UX, and high-performance playback, offering a relaxing entertainment experience.",
@@ -110,6 +144,24 @@ export const projectsEn: Project[] = [
 export const projectsVi: Project[] = [
     {
         ...projectsEn[0],
+        summary: "Nền tảng tổng hợp các thủ thuật phát triển web, mẹo lập trình và tài nguyên tiện ích, cung cấp các đoạn mã mẫu chất lượng cao giúp tối ưu hóa tiến độ công việc.",
+        role: "Trưởng nhóm phát triển",
+        problem: "Lập trình viên thường tốn nhiều thời gian tìm kiếm các đoạn mã mẫu tin cậy, công cụ tiện ích nhỏ và thủ thuật phát triển từ nhiều nguồn rải rác.",
+        process: "Thiết kế danh mục công cụ sạch sẽ, ưu tiên tìm kiếm nhanh với nút sao chép mã nguồn tức thì, làm nổi bật cú pháp code và sơ đồ điều hướng rõ ràng.",
+        solution: "Xây dựng cổng thông tin Ez Tool tương tác cao tích hợp sẵn các công cụ script tiện ích tốc độ cao, bảng tra cứu cú pháp và thủ thuật lập trình tối ưu hóa.",
+        outcome: "Tạo nên danh mục công cụ tiện ích được nhiều lập trình viên và sinh viên truy cập thường xuyên để tăng tốc độ phát triển dự án hàng ngày."
+    },
+    {
+        ...projectsEn[1],
+        summary: "Nền tảng học tập tương tác chuyên sâu về Logistics, quản trị chuỗi cung ứng và nhiều lĩnh vực kiến thức học thuật đa dạng khác, cung cấp các khóa học và tài nguyên bài bản.",
+        role: "Trưởng nhóm phát triển",
+        problem: "Sinh viên thiếu các nguồn tài liệu học tập tập trung, dễ hiểu về các khái niệm chuỗi cung ứng, công thức tính toán tồn kho và chiến lược logistics.",
+        process: "Hệ thống hóa các học phần giáo trình cốt lõi, thiết kế giao diện học tập trực quan và xây dựng công cụ tra cứu công thức nhanh nhạy.",
+        solution: "Xây dựng cổng thông tin học tập chuyên nghiệp Ez Study lưu trữ các tài liệu bài giảng chọn lọc, bài viết chuyên ngành chuỗi cung ứng và hướng dẫn học thuật.",
+        outcome: "Mang lại kho học liệu học thuật tập trung giúp sinh viên ngành Logistics tại Đại học Kỹ thuật - Công nghệ Cần Thơ nghiên cứu hiệu quả hơn."
+    },
+    {
+        ...projectsEn[2],
         summary: "Nền tảng xem phim trực tuyến cao cấp tập trung vào khám phá nội dung, giao diện responsive mượt mà và trình phát hiệu năng cao, mang lại trải nghiệm giải trí thư giãn.",
         role: "Trưởng nhóm phát triển",
         problem: "Tình trạng giật lag khi tải video và quảng cáo phiền nhiễu thường phá hỏng trải nghiệm xem phim của người dùng khi muốn thư giãn.",
@@ -118,16 +170,16 @@ export const projectsVi: Project[] = [
         outcome: "Ra mắt thành công Nghiện Phim Relax, cung cấp giao diện tinh giản giúp người dùng thư giãn và xem phim trơn tru không gặp trở ngại."
     },
     {
-        ...projectsEn[1],
+        ...projectsEn[3],
         summary: "Nền tảng xem phim trực tuyến cao cấp, mang lại trải nghiệm mượt mà và sống động. Thiết kế giao diện hiện đại tối ưu hiệu suất.",
         role: "Trưởng nhóm phát triển",
         problem: "Người xem thường xuyên gặp khó khăn với các trang web phim chứa quá nhiều quảng cáo rác, chậm trễ và khó theo dõi trên nhiều thiết bị.",
         process: "Thiết kế xoay quanh trải nghiệm người dùng với theme điện ảnh tối màu, tối ưu hóa tải phương tiện và kiến trúc đáp ứng nhanh.",
         solution: "Phát triển web phim giao diện trực quan, ưu tiên khám phá nội dung dễ dàng, trình phát video liền mạch và mượt mà.",
-        outcome: "Đã ra mắt thành công nền tảng chiếu phim ổn định, xử lý phim độ phân giải cao thu hút tệp khán giả ngày càng lớn."
+        outcome: "Đã ra mắt thành công nền tảng chiếu phim ổn định, xử lý phim độ phân giải cao thu hút tệp khán giả ngày cảng lớn."
     },
     {
-        ...projectsEn[2],
+        ...projectsEn[4],
         summary: "Hệ thống Quản lý Kho bãi quy trình lạnh với giao diện bảo mật, theo dõi nhiệt độ container trực tuyến thời gian thực, và cảnh báo an toàn tức thì.",
         role: "Lập trình viên Fullstack",
         problem: "Các nhóm quản lý kho lạnh phải theo dõi thủ công kho bãi thông qua nhiều công cụ ngắt kết nối, gây chậm trễ xử lý các vấn đề khẩn cấp.",

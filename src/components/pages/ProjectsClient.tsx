@@ -39,6 +39,22 @@ export default function ProjectsClient() {
                 hoverText: "group-hover:text-rose-600 dark:group-hover:text-rose-400"
             };
         }
+        if (id === "ez-tool") {
+            return {
+                glow: "bg-emerald-500",
+                accent: "text-emerald-600 dark:text-emerald-400 bg-emerald-500/5 border-emerald-500/10 dark:border-emerald-400/20",
+                button: "bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/10 hover:shadow-emerald-500/20",
+                hoverText: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400"
+            };
+        }
+        if (id === "ez-study") {
+            return {
+                glow: "bg-amber-500",
+                accent: "text-amber-600 dark:text-amber-400 bg-amber-500/5 border-amber-500/10 dark:border-amber-400/20",
+                button: "bg-amber-600 hover:bg-amber-500 shadow-amber-500/10 hover:shadow-amber-500/20",
+                hoverText: "group-hover:text-amber-600 dark:group-hover:text-amber-400"
+            };
+        }
         return {
             glow: "bg-indigo-500",
             accent: "text-indigo-600 dark:text-indigo-400 bg-indigo-500/5 border-indigo-500/10 dark:border-indigo-500/20",
