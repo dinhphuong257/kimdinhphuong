@@ -298,7 +298,11 @@ export default function ToolsPageClient() {
                             <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col justify-between h-full space-y-6">
                                 <div className="space-y-4">
                                     <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                                        <span className="w-6 h-6 rounded bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xs font-bold">✓</span>
+                                        <span className="w-6 h-6 rounded bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xs font-bold">
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                            </svg>
+                                        </span>
                                         {isVi ? "Tỷ lệ Lấp đầy (Fill Rate)" : "Fill Rate Calculator"}
                                     </h3>
                                     <p className="text-xs text-slate-500 leading-relaxed">
@@ -346,7 +350,11 @@ export default function ToolsPageClient() {
                             <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col justify-between h-full space-y-6">
                                 <div className="space-y-4">
                                     <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                                        <span className="w-6 h-6 rounded bg-amber-500/10 text-amber-600 flex items-center justify-center text-xs font-bold">🔀</span>
+                                        <span className="w-6 h-6 rounded bg-amber-500/10 text-amber-600 flex items-center justify-center text-xs font-bold">
+                                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.228 9H18.9" />
+                                            </svg>
+                                        </span>
                                         {isVi ? "Vòng quay Tồn kho (Inventory Turnover)" : "Inventory Turnover Calculator"}
                                     </h3>
                                     <p className="text-xs text-slate-500 leading-relaxed">
