@@ -33,6 +33,12 @@ const TutIcon = () => (
   </svg>
 );
 
+const ToolsIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+  </svg>
+);
+
 const AboutIcon = () => (
   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -91,6 +97,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     { label: language === "vi" ? "Dự án" : "Projects", icon: <ProjectsIcon />, href: "/projects" },
     { label: language === "vi" ? "Bài viết" : "Blog", icon: <BlogIcon />, href: "/blog" },
     { label: language === "vi" ? "Thủ thuật" : "Tutorials", icon: <TutIcon />, href: "/tut" },
+    { label: language === "vi" ? "Công cụ" : "Tools", icon: <ToolsIcon />, href: "/tools" },
     { label: language === "vi" ? "Thông tin" : "About", icon: <AboutIcon />, href: "/about" },
     { label: language === "vi" ? "Liên hệ" : "Contact", icon: <ContactIcon />, href: "/contact" },
   ];

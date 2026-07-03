@@ -4,10 +4,68 @@ import Image from "next/image";
 import { profileData } from "@/data/profile";
 import Reveal from "@/components/Reveal";
 import { useLanguage } from "@/context/LanguageContext";
+import dynamic from "next/dynamic";
+
+const ResponsiveContainer = dynamic(
+    () => import("recharts").then((m) => ({ default: m.ResponsiveContainer })),
+    { ssr: false }
+);
+const RadarChart = dynamic(
+    () => import("recharts").then((m) => ({ default: m.RadarChart })),
+    { ssr: false }
+);
+const PolarGrid = dynamic(
+    () => import("recharts").then((m) => ({ default: m.PolarGrid })),
+    { ssr: false }
+);
+const PolarAngleAxis = dynamic(
+    () => import("recharts").then((m) => ({ default: m.PolarAngleAxis })),
+    { ssr: false }
+);
+const PolarRadiusAxis = dynamic(
+    () => import("recharts").then((m) => ({ default: m.PolarRadiusAxis })),
+    { ssr: false }
+);
+const Radar = dynamic(
+    () => import("recharts").then((m) => ({ default: m.Radar })),
+    { ssr: false }
+);
+const Tooltip = dynamic(
+    () => import("recharts").then((m) => ({ default: m.Tooltip })),
+    { ssr: false }
+);
 
 export default function AboutPageClient() {
     const { language } = useLanguage();
     const isVi = language === 'vi';
+
+    const radarData = [
+        {
+            subject: isVi ? "Vận hành Logistics" : "Logistics Ops",
+            A: 95,
+            fullMark: 100,
+        },
+        {
+            subject: isVi ? "Kế hoạch Tồn kho" : "Inventory Planning",
+            A: 90,
+            fullMark: 100,
+        },
+        {
+            subject: isVi ? "Phân tích Dữ liệu" : "Data Analysis",
+            A: 85,
+            fullMark: 100,
+        },
+        {
+            subject: isVi ? "Phát triển Phần mềm" : "Software Dev",
+            A: 80,
+            fullMark: 100,
+        },
+        {
+            subject: isVi ? "Thiết kế UI/UX" : "UI/UX Design",
+            A: 75,
+            fullMark: 100,
+        },
+    ];
 
     const aboutTextEn = profileData.about;
     const aboutTextVi = [
@@ -86,19 +144,63 @@ export default function AboutPageClient() {
                 <Reveal direction="up" delay={400}>
                     <section className="mb-12">
                         <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                            {isVi ? "Kỹ năng" : "Skills"}
+                            {isVi ? "Năng lực chuyên môn" : "Core Competencies"}
                             <span className="inline-block w-8 h-px bg-indigo-600 ml-2"></span>
                         </h2>
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                            {profileData.skills.map((skill, index) => (
-                                <div
-                                    key={skill}
-                                    className="px-4 py-3 bg-indigo-50 border border-indigo-100 hover:border-indigo-300 hover:bg-indigo-100 rounded-xl text-center transition-all hover:-translate-y-0.5 hover:shadow-sm duration-200"
-                                    style={{ transitionDelay: `${index * 50}ms` }}
-                                >
-                                    <span className="text-sm font-semibold text-indigo-700">{skill}</span>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                            {/* Radar Chart */}
+                            <div className="lg:col-span-5 flex justify-center">
+                                <div className="h-64 w-full max-w-[320px] bg-slate-50/50 rounded-2xl p-4 border border-slate-100 flex items-center justify-center">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                                            <PolarGrid stroke="#e2e8f0" />
+                                            <PolarAngleAxis 
+                                                dataKey="subject" 
+                                                tick={{ fill: "#64748b", fontSize: 9, fontWeight: 700 }}
+                                            />
+                                            <PolarRadiusAxis 
+                                                angle={30} 
+                                                domain={[0, 100]} 
+                                                tick={{ fill: "#94a3b8", fontSize: 8 }}
+                                                axisLine={false}
+                                            />
+                                            <Radar
+                                                name={isVi ? "Năng lực" : "Competency"}
+                                                dataKey="A"
+                                                stroke="#4f46e5"
+                                                fill="#6366f1"
+                                                fillOpacity={0.25}
+                                            />
+                                            <Tooltip 
+                                                contentStyle={{
+                                                    borderRadius: "8px",
+                                                    fontSize: "11px",
+                                                    border: "none",
+                                                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05)"
+                                                }}
+                                            />
+                                        </RadarChart>
+                                    </ResponsiveContainer>
                                 </div>
-                            ))}
+                            </div>
+
+                            {/* Skills Tag Cloud */}
+                            <div className="lg:col-span-7 space-y-4">
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    {isVi ? "Các kỹ năng chuyên ngành khác" : "Other Professional Skills"}
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                    {profileData.skills.map((skill) => (
+                                        <span
+                                            key={skill}
+                                            className="px-3.5 py-2 bg-indigo-50 border border-indigo-100/50 text-indigo-700 text-xs font-bold rounded-xl transition-all hover:bg-indigo-100 hover:border-indigo-300 hover:-translate-y-0.5 duration-200 shadow-sm"
+                                        >
+                                            {skill}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </section>
                 </Reveal>

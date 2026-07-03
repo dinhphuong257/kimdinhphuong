@@ -86,85 +86,100 @@ export default function ProjectDetailClient({ id }: ProjectDetailClientProps) {
                 </div>
             </Reveal>
 
-            {/* Content sections */}
-            <div className="space-y-8">
-                {/* Problem */}
+            {/* Content sections - Redesigned as a Premium Vertical Timeline */}
+            <div className="relative border-l-2 border-slate-150 dark:border-slate-800 ml-4 md:ml-8 pl-8 md:pl-10 space-y-12 py-4">
+                
+                {/* 1. Problem */}
                 <Reveal direction="up" delay={150}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-sm font-bold">
-                                1
-                            </span>
-                            {language === 'vi' ? 'Vấn Đề' : 'Problem'}
-                        </h2>
-                        <p className="text-gray-600 leading-relaxed">{project.problem}</p>
-                    </section>
+                    <div className="relative">
+                        {/* Timeline Node Dot */}
+                        <div className="absolute -left-[45px] md:-left-[53px] top-1.5 w-8 h-8 md:w-10 md:h-10 rounded-full border-4 border-white dark:border-slate-950 bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center text-sm md:text-base font-extrabold shadow-sm z-10">
+                            1
+                        </div>
+                        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+                            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mb-4">
+                                {language === 'vi' ? 'Vấn Đề' : 'Problem'}
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium text-justify">{project.problem}</p>
+                        </section>
+                    </div>
                 </Reveal>
 
-                {/* Process */}
+                {/* 2. Process */}
                 <Reveal direction="up" delay={200}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold">
-                                2
-                            </span>
-                            {language === 'vi' ? 'Quá Trình' : 'Process'}
-                        </h2>
-                        <p className="text-gray-600 leading-relaxed">{project.process}</p>
-                    </section>
+                    <div className="relative">
+                        {/* Timeline Node Dot */}
+                        <div className="absolute -left-[45px] md:-left-[53px] top-1.5 w-8 h-8 md:w-10 md:h-10 rounded-full border-4 border-white dark:border-slate-950 bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center text-sm md:text-base font-extrabold shadow-sm z-10">
+                            2
+                        </div>
+                        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+                            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mb-4">
+                                {language === 'vi' ? 'Quá Trình' : 'Process'}
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium text-justify">{project.process}</p>
+                        </section>
+                    </div>
                 </Reveal>
 
-                {/* Solution */}
+                {/* 3. Solution */}
                 <Reveal direction="up" delay={250}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-sm font-bold">
-                                3
-                            </span>
-                            {language === 'vi' ? 'Giải Pháp' : 'Solution'}
-                        </h2>
-                        <p className="text-gray-600 leading-relaxed">{project.solution}</p>
-                    </section>
+                    <div className="relative">
+                        {/* Timeline Node Dot */}
+                        <div className="absolute -left-[45px] md:-left-[53px] top-1.5 w-8 h-8 md:w-10 md:h-10 rounded-full border-4 border-white dark:border-slate-950 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-sm md:text-base font-extrabold shadow-sm z-10">
+                            3
+                        </div>
+                        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+                            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mb-4">
+                                {language === 'vi' ? 'Giải Pháp' : 'Solution'}
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium text-justify">{project.solution}</p>
+                        </section>
+                    </div>
                 </Reveal>
 
-                {/* Outcome */}
+                {/* 4. Outcome */}
                 <Reveal direction="up" delay={300}>
-                    <section className="bg-white rounded-xl border border-gray-200 p-8">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-3">
-                            <span className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-sm font-bold">
-                                4
-                            </span>
-                            {language === 'vi' ? 'Kết Quả' : 'Outcome'}
-                        </h2>
-                        <p className="text-gray-600 leading-relaxed mb-8">{project.outcome}</p>
-                        
-                        {project.results && project.results.length > 0 && (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {project.results.map((result, idx) => (
-                                    <div key={idx} className="space-y-2">
-                                        <div className="flex items-baseline justify-between">
-                                            <h3 className="text-sm font-bold text-gray-900 uppercase tracking-tight">{result.label}</h3>
-                                            <span className="text-2xl font-black text-indigo-600">{result.value}</span>
+                    <div className="relative">
+                        {/* Timeline Node Dot */}
+                        <div className="absolute -left-[45px] md:-left-[53px] top-1.5 w-8 h-8 md:w-10 md:h-10 rounded-full border-4 border-white dark:border-slate-950 bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center text-sm md:text-base font-extrabold shadow-sm z-10">
+                            4
+                        </div>
+                        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8 hover:shadow-lg transition-all duration-300">
+                            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mb-4">
+                                {language === 'vi' ? 'Kết Quả' : 'Outcome'}
+                            </h2>
+                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium text-justify mb-8">{project.outcome}</p>
+                            
+                            {project.results && project.results.length > 0 && (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-slate-100 dark:border-slate-800/60">
+                                    {project.results.map((result, idx) => (
+                                        <div key={idx} className="space-y-2">
+                                            <div className="flex items-baseline justify-between">
+                                                <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{result.label}</h3>
+                                                <span className="text-2xl font-black text-indigo-600 dark:text-indigo-400">{result.value}</span>
+                                            </div>
+                                            {result.chartData && (
+                                                <ProjectChart data={result.chartData} label={language === 'vi' ? 'Hiệu quả đạt được' : 'Performance Increase'} />
+                                            )}
                                         </div>
-                                        {result.chartData && (
-                                            <ProjectChart data={result.chartData} label={language === 'vi' ? 'Phân tích' : 'Analysis'} />
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                                    ))}
+                                </div>
+                            )}
 
-                        {project.id === "wms-ecofresh" && !project.results && (
-                            <WMSPerformanceChart language={language} />
-                        )}
-                    </section>
+                            {project.id === "wms-ecofresh" && !project.results && (
+                                <div className="pt-6 border-t border-slate-100 dark:border-slate-800/60">
+                                    <WMSPerformanceChart language={language} />
+                                </div>
+                            )}
+                        </section>
+                    </div>
                 </Reveal>
 
                 {/* Image gallery */}
                 {project.images && project.images.length > 0 && (
                     <Reveal direction="up" delay={350}>
-                        <section className="bg-white rounded-xl border border-gray-200 p-8">
-                            <h2 className="text-xl font-semibold text-gray-900 mb-6">{language === 'vi' ? 'Thư Viện Ảnh' : 'Gallery'}</h2>
+                        <section className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 p-6 md:p-8">
+                            <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mb-6">{language === 'vi' ? 'Thư Viện Ảnh' : 'Gallery'}</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {project.images.map((image, idx) => (
                                     <div key={idx} className="rounded-lg overflow-hidden h-64 relative">
@@ -184,16 +199,16 @@ export default function ProjectDetailClient({ id }: ProjectDetailClientProps) {
                 {/* External links */}
                 {project.caseStudyUrl && (
                     <Reveal direction="up" delay={400}>
-                        <div className="flex justify-center mt-12 mb-8">
+                        <div className="flex justify-center pt-6">
                             <a
                                 href={project.caseStudyUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
+                                className="inline-flex items-center gap-2 px-6 py-3.5 bg-slate-900 text-white font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-slate-800 transition-colors shadow-md"
                             >
                                 {language === 'vi' ? 'Xem dự án thực tế' : 'Visit project website'}
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
                             </a>
                         </div>
